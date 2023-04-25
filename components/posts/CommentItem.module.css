@@ -1,0 +1,63 @@
+.commentItem {
+    border-bottom: 1px solid #1f2937;
+    padding: 1.25rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .commentItem:hover {
+    background-color: #1f2937;
+  }
+  
+  .flexRow {
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    gap: 1rem;
+  }
+  
+  .userInfo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .userName {
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  
+  .userName:hover {
+    text-decoration: underline;
+  }
+  
+  .userUsername {
+    color: #6b7280;
+    cursor: pointer;
+    text-decoration: underline;
+    display: none;
+  }
+  
+  .userUsername:hover {
+    text-decoration: underline;
+  }
+  
+  @media (min-width: 768px) {
+    .userUsername {
+      display: inline;
+    }
+  }
+  
+  .createdAt {
+    color: #6b7280;
+    font-size: 0.875rem;
+  }
+  
+  .commentBody {
+    color: white;
+    margin-top: 0.25rem;
+  }
+  

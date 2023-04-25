@@ -1,0 +1,27 @@
+.headerContainer {
+    border-bottom: 1px solid #424b54;
+    padding: 1.25rem;
+  }
+  
+  .headerContent {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .backArrow {
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  
+  .backArrow:hover {
+    opacity: 0.7;
+  }
+  
+  .headerTitle {
+    color: white;
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+  

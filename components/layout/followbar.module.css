@@ -1,0 +1,51 @@
+.container {
+  padding: 1.5rem;
+  display: none;
+}
+
+.followBar {
+  background-color: #1f2937;
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.title {
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.userList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.user {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.userName {
+  color: white;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.userHandle {
+  color: #9ca3af;
+  font-size: 0.875rem;
+}
+
+@media (min-width: 1024px) {
+  .container {
+    display: block;
+  }
+}

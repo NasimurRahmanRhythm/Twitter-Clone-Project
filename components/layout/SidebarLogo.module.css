@@ -1,0 +1,18 @@
+.sidebarLogo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    height: 3.5rem;
+    width: 3.5rem;
+    padding: 1rem;
+    cursor: pointer;
+    transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+  
+  .sidebarLogo:hover {
+    background-color: rgba(30, 58, 138, 0.1);
+  }
+  

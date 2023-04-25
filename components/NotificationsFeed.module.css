@@ -1,0 +1,25 @@
+.noNotifications {
+    color: #6b7280;
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 1.125rem;
+  }
+  
+  .notificationContainer {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .notificationItem {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 1.5rem;
+    gap: 1rem;
+    border-bottom: 1px solid #2c2f33;
+  }
+  
+  .notificationText {
+    color: #fff;
+  }
+  

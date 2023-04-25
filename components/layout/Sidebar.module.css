@@ -1,0 +1,25 @@
+.sidebar {
+    grid-column: span 1;
+    height: 100%;
+    padding-right: 1rem;
+  }
+  
+  .sidebarContent {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  
+  .sidebarItems {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 230px;
+  }
+  
+  @media (min-width: 768px) {
+    .sidebar {
+      padding-right: 1.5rem;
+    }
+  }
+  
