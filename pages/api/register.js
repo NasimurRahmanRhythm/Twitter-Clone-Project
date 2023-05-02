@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
-
-import prisma from "@/libs/prismadb";
+import connectToDB from "@/libs/mongooseDB";
+import User from "@/models/User";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -8,20 +8,20 @@ export default async function handler(req, res) {
   }
 
   try {
+    await connectToDB();
+
     const { email, username, name, password } = req.body;
 
     const hashPassword = await bcrypt.hash(password, 12);
 
-    const user = await prisma.user.create({
-      data: {
-        email,
-        username,
-        name,
-        hashPassword,
-      },
+    const user = await User.create({
+      email,
+      username,
+      name,
+      hashPassword,
     });
 
-    return res.status(200).json(user);
+    return res.status(200).json(user.toObject());
   } catch (error) {
     console.log(error);
     return res.status(400).end();

@@ -1,4 +1,4 @@
-import serverAuth from "@/libs/serverAuth";
+import serverAuth from "@/src/libs/serverAuth";
 
 export default async function handler(req, res) {
   if (req.method !== "GET") {
