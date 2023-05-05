@@ -1,5 +1,5 @@
-import Header from "@/components/Header";
-import NotificationsFeed from "@/components/NotificationsFeed";
+import Header from "@/src/components/Header";
+import NotificationsFeed from "@/src/components/NotificationsFeed";
 import { getSession } from "next-auth/react";
 
 export async function getServerSideProps(context) {
@@ -8,26 +8,26 @@ export async function getServerSideProps(context) {
   if (!session) {
     return {
       redirect: {
-        destination: '/',
+        destination: "/",
         permanent: false,
-      }
-    }
+      },
+    };
   }
 
   return {
     props: {
-      session
-    }
-  }
+      session,
+    },
+  };
 }
 
 const Notifications = () => {
-  return ( 
+  return (
     <>
       <Header showBackArrow label="Notifications" />
       <NotificationsFeed />
     </>
-   );
-}
- 
+  );
+};
+
 export default Notifications;

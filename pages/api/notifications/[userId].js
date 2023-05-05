@@ -1,10 +1,10 @@
 // pages/api/notifications/[userId].jsx
-import User from '@/models/User';
-import Notification from '@/models/Notification';
-import connectToDB from '@/libs/mongooseDB';
+import User from "@/src/models/User";
+import Notification from "@/src/models/Notification";
+import connectToDB from "@/src/libs/mongooseDB";
 
 export default async function handler(req, res) {
-  if (req.method !== 'GET') {
+  if (req.method !== "GET") {
     return res.status(405).end();
   }
 
@@ -13,13 +13,13 @@ export default async function handler(req, res) {
 
     const { userId } = req.query;
 
-    if (!userId || typeof userId !== 'string') {
-      throw new Error('Invalid ID');
+    if (!userId || typeof userId !== "string") {
+      throw new Error("Invalid ID");
     }
 
     const notifications = await Notification.find({
       userId,
-    }).sort({ createdAt: 'desc' });
+    }).sort({ createdAt: "desc" });
 
     await User.updateOne(
       { _id: userId },

@@ -1,7 +1,7 @@
-import serverAuth from "@/libs/serverAuth";
-import connectToDB from "@/libs/mongooseDB";
-import User from "@/models/User";
-import Notification from "@/models/Notification";
+import serverAuth from "@/src/libs/serverAuth";
+import connectToDB from "@/src/libs/mongooseDB";
+import User from "@/src/models/User";
+import Notification from "@/src/models/Notification";
 
 export default async function handler(req, res) {
   if (req.method !== "POST" && req.method !== "DELETE") {

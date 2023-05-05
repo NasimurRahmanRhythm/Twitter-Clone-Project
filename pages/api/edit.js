@@ -1,6 +1,6 @@
-import serverAuth from "@/libs/serverAuth";
-import connectToDB from "@/libs/mongooseDB";
-import User from "@/models/User";
+import serverAuth from "@/src/libs/serverAuth";
+import connectToDB from "@/src/libs/mongooseDB";
+import User from "@/src/models/User";
 
 export default async function handler(req, res) {
   if (req.method !== "PATCH") {

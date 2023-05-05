@@ -1,6 +1,6 @@
-import serverAuth from "@/libs/serverAuth";
-import connectToDB from "@/libs/mongooseDB";
-import Comment from "@/models/Comment";
+import serverAuth from "@/src/libs/serverAuth";
+import connectToDB from "@/src/libs/mongooseDB";
+import Comment from "@/src/models/Comment";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
