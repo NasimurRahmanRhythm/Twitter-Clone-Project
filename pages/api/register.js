@@ -12,14 +12,15 @@ export default async function handler(req, res) {
 
     const { email, username, name, password } = req.body;
 
-    const hashPassword = await bcrypt.hash(password, 12);
+    const hashedPassword = await bcrypt.hash(password, 12);
 
     const user = await User.create({
       email,
       username,
       name,
-      hashPassword,
+      hashedPassword,
     });
+    console.log(user);
 
     return res.status(200).json(user.toObject());
   } catch (error) {

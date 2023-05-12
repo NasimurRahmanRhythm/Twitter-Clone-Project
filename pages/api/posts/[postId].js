@@ -18,11 +18,11 @@ export default async function handler(req, res) {
 
     const post = await Post.findById(postId)
       .populate({
-        path: "user",
+        path: "userId",
         model: User,
       })
       .populate({
-        path: "comments.user",
+        path: "comments.userId",
         model: User,
       })
       .sort({ "comments.createdAt": "desc" });

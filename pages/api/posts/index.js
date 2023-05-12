@@ -32,13 +32,13 @@ export default async function handler(req, res) {
 
       if (userId && typeof userId === "string") {
         posts = await Post.find({ userId })
-          .populate("user")
-          .populate("comments")
+          .populate("userId")
+          .populate("comments.userId")
           .sort({ createdAt: "desc" });
       } else {
         posts = await Post.find({})
-          .populate("user")
-          .populate("comments")
+          .populate("userId")
+          .populate("comments.userId")
           .sort({ createdAt: "desc" });
       }
 

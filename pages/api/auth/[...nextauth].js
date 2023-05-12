@@ -20,13 +20,15 @@ export default NextAuth({
         await connectToDB();
 
         if (!credentials?.email || !credentials?.password) {
+          console.log(credentials);
           throw new Error("Invalid credentials");
         }
 
         const user = await User.findOne({
           email: credentials.email,
         }).exec();
-
+        console.log(user);
+        console.log(credentials);
         if (!user || !user?.hashedPassword) {
           throw new Error("Invalid credentials");
         }
