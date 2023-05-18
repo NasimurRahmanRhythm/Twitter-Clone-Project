@@ -1,8 +1,8 @@
-import { formatDistanceToNowStrict } from 'date-fns';
-import { useRouter } from 'next/router';
-import React, { useCallback, useMemo } from 'react';
-import Avatar from '../Avatar';
-import styles from './CommentItem.module.css';
+import { formatDistanceToNowStrict } from "date-fns";
+import { useRouter } from "next/router";
+import React, { useCallback, useMemo } from "react";
+import Avatar from "../../Avatar/Avatar";
+import styles from "./CommentItem.module.css";
 
 const CommentItem = ({ data }) => {
   const router = useRouter();

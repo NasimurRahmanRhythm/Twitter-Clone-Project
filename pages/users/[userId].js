@@ -3,17 +3,18 @@ import { ClipLoader } from "react-spinners";
 
 import useUser from "@/src/hooks/useUser";
 
-import Header from "@/src/components/Header";
-import UserBio from "@/src/components/users/UserBio";
-import UserHero from "@/src/components/users/UserHero";
-import PostFeed from "@/src/components/posts/PostFeed";
+import Header from "@/src/components/Header/Header";
+import UserBio from "@/src/components/users/userBio/userBio";
+import UserHero from "@/src/components/users/UserHero/UserHero";
+import PostFeed from "@/src/components/posts/PostFeed/PostFeed";
 
 const UserView = () => {
   const router = useRouter();
   const { userId } = router.query;
 
   const { data: fetchedUser, isLoading } = useUser(userId);
-
+  //console.log("UserId", userId);
+  //console.log("Fetched Us", fetchedUser);
   if (isLoading || !fetchedUser) {
     return (
       <div className="flex justify-center items-center h-full">

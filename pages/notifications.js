@@ -1,5 +1,5 @@
-import Header from "@/src/components/Header";
-import NotificationsFeed from "@/src/components/NotificationsFeed";
+import Header from "@/src/components/Header/Header";
+import NotificationsFeed from "@/src/components/NotificationsFeed/NotificationsFeed";
 import { getSession } from "next-auth/react";
 
 export async function getServerSideProps(context) {

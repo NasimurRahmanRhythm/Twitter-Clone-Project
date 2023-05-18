@@ -1,30 +1,34 @@
-import useCurrentUser from '@/src/hooks/useCurrentUser'; 
-import useLoginModal from '@/src/hooks/useLoginModal';
-import useLike from '@/src/hooks/useLike';
-import { formatDistanceToNowStrict } from 'date-fns';
-import { useRouter } from 'next/router';
-import React, { useCallback, useMemo } from 'react';
-import Avatar from '../../Avatar/Avatar';
-import { AiOutlineHeart, AiFillHeart, AiOutlineMessage } from 'react-icons/ai';
-import styles from './PostItem.module.css';
+import useCurrentUser from "@/src/hooks/useCurrentUser";
+import useLoginModal from "@/src/hooks/useLoginModal";
+import useLike from "@/src/hooks/useLike";
+import { formatDistanceToNowStrict } from "date-fns";
+import { useRouter } from "next/router";
+import React, { useCallback, useMemo } from "react";
+import Avatar from "../../Avatar/Avatar";
+import { AiOutlineHeart, AiFillHeart, AiOutlineMessage } from "react-icons/ai";
+import styles from "./PostItem.module.css";
 
 const PostItem = ({ data, userId }) => {
   const router = useRouter();
   const loginModal = useLoginModal();
   const { data: currentUser } = useCurrentUser();
-  const { hasLiked, toggleLike } = useLike({ postId: data.id, userId });
+  //console.log(data);
+  const { hasLiked, toggleLike } = useLike({
+    postId: data._id,
+    userId: data.userId._id,
+  });
   const goToUser = useCallback(
     (event) => {
       event.stopPropagation();
 
-      router.push(`/users/${data.user.id}`);
+      router.push(`/users/${data.userId._id}`);
     },
-    [router, data.user.id]
+    [router, data.userId._id]
   );
-
+  //console.log("userId", data.userId);
   const goToPost = useCallback(() => {
-    router.push(`/posts/${data.id}`);
-  }, [router, data.id]);
+    router.push(`/posts/${data._id}`);
+  }, [router, data._id]);
 
   const onLike = useCallback(
     (event) => {
@@ -50,25 +54,23 @@ const PostItem = ({ data, userId }) => {
   return (
     <div onClick={goToPost} className={styles.postItem}>
       <div className={styles.flexRow}>
-        <Avatar userId={data.user.id} />
+        <Avatar userId={data.userId._id} />
         <div>
           <div className={styles.userInfo}>
             <p onClick={goToUser} className={styles.userName}>
-              {data.user.name}
+              {data.userId.username}
             </p>
             <span
               onClick={goToUser}
               className={`${styles.userUsername} ${styles.hiddenMd}`}
             >
-              @{data.user.username}
+              @{data.userId.username}
             </span>
             <span className={styles.createdAt}>{createdAt}</span>
           </div>
           <div className={styles.postBody}>{data.body}</div>
           <div className={styles.actions}>
-            <div
-              className={`${styles.actionItem} ${styles.commentAction}`}
-            >
+            <div className={`${styles.actionItem} ${styles.commentAction}`}>
               <AiOutlineMessage size={20} />
               <p>{data.comments?.length || 0}</p>
             </div>
@@ -76,7 +78,7 @@ const PostItem = ({ data, userId }) => {
               onClick={onLike}
               className={`${styles.actionItem} ${styles.likeAction}`}
             >
-              <LikeIcon size={20} color={hasLiked ? 'red' : ''} />
+              <LikeIcon size={20} color={hasLiked ? "red" : ""} />
               <p>{data.likedIds.length}</p>
             </div>
           </div>

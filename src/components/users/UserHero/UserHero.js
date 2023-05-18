@@ -1,8 +1,8 @@
 import Image from "next/image";
 
-import useUser from "@/hooks/useUser";
+import useUser from "@/src/hooks/useUser";
 
-import Avatar from "../Avatar";
+import Avatar from "../../Avatar/Avatar";
 import styles from "./UserHero.module.css";
 
 const UserHero = ({ userId }) => {
@@ -12,7 +12,12 @@ const UserHero = ({ userId }) => {
     <div>
       <div className={styles.heroBackground}>
         {fetchedUser?.coverImage && (
-          <Image src={fetchedUser.coverImage} fill alt="Cover Image" style={{ objectFit: 'cover' }} />
+          <Image
+            src={fetchedUser.coverImage}
+            fill
+            alt="Cover Image"
+            style={{ objectFit: "cover" }}
+          />
         )}
         <div className={styles.avatarWrapper}>
           <Avatar userId={userId} isLarge hasBorder />
@@ -20,6 +25,6 @@ const UserHero = ({ userId }) => {
       </div>
     </div>
   );
-}
+};
 
 export default UserHero;

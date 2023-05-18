@@ -1,7 +1,7 @@
 import Form from "@/src/components/Form/Form";
-import Header from "@/src/components/Header";
-import CommentFeed from "@/src/components/posts/CommentFeed";
-import PostItem from "@/src/components/posts/PostItem";
+import Header from "@/src/components/Header/Header";
+import CommentFeed from "@/src/components/posts/CommentFeed/CommentFeed";
+import PostItem from "@/src/components/posts/PostItem/PostItem";
 import usePost from "@/src/hooks/usePost";
 import { useRouter } from "next/router";
 import React from "react";
