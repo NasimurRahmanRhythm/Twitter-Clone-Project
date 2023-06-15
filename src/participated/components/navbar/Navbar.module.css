@@ -1,0 +1,149 @@
+.navbar{
+  height: 100%;
+}
+.navList{
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem ; 
+  font-size: 2rem;
+  height: 100%;
+  max-width: 244px;
+}
+
+.navOptions{
+ width: 100%;
+}
+
+
+.navItem{
+  cursor: pointer;
+  display: flex;
+  position: relative;
+  gap: 1rem;
+  width: max-content;
+  padding: 1rem;
+  font-size: 1.5rem;
+  border-radius: 9999px;
+}
+
+.profile{
+  display: flex;
+  width: 100%;
+  align-items: center;
+  font-size: 1rem;
+  gap:1rem;
+  padding: 1rem;
+  border-radius: 9999px;
+  margin-top: auto;
+  cursor: pointer;
+}
+
+.profile > div{
+  width: 60%;
+}
+
+.profile:hover{
+  background-color: var(--white);
+}
+
+.profilePic{
+  height: 100%;
+  max-height: 3rem;
+  max-width: 3rem;
+  border-radius: 100%;
+  overflow: hidden;
+}
+
+.name{
+ font-weight: bold;
+ font-size: 1.2rem; 
+ max-width: 100%;
+ max-lines: 1;
+ text-overflow: ellipsis;
+overflow: hidden;
+  white-space: nowrap;
+}
+.username{
+  font-weight: 500;
+  opacity: 0.5;
+}
+
+.profile>div{
+  display: flex;
+  flex-direction: column;
+  gap:0.5rem
+}
+
+ .navOptions:hover .navItem{
+  background-color: var(--white);
+}
+
+.tweetButton{
+  text-align: center;
+  border-radius: 9999px;
+  background-color: var(--primary-color);
+  cursor: pointer;
+  padding: 1rem;
+  font-weight: 500;
+  font-size: 1.2rem;
+  color: white;
+  width: 90%;
+  display: inline-block;
+}
+.tweetButton > a{
+  display: inline-block;
+  width: 100%;
+}
+
+
+.tweetButton:hover{
+  background-color: var(--primary-hover);
+}
+
+.logo{
+  height: 1.8rem;
+  width: 2rem;
+}
+
+.logoItem{
+  padding: 1rem;
+  width: max-content;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logoItem:hover{
+  background-color: var(--primary-alpha);
+}
+
+
+@media only screen and (max-width: 1266px) {
+  .profile > div,
+  .profile p,
+  .profile>svg,
+  .navText,
+  .tweetButton
+  {
+    display: none;
+  }
+
+  .natItem{
+    padding-right: 1rem;
+  }
+
+
+
+ .navOptions{
+  width: 100%;
+  display: flex;
+    justify-content: center;
+    align-items: center;
+ }
+
+
+.logoItem{
+    width: 100%;
+  }
+}

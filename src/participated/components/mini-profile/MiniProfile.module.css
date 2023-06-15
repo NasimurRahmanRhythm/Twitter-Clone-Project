@@ -1,0 +1,55 @@
+.profile{
+  display: flex;
+  width: 100%;
+  align-items: center;
+  font-size: 1rem;
+  gap:1rem;
+  cursor: pointer;
+  position: relative;
+}
+
+
+
+.profilePic{
+  height: 100%;
+  max-height: 3rem;
+  max-width: 3rem;
+  border-radius: 100%;
+  overflow: hidden;
+}
+
+.name{
+ font-weight: bold;
+ font-size: 1.2rem; 
+ max-lines: 1;
+ text-overflow: ellipsis;
+ overflow: hidden;
+ white-space: nowrap;
+}
+.names{
+ flex-grow: 1;
+ width: 80%;
+}
+.username{
+  font-weight: 500;
+  opacity: 0.5;
+}
+
+.profile>div:nth-child(1){
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.action{
+ margin-left: auto;
+}
+
+@container (max-width: 1266px) {
+  .profile > div,
+  .profile p,
+  .profile>svg,
+  {
+    display: none;
+  }
+}

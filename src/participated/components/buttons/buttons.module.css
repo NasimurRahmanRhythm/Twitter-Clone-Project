@@ -1,0 +1,14 @@
+
+.iconBg{
+  height: 100%;
+  width: 100%;
+  opacity: 0.2;
+}
+
+.button{
+  padding: 1rem;
+  border-radius: 9999px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

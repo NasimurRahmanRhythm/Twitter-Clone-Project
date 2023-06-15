@@ -1,0 +1,130 @@
+.post{
+  position: relative;
+  gap:1.2rem;
+  flex-direction: column;
+
+  display: flex;
+  width: 100%;
+  gap:0.4rem;
+  padding: 1rem;
+  font-size: 1rem;
+  color: var(--black);
+  letter-spacing: 0.4px;
+  border-bottom: 1px solid var(--white);
+}
+
+.dropdown{
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.postCard:hover{
+  background-color: var(--white);
+}
+
+.names{
+  font-size: 1.2rem;
+}
+.image{
+  width: 100%;
+  border-radius: 20px;
+}
+.postCard>div{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.name{
+  font-weight: 500;
+  color: var(--black);
+
+}
+
+.actions{
+  color: var(--grey);
+  fill: var(--grey);
+  width: 100%;
+  display: flex;
+  gap: 1.2rem;
+}
+
+.username{
+  color: var(--grey);
+}
+
+.commentIcon{
+  width: 1.2rem;
+  color: var(--white);
+  padding: 0.5rem;
+  border-radius: 50%;
+  box-sizing: content-box;
+}
+
+.content{
+  padding-top: 0rem;
+  font-size: 1.2rem;
+}
+
+.numbers{
+  display: flex;
+  gap: 1rem;
+  color: var(--grey)
+}
+
+
+.numbers .number{
+ color: var(--black);
+}
+.tweetView{
+  border-bottom: 1px solid var(--white);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+
+.date{
+  color: var(--grey);
+}
+
+
+
+.likeIcon{
+  width: 1.2rem;
+  color: var(--white);
+  padding: 0.5rem;
+  border-radius: 50%;
+  box-sizing: content-box;
+}
+
+.actionButton{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: max-content;
+  cursor: pointer;
+  gap: 0.2rem;
+}
+
+.likeButton:hover{
+ color: var(--pink);
+}
+
+.commentButton:hover{
+ color: var(--primary-color);
+}
+
+.commentButton:hover .commentIcon{
+ color: var(--primary-color);
+ fill: var(--primary-color);
+ background-color: var(--primary-alpha);
+}
+
+.likeButton:hover .likeIcon{
+ color: var(--pink);
+ fill: var(--pink);
+ background-color: var(--pink-alpha);
+}

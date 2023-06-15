@@ -1,0 +1,52 @@
+.createPost{
+  display: flex;
+  width: 100%;
+  padding:0.5rem 1rem;
+  position: relative;
+}
+
+
+.audience{
+  width: max-content;
+  padding:0.2rem 1rem;
+  border-radius: 9999px;
+  border: 2px solid var(--white) ;
+  cursor: pointer;
+  font-weight: bold;
+  background-color: transparent;
+  color: var(--primary-color);
+  margin-left: 1rem;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.audience:hover{
+ background-color: var(--primary-alpha);
+}
+
+
+.fields{
+  display: flex;
+  margin-top: 0.2rem;
+  flex-direction: column;
+  width: 100%;
+}
+
+.fields img{
+  border-radius: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.actions{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.textarea{
+  margin: 1rem;
+  font-size: 1.5rem;
+  line-height: 24px;
+}

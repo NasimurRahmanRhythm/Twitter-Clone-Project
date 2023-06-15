@@ -1,0 +1,77 @@
+.loadingBar{
+  height: 0.25rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 6;
+  border-radius: 9999px;
+  overflow: hidden;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin:left;
+  background-color: var(--primary-color);
+}
+
+
+.loading{
+  animation: loading 1s ease-in-out forwards;
+}
+.completed{
+  animation: completed 0.2s ease-in forwards;
+}
+
+@keyframes completed{
+ 0%{
+   transform: scaleX(0.8); 
+ }
+ 100%{
+   transform: scaleX(1); 
+ }
+}
+
+@keyframes loading{
+from{
+   transform: scaleX(0); 
+}
+to{
+  transform: scaleX(0.8); 
+}
+
+}
+
+
+.indeterminate {
+  height: 0.25rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 6;
+  width: 100%;
+  transition: all 1s ease-in-out;
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.indeterminate::after {
+  content: '';
+  width: 50%;
+  height: 100%;
+  background: var(--primary-color);
+  position: absolute;
+  top: 0;
+  left: 0;
+  animation: animloader 1s linear infinite;
+}
+
+@keyframes animloader {
+  0% {
+    left: 0;
+    transform: translateX(-100%);
+  }
+  100% {
+    left: 100%;
+    transform: translateX(0%);
+  }
+}
+    
+

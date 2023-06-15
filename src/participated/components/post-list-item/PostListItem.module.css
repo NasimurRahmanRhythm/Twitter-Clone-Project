@@ -1,0 +1,148 @@
+.postCard{
+  display: flex;
+  gap:1rem;
+  padding: 1rem;
+  font-size: 1rem;
+  color: var(--black);
+  letter-spacing: 0.4px;
+  width: 100%;
+  border-bottom: 1px solid var(--white);
+  position: relative;
+}
+
+.post{
+  font-size: 1.2rem;
+}
+
+.postCard:hover{
+  background-color: var(--white);
+}
+
+.names{
+  font-size: 1.2rem;
+}
+.image{
+  width: 100%;
+  border-radius: 20px;
+}
+.postCard>div{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.name{
+  font-weight: 700;
+  color: var(--black);
+}
+
+.actions{
+  color: var(--grey);
+  fill: var(--grey);
+  width: 100%;
+  display: flex;
+  gap: 1.2rem;
+}
+
+.username{
+  color: var(--grey);
+  font-weight:400;
+}
+
+.icon{
+  width: 1.2rem;
+  color: var(--white);
+  padding: 0.5rem;
+  border-radius: 50%;
+  box-sizing: content-box;
+}
+
+.content{
+  padding-top: 0rem;
+}
+
+.numbers{
+  display: flex;
+  gap: 1rem;
+  color: var(--grey)
+}
+
+
+.numbers .number{
+ color: var(--black);
+}
+.tweetView{
+  border-bottom: 1px solid var(--white);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+
+.date{
+  color: var(--grey);
+}
+
+
+.name{
+  color: var(--grey);
+  display: flex;
+  gap: 0.5rem;
+}
+
+.name > div:nth-child(1){
+  color: var(--black)
+}
+
+
+.actionButton{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: max-content;
+  cursor: pointer;
+  gap: 0.2rem;
+}
+
+.likeButton:hover{
+ color: var(--pink);
+}
+
+
+
+.commentButton:hover{
+ color: var(--primary-color);
+}
+
+.retweetButton:hover{
+ color: green;
+}
+
+.commentButton:hover .icon{
+ color: var(--primary-color);
+ fill: var(--primary-color);
+ background-color: var(--primary-alpha);
+}
+
+
+.retweetButton:hover .icon{
+ color: green;
+ fill: green;
+ background-color: rgba(0, 200, 0, 0.1);
+}
+
+.likeButton:hover .icon{
+ color: var(--pink);
+ fill: var(--pink);
+ background-color: var(--pink-alpha);
+}
+
+.dropdown{
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  margin-left: auto;
+}
+

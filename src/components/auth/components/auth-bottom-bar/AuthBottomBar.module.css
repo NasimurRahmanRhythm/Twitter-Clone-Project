@@ -1,0 +1,42 @@
+.authBottomBar {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1.4fr 1.4fr;
+  background-color: #3b5998; 
+  color: #f0f0f0; 
+  padding: 0.8rem 0;
+}
+
+.title {
+  font-size: 1.9rem; 
+  font-weight: 600; 
+}
+
+.subtitle {
+  font-size: 1.1rem; 
+}
+
+.right {
+  justify-self: center;
+  align-self: center;
+}
+
+.right a {
+  padding: 0.7rem 1.2rem; 
+  border-radius: 9999px;
+  font-weight: 600; 
+  font-size: 1.3rem; 
+}
+
+.login {
+  border: 1px solid rgba(255, 255, 255, 0.5); /* increased opacity for more visible border */
+}
+
+.signup {
+  background-color: #f0f0f0; /* light gray background */
+  color: #333333; /* dark gray text */
+  margin-left: 1.5rem; /* slightly more space between buttons */
+}

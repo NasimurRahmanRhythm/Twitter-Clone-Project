@@ -1,0 +1,54 @@
+
+.cover{
+  width: 100%;
+  aspect-ratio: 3/1;
+  background-color: var(--grey);
+}
+
+.cover img{
+  width: 100%;
+  aspect-ratio: 3/1;
+  object-fit: cover;
+}
+
+.profilePic{
+  width: 100%;
+  display: flex;
+  margin-top: -67px;
+}
+
+.profilePic>div{
+  padding: 0.5rem;
+  background-color: white;
+  border-radius: 50%;
+  transform: translateX(30%);
+}
+
+.profilePic>button{
+  height: max-content;
+  justify-self: flex-end;
+  margin-left: auto;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+  margin-top: auto;
+}
+
+.info{
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1rem;
+  color: var(--grey);
+}
+
+.info>div:nth-child(1){
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--black);
+
+}
+
+.loading{
+ position: sticky;
+ top: 60px;
+}

@@ -1,0 +1,29 @@
+
+.tweeterLogo{
+  width: 2rem;
+  height: 2rem;
+}
+
+.signupCard{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.signupCard form{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  gap: 0.8rem;
+}
+
+.signupCard h4{
+ font-size: 2rem;
+ font-weight: 700;
+}
+
+.signupCard form>*{
+ width: 100%;
+}

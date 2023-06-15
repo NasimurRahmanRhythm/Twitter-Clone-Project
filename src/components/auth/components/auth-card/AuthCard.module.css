@@ -1,0 +1,23 @@
+.btnGithub, .btnEmail {
+  border: 1px solid #f0f0f0; 
+  width: 100%;
+  gap: 1.2rem; 
+}
+
+.authCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.2rem; 
+  width: 100%;
+  padding: 1.2rem; 
+}
+
+.title {
+  font-size: 2rem; 
+  font-weight: bold;
+}
+
+.subtitle {
+  color: #777777; 
+}

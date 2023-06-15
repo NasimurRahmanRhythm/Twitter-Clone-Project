@@ -1,0 +1,61 @@
+.tweeterLogo {
+  width: 2rem;
+  height: 2rem;
+}
+
+.editCard {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.editCard form {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  gap: 0.8rem;
+}
+
+.editCard h4 {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.editCard form > * {
+  width: 100%;
+}
+
+.cover {
+  width: 100%;
+  aspect-ratio: 3/1;
+  background-color: var(--grey);
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.cover img {
+  width: 100%;
+  aspect-ratio: 3/1;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.profile {
+  margin-top: -45px;
+  margin-left: 45px;
+  cursor: pointer;
+}
+
+.profile div {
+  width: max-content;
+  height: max-content;
+  padding: 0.5rem;
+  border-radius: 50%;
+  background-color: white;
+  cursor: pointer;
+}
