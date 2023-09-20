@@ -1,0 +1,19 @@
+.imageUploadContainer {
+    width: 100%;
+    padding: 1rem;
+    text-align: center;
+    border: 2px dotted #424b54;
+    border-radius: 0.375rem;
+    color: white;
+  }
+  
+  .imageWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .imageUploadLabel {
+    color: white;
+  }
+  

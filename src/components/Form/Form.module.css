@@ -1,0 +1,79 @@
+.formContainer {
+    border-bottom: 1px solid #424B54;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+  
+  .userForm {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+  }
+  
+  .textareaWrapper {
+    width: 100%;
+  }
+  
+  .textarea {
+    resize: none;
+    margin-top: 0.75rem;
+    width: 100%;
+    background-color: #000;
+    border: none;
+    outline: none;
+    font-size: 20px;
+    color: #A1AEB7;
+    color: white;
+  }
+  
+  .textarea::placeholder {
+    color: #A1AEB7;
+  }
+  
+  .textarea:disabled {
+    opacity: 0.8;
+  }
+  
+  .hr {
+    opacity: 0;
+    height: 1px;
+    width: 100%;
+    border: none;
+    border-top: 1px solid #424B54;
+    transition: all 0.2s;
+  }
+  
+  .peerFocusOpacity {
+    opacity: 1;
+  }
+  
+  .buttonWrapper {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+  
+  .welcomeContainer {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+  
+  .welcomeTitle {
+    color: white;
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 1rem;
+    font-weight: bold;
+  }
+  
+  .buttonGroup {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+  

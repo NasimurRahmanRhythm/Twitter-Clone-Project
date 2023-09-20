@@ -1,0 +1,52 @@
+.tweetButton {
+    margin-top: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #3c82ff;
+    cursor: pointer;
+    transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+  
+  .tweetButton:hover {
+    background-color: #3c82ff;
+    opacity: 0.9;
+  }
+  
+  .tweetButtonSmall {
+    border-radius: 9999px;
+    height: 3.5rem;
+    width: 3.5rem;
+    padding: 1rem;
+  }
+  
+  .tweetButtonLarge {
+    display: none;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+  }
+  
+  .tweetButtonText {
+    display: none;
+    text-align: center;
+    font-weight: 600;
+    color: white;
+    font-size: 1.25rem;
+  }
+  
+  @media (min-width: 1024px) {
+    .tweetButtonSmall {
+      display: none;
+    }
+  
+    .tweetButtonLarge {
+      display: flex;
+    }
+  
+    .tweetButtonText {
+      display: block;
+    }
+  }
+  

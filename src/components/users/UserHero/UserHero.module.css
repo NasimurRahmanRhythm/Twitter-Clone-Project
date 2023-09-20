@@ -1,0 +1,12 @@
+.heroBackground {
+    background-color: #2D3748;
+    height: 11rem;
+    position: relative;
+  }
+  
+  .avatarWrapper {
+    position: absolute;
+    bottom: -4rem;
+    left: 1rem;
+  }
+  

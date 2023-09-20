@@ -1,0 +1,76 @@
+.bioContainer {
+    border-bottom: 1px solid #424B54;
+    padding-bottom: 1rem;
+  }
+  
+  .buttonWrapper {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0.5rem;
+  }
+  
+  .contentWrapper {
+    margin-top: 2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .nameUsername {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .name {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+  
+  .username {
+    color: #A1AEB7;
+    font-size: 1rem;
+  }
+  
+  .bioJoined {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+  }
+  
+  .bio {
+    color: white;
+  }
+  
+  .joined {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    color: #A1AEB7;
+  }
+  
+  .followInfo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
+  
+  .following,
+  .followers {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  
+  .followCount {
+    color: white;
+  }
+  
+  .followLabel {
+    color: #A1AEB7;
+  }
+  

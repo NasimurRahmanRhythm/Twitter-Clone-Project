@@ -1,0 +1,62 @@
+.sidebarItem {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .iconContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border-radius: 9999px;
+    height: 3.5rem;
+    width: 3.5rem;
+    padding: 1rem;
+    cursor: pointer;
+    transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+  
+  .iconContainer:hover {
+    background-color: rgba(48, 71, 89, 0.1);
+  }
+  
+  .iconContainerSmall {
+    display: flex;
+  }
+  
+  .iconContainerLarge {
+    display: none;
+    flex-direction: row;
+    gap: 1rem;
+  }
+  
+  .itemLabel {
+    display: none;
+    color: white;
+    font-size: 1.25rem;
+  }
+  
+  .alertDot {
+    color: #3c82ff;
+    position: absolute;
+    top: -1rem;
+    left: 0;
+  }
+  
+  @media (min-width: 1024px) {
+    .iconContainerSmall {
+      display: none;
+    }
+  
+    .iconContainerLarge {
+      display: flex;
+    }
+  
+    .itemLabel {
+      display: block;
+    }
+  }
+  

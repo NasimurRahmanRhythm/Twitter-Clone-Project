@@ -1,0 +1,18 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .footer {
+    color: #9ca3af;
+    text-align: center;
+    margin-top: 1rem;
+  }
+  
+  .createAccountLink {
+    color: white;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  

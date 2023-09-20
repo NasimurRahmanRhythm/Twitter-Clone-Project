@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  @apply h-full bg-black
+}
+
+body {
+  @apply h-full bg-black
+}
+
+.center{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fullhw {
+  width: 100vw;
+  height: 100vh;
+}
+
+.button {
+  padding: 1rem 1rem;
+  border-radius: 10000px;
+  cursor: pointer;
+  font-weight: bold;
+  display: flex;
+  font-size: 1rem;
+  width: max-content;
+  justify-content: center;
+  align-items: center;
+  color: rgb(0,0,240);
+  gap: 0.7rem;
+}
+
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
