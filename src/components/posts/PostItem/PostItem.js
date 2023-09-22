@@ -9,10 +9,12 @@ import { AiOutlineHeart, AiFillHeart, AiOutlineMessage, AiFillEdit, AiOutlineRet
 
 import styles from "./PostItem.module.css";
 import useDelete from "@/src/hooks/useDelete";
+import useEditPostModal from "@/src/hooks/useEditPostModal";
 
 const PostItem = ({ data, userId }) => {
   const router = useRouter();
   const loginModal = useLoginModal();
+  const editPostModal = useEditPostModal();
   const { data: currentUser } = useCurrentUser();
   const { hasLiked, toggleLike } = useLike({ postId: data._id, userId: data.userId_id });
   const { deletePost } = useDelete({postId: data._id});
@@ -51,6 +53,13 @@ const PostItem = ({ data, userId }) => {
     [loginModal, currentUser, deletePost],
   )
   
+  const onEdit = useCallback (
+    (ev)=> {
+      ev.stopPropagation();
+      if(!currentUser) return loginModal.onOpen();
+      else return editPostModal.onOpen();
+    }
+  )
 
   const createdAt = useMemo(() => {
     if (!data?.createdAt) {
