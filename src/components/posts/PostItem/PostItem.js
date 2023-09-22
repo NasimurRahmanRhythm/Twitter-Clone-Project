@@ -5,14 +5,18 @@ import { formatDistanceToNowStrict } from "date-fns";
 import { useRouter } from "next/router";
 import React, { useCallback, useMemo } from "react";
 import Avatar from "../../Avatar/Avatar";
-import { AiOutlineHeart, AiFillHeart, AiOutlineMessage } from "react-icons/ai";
+import { AiOutlineHeart, AiFillHeart, AiOutlineMessage, AiFillEdit, AiOutlineRetweet, AiOutlineDelete } from "react-icons/ai";
+
 import styles from "./PostItem.module.css";
+import useDelete from "@/src/hooks/useDelete";
 
 const PostItem = ({ data, userId }) => {
   const router = useRouter();
   const loginModal = useLoginModal();
   const { data: currentUser } = useCurrentUser();
   const { hasLiked, toggleLike } = useLike({ postId: data._id, userId: data.userId_id });
+  const { deletePost } = useDelete({postId: data._id});
+  
   const goToUser = useCallback((ev) => {
     ev.stopPropagation();
     console.log(data);
@@ -34,7 +38,19 @@ const PostItem = ({ data, userId }) => {
     toggleLike();
   }, [loginModal, currentUser, toggleLike]);
 
+
   const LikeIcon = hasLiked ? AiFillHeart : AiOutlineHeart;
+
+  const onDelete = useCallback(
+    (ev) => {
+      ev.stopPropagation();
+      if(!currentUser) return loginModal.onOpen();
+
+      deletePost();
+    },
+    [loginModal, currentUser, deletePost],
+  )
+  
 
   const createdAt = useMemo(() => {
     if (!data?.createdAt) {
@@ -72,6 +88,24 @@ const PostItem = ({ data, userId }) => {
             >
               <LikeIcon size={20} color={hasLiked ? "red" : ""} />
               <p>{data.likedIds.length}</p>
+            </div>
+            <div
+            onClick={onEdit}
+             className={ `${styles.actionItem} ${styles.editAction}`}
+             >
+              <AiFillEdit size={20}/>
+            </div>
+            <div
+            //  onClick={onEdit}
+             className={ `${styles.actionItem} ${styles.retweetAction}`}
+             >
+              <AiOutlineRetweet size={20}/>
+            </div>
+            <div
+            onClick={onDelete}
+             className={ `${styles.actionItem} ${styles.deleteAction}`}
+             >
+              <AiOutlineDelete size={20}/>
             </div>
           </div>
         </div>

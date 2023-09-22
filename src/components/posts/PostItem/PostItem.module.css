@@ -83,4 +83,15 @@
   .likeAction:hover {
     color: #ef4444;
   }
+
+  .editAction:hover {
+    color: #0670f2;
+  }
   
+  .retweetAction:hover {
+    color: #050c15;
+  }
+
+  .deleteAction:hover {
+    color: #f33308;
+  }

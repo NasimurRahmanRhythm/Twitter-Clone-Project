@@ -10,6 +10,7 @@ const PostSchema = new Schema({
   likedIds: [{ type: Schema.Types.ObjectId, ref: "users" }],
   comments: [{ type: Schema.Types.ObjectId, ref: "posts" }],
   replies: [{ type: Schema.Types.ObjectId, ref: "posts" }],
+  isRetweet: { type: Boolean, default: false},
   parent: { type: mongoose.Schema.Types.ObjectId, ref: "posts" },
   type:{type:String, enum:['post','comment','reply'], default:'post'},
 });

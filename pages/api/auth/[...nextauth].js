@@ -5,6 +5,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import User from "@/src/models/User";
 import connectToDB from "@/src/libs/mongooseDB";
 import mongooseAdapter from "@/src/libs/mongooseAdapter";
+import { toast } from "react-hot-toast";
 
 export const AuthOptions = {
   adapter: mongooseAdapter(User),

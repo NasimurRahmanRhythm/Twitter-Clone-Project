@@ -29,6 +29,7 @@ const LoginModal = () => {
       await signIn('credentials', {
         email,
         password,
+        redirect: false,
       });
 
       loginModal.onClose();

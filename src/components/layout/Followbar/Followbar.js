@@ -15,7 +15,8 @@ const FollowBar = () => {
       <div className={styles.followBar}>
         <h2 className={styles.title}>Who to follow</h2>
         <div className={styles.userList}>
-          {users.map((user) => (
+          {users.filter((user)=> user.isVerified === true). 
+          map((user) => (
             <div key={user._id} className={styles.user}>
               <Avatar userId={user._id} />
               <div className={styles.userInfo}>
