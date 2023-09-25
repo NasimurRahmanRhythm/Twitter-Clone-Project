@@ -19,10 +19,7 @@
   .mainContent {
     grid-column: span 3 / span 3;
     border-left: 1px solid #424b54;
-    border-right: 1px solid #424b54;
-    white-space: nowrap; 
-    overflow: hidden;
-    text-overflow: ellipsis; 
+    border-right: 1px solid #424b54; 
   }
   
   @media (min-width: 1024px) {
