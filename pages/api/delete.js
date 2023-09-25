@@ -1,4 +1,4 @@
-import Post from "@/Twitter-Clone-Project/src/models/Post";
+import Post from "@/src/models/Post";
 import connectToDB from "@/src/libs/mongooseDB";
 import serverAuth from "@/src/libs/serverAuth";
 

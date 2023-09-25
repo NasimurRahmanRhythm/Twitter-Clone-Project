@@ -72,7 +72,7 @@ const PostItem = ({ data, userId }) => {
     <div onClick={goToPost} className={styles.postItem}>
       <div className={styles.flexRow}>
         <Avatar userId={data.userId._id} />
-        <div>
+        <div className={styles.post}>
           <div className={styles.userInfo}>
             <p onClick={goToUser} className={styles.userName}>
               {data.userId.username}

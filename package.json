@@ -17,6 +17,7 @@
     "date-fns": "^2.29.3",
     "eslint": "8.37.0",
     "eslint-config-next": "13.2.4",
+    "formidable": "^3.5.1",
     "mongodb": "^5.2.0",
     "mongoose": "^7.0.5",
     "next": "13.2.4",

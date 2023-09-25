@@ -22,22 +22,25 @@ const Form = ({ placeholder, isComment, postId }) => {
   const [body, setBody] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isImageSelected, setIsImageSelected] = useState(false);
 
-  const handleImageUpload = async () => {
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+
+    if (!file) return;
+
     setIsImageSelected(true);
+    console.log("file is " + file);
     try {
-      if (!selectedFile) return;
       const formData = new FormData();
-      formData.append("myImage", selectedFile);
       const { data } = await axios.post("/api/image", formData);
       console.log(data);
-      setSelectedImage(data.imageUrl); // Store the image URL returned by the server
+      setSelectedImage(data.imageUrl);
     } catch (error) {
       console.log(error.response?.data);
+    } finally {
+      setIsImageSelected(false);
     }
-    setIsImageSelected(false); // Reset the flag after image upload
   };
 
   const onSubmit = useCallback(async () => {
@@ -45,19 +48,21 @@ const Form = ({ placeholder, isComment, postId }) => {
       setIsLoading(true);
 
       const url = isComment ? `/api/comments?postId=${postId}` : "/api/posts";
-      const postData = { body };
+      let postData = { body };
 
       if (isImageSelected) {
-        // If an image is selected, include its URL in the post data
         postData.image = selectedImage;
       }
 
-      await axios.post(url, postData);
+      if (postData.hasOwnProperty("image")) {
+        await axios.post(url, postData);
+      } else {
+        await axios.post(url, { body });
+      }
 
       toast.success("Tweet Created");
       setBody("");
       setSelectedImage("");
-      setSelectedFile(null);
       setIsImageSelected(false);
       mutatePosts();
       mutatePost();
@@ -91,19 +96,14 @@ const Form = ({ placeholder, isComment, postId }) => {
               }`}
             />
             <div className={styles.buttonWrapper}>
-              <Button
-                disabled={isLoading}
-                onChange={({ target }) => {
-                  if (target.files) {
-                    const file = target.files[0];
-                    setSelectedImage(URL.createObjectURL(file));
-                    setSelectedFile(file);
-                  }
-                }}
-                onClick={handleImageUpload}
-                label="Img"
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
               />
-              <BsFileImage />
+              <label>
+                <BsFileImage />
+              </label>
               <Button
                 disabled={isLoading || (!body && !isImageSelected)}
                 onClick={onSubmit}
