@@ -9,7 +9,7 @@ const PostFeed = ({userId}) => {
         {posts.map((post) =>(
             <PostItem
             userId = {userId}
-            key= {post.id}
+            key= {post._id}
             data= {post}
             />
         ))}

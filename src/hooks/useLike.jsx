@@ -18,7 +18,7 @@ const useLike = ({ postId, userId }) => {
   const hasLiked = useMemo(() => {
     const list = fetchedPost?.likedIds || [];
 
-    return list.includes(currentUser?.id);
+    return list.includes(currentUser?._id);
   }, [fetchedPost, currentUser]);
   console.log("Has Liked is " + hasLiked);
   const toggleLike = useCallback(async () => {
@@ -28,12 +28,8 @@ const useLike = ({ postId, userId }) => {
 
     try {
       let request;
-
-      if (hasLiked) {
-        request = () => axios.delete('/api/like', { data: { postId } });
-      } else {
-        request = () => axios.patch('/api/like', { postId });
-      }
+      request = () => axios.patch('/api/like', { postId });
+     
 
       await request();
       mutateFetchedPost();

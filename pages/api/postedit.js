@@ -27,7 +27,7 @@ export default async function handler(req, res) {
       throw new Error("Post not found");
     }
 
-    if (updatedPost.userId.toString() !== currentUser.id) {
+    if (updatedPost.userId.toString() !== currentUser._id) {
       return res.status(403).json({ error: "You do not have permission to edit this post" });
     }
 

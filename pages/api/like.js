@@ -26,18 +26,18 @@ export default async function handler(req, res) {
       throw new Error("Invalid ID");
     }
 
-    console.log("Current User is " + currentUser.id);
-    console.log(typeof(currentUser.id));
-    const isLiked = post.likedIds.includes(currentUser.id);
+    console.log("Current User is " + currentUser._id);
+    console.log(typeof(currentUser._id));
+    const isLiked = post.likedIds.includes(currentUser._id);
     if (isLiked) {
       //like
-      post.likedIds.pull(currentUser.id);
+      post.likedIds.pull(currentUser._id);
     }
 else {
       //unlike
       //console.log("Delete krlam " + updatedLikedIds);
       //console.log("Delete holo " + likedId);
-      post.likedIds.push(currentUser.id);
+      post.likedIds.push(currentUser._id);
     }
 
     const updatedPost = await Post.findByIdAndUpdate(

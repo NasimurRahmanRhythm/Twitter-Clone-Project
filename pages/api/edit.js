@@ -19,7 +19,7 @@ export default async function handler(req, res) {
     }
 
     const updatedUser = await User.findByIdAndUpdate(
-      currentUser.id,
+      currentUser._id,
       {
         name,
         username,

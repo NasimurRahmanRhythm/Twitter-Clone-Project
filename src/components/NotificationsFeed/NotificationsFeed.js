@@ -8,7 +8,7 @@ import styles from "./NotificationsFeed.module.css";
 
 const NotificationsFeed = () => {
   const { data: currentUser, mutate: mutateCurrentUser } = useCurrentUser();
-  const { data: fetchedNotifications = [] } = useNotifications(currentUser?.id);
+  const { data: fetchedNotifications = [] } = useNotifications(currentUser?._id);
 
   useEffect(() => {
     mutateCurrentUser();
@@ -21,7 +21,7 @@ const NotificationsFeed = () => {
   return (
     <div className={styles.notificationContainer}>
       {fetchedNotifications.map((notification) => (
-        <div key={notification.id} className={styles.notificationItem}>
+        <div key={notification._id} className={styles.notificationItem}>
           <BsTwitter color="white" size={32} />
           <p className={styles.notificationText}>{notification.body}</p>
         </div>

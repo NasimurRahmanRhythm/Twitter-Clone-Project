@@ -29,7 +29,7 @@ const UserBio = ({ userId }) => {
   return (
     <div className={styles.bioContainer}>
       <div className={styles.buttonWrapper}>
-        {currentUser?.id === userId ? (
+        {currentUser?._id === userId ? (
           <Button secondary label="Edit" onClick={editModal.onOpen} />
         ) : (
           <Button

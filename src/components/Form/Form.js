@@ -21,48 +21,48 @@ const Form = ({ placeholder, isComment, postId }) => {
 
   const [body, setBody] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedImage, setSelectedImage] = useState("");
   const [isImageSelected, setIsImageSelected] = useState(false);
+
+  const [imageURL, setImageURL] = useState(""); 
 
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
-
+  
     if (!file) return;
-
+  
     setIsImageSelected(true);
-    console.log("file is " + file);
+  
     try {
       const formData = new FormData();
-      const { data } = await axios.post("/api/image", formData);
-      console.log(data);
-      setSelectedImage(data.imageUrl);
+      formData.append("myImage", file);
+  
+      const response = await axios.post("/api/image", formData);
+      const { imageUrl } = response.data; 
+  
+      setImageURL(imageUrl);
     } catch (error) {
       console.log(error.response?.data);
     } finally {
       setIsImageSelected(false);
     }
   };
-
+  
   const onSubmit = useCallback(async () => {
     try {
       setIsLoading(true);
-
+  
       const url = isComment ? `/api/comments?postId=${postId}` : "/api/posts";
-      let postData = { body };
-
-      if (isImageSelected) {
-        postData.image = selectedImage;
+      const postData = { body };
+  
+      if (imageURL) {
+        postData.image = imageURL; 
       }
-
-      if (postData.hasOwnProperty("image")) {
-        await axios.post(url, postData);
-      } else {
-        await axios.post(url, { body });
-      }
-
+  
+      await axios.post(url, postData);
+  
       toast.success("Tweet Created");
       setBody("");
-      setSelectedImage("");
+      setImageURL(""); 
       setIsImageSelected(false);
       mutatePosts();
       mutatePost();
@@ -71,14 +71,14 @@ const Form = ({ placeholder, isComment, postId }) => {
     } finally {
       setIsLoading(false);
     }
-  }, [body, mutatePosts, mutatePost, isComment, postId, isImageSelected, selectedImage]);
+  }, [body, mutatePosts, mutatePost, isComment, postId, imageURL]);
 
   return (
     <div className={styles.formContainer}>
       {currentUser ? (
         <div className={styles.userForm}>
           <div>
-            <Avatar userId={currentUser?.id} />
+            <Avatar userId={currentUser?._id} />
           </div>
           <div className={styles.textareaWrapper}>
             <textarea
@@ -96,19 +96,15 @@ const Form = ({ placeholder, isComment, postId }) => {
               }`}
             />
             <div className={styles.buttonWrapper}>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageUpload}
-              />
-              <label>
-                <BsFileImage />
-              </label>
-              <Button
-                disabled={isLoading || (!body && !isImageSelected)}
-                onClick={onSubmit}
-                label="Tweet"
-              />
+            <input type="file" accept="image/*" onChange={handleImageUpload} />
+          <label>
+            <BsFileImage />
+          </label>
+          <Button
+            disabled={isLoading || (!body && !imageURL)}
+            onClick={onSubmit}
+            label="Tweet"
+          />
             </div>
           </div>
         </div>

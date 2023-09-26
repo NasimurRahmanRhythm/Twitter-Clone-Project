@@ -18,7 +18,7 @@ export default async function handler(req, res) {
 
       const post = new Post({
         body,
-        userId: currentUser.id,
+        userId: currentUser._id,
       });
 
       await post.save();

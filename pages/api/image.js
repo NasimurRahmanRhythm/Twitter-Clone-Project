@@ -9,19 +9,17 @@ export const config = {
   };
   
   const readFile = (req, saveLocally = false) => {
-    console.log("req is " + req);
     const options = {};
     if (saveLocally) {
       options.uploadDir = path.join(process.cwd(), "/public/images");
       options.filename = (name, ext, path, form) => {
-        return Date.now().toString() + "_" + path.originalFilename;
+        return Date.now().toString() + "_" + form.originalFilename;
       };
     }
     options.maxFileSize = 4000 * 1024 * 1024;
     const form = formidable(options);
     return new Promise((resolve, reject) => {
       form.parse(req, (err, fields, files) => {
-        console.log("fields is " + fields);
         if (err) reject(err);
         resolve({ fields, files });
       });

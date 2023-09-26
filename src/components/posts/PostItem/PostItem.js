@@ -86,6 +86,13 @@ const PostItem = ({ data, userId }) => {
             <span className={styles.createdAt}>{createdAt}</span>
           </div>
           <div className={styles.postBody}>{data.body}</div>
+          {data.image && (
+            <img
+              src={data.image}
+              alt="Post Image"
+              className={styles.postImage}
+            />
+          )}
           <div className={styles.actions}>
             <div className={`${styles.actionItem} ${styles.commentAction}`}>
               <AiOutlineMessage size={20} />

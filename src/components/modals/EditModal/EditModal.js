@@ -11,7 +11,7 @@ import Modal from '../../Modal/Modal';
 
 const EditModal = () => {
   const { data: currentUser } = useCurrentUser();
-  const { mutate: mutateFetchedUser } = useUser(currentUser?.id);
+  const { mutate: mutateFetchedUser } = useUser(currentUser?._id);
   const editModal = useEditModal();
   const [profileImage, setProfileImage] = useState('');
   const [coverImage, setCoverImage] = useState('');
