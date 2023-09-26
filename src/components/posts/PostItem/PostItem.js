@@ -10,6 +10,7 @@ import { AiOutlineHeart, AiFillHeart, AiOutlineMessage, AiFillEdit, AiOutlineRet
 import styles from "./PostItem.module.css";
 import useDelete from "@/src/hooks/useDelete";
 import useEditPostModal from "@/src/hooks/useEditPostModal";
+import EditPostModal from "../../modals/EditPostModal/EditPostModal";
 
 const PostItem = ({ data, userId }) => {
   const router = useRouter();
@@ -57,9 +58,10 @@ const PostItem = ({ data, userId }) => {
     (ev)=> {
       ev.stopPropagation();
       if(!currentUser) return loginModal.onOpen();
-      else return editPostModal.onOpen();
-    }
-  )
+      editPostModal.onOpen();
+      return <EditPostModal postId={data._id} />;
+    },[editPostModal,loginModal,data._id,currentUser]
+  );
 
   const createdAt = useMemo(() => {
     if (!data?.createdAt) {

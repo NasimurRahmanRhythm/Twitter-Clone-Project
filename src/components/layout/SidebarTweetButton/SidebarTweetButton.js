@@ -6,6 +6,7 @@ import useLoginModal from '@/src/hooks/useLoginModal';
 
 const SidebarTweetButton = () => {
   const router = useRouter();
+  
   const loginModal = useLoginModal();
   const onClick = useCallback(() => {
     loginModal.onOpen();

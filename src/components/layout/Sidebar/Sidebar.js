@@ -11,7 +11,7 @@ import useCurrentUser from '@/src/hooks/useCurrentUser';
 
 const Sidebar = () => {
   const { data: currentUser } = useCurrentUser();
-  console.log("Current user is " + currentUser);
+  //console.log("Current user is ffffff" + currentUser._id);
   const items = [
     {
       label: 'Home',
@@ -48,6 +48,7 @@ const Sidebar = () => {
               label={item.label}
             />
           ))}
+          <SidebarTweetButton/>
         </div>
       </div>
     </div>

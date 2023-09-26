@@ -11,6 +11,7 @@ import Modal from '../../Modal/Modal';
 
 const EditModal = () => {
   const { data: currentUser } = useCurrentUser();
+  console.log("My now user is ", + currentUser);
   const { mutate: mutateFetchedUser } = useUser(currentUser?._id);
   const editModal = useEditModal();
   const [profileImage, setProfileImage] = useState('');
@@ -18,15 +19,15 @@ const EditModal = () => {
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
   const [bio, setBio] = useState('');
-
+  console.log("My currenttttt user in editmodal is + ", currentUser);
   useEffect(() => {
-    setProfileImage(currentUser?.profileImage);
-    setCoverImage(currentUser?.coverImage);
-    setName(currentUser?.name);
-    setUsername(currentUser?.username);
-    setBio(currentUser?.bio);
-  }, [currentUser]);
-
+    setProfileImage(currentUser?.profileImage)
+    setCoverImage(currentUser?.coverImage)
+    setName(currentUser?.name)
+    setUsername(currentUser?.username)
+    setBio(currentUser?.bio)
+  }, [currentUser?.name, currentUser?.username, currentUser?.bio, currentUser?.profileImage, currentUser?.coverImage]);
+  
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = useCallback(async () => {

@@ -6,7 +6,6 @@ import useCurrentUser from "@/src/hooks/useCurrentUser";
 import useUser from "@/src/hooks/useUser";
 import useFollow from "@/src/hooks/useFollow";
 import useEditModal from "@/src/hooks/useEditModal";
-
 import Button from "../../Button/Button";
 import styles from "./userBio.module.css";
 
