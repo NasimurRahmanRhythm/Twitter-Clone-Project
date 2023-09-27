@@ -1,11 +1,11 @@
 import { create } from "zustand";
 
-  
-  const useEditPostModal = create((set) => ({
-    isOpen: false,
-    onOpen: () => set({ isOpen: true }),
-    onClose: () => set({ isOpen: false })
-  }));
-  
-  
-  export default useEditPostModal;
+const useEditModal = create((set) => ({
+  isOpen: false,
+  postId: null, 
+  onOpen: () => set({ isOpen: true }),
+  onClose: () => set({ isOpen: false }),
+  // setPostId: (postId) => set({ postId }), 
+}));
+
+export default useEditModal;

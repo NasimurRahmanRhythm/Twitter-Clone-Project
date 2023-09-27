@@ -59,7 +59,7 @@ const PostItem = ({ data, userId }) => {
       ev.stopPropagation();
       if(!currentUser) return loginModal.onOpen();
       editPostModal.onOpen();
-      return <EditPostModal postId={data._id} />;
+      // return <EditPostModal postId={data._id} />;
     },[editPostModal,loginModal,data._id,currentUser]
   );
 

@@ -8,9 +8,10 @@ import Input from "../../Input/Input";
 import Modal from "../../Modal/Modal";
 import EditModal from "../EditModal/EditModal";
 import useEditModal from "@/src/hooks/useEditModal";
+import { useStore } from "zustand";
 
-const EditPostModal = (postId) =>{
-    console.log("PostId is ", + postId);
+const EditPostModal = ({postId}) =>{
+    console.log(`PostId is ${postId}`);
     const editPostModal = useEditPostModal();
     const { data: post} = usePost(postId);
     const [postbody, setPostbody] = useState('');
@@ -24,7 +25,7 @@ const EditPostModal = (postId) =>{
     const onSubmit = useCallback(async() => {
         try{
             setIsLoading(true);
-            await axios.patch('api/postedit', {
+            await axios.patch('/api/postedit', {
                 postbody,
             });
             toast.success('Post Edited');

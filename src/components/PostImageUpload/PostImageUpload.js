@@ -1,10 +1,9 @@
-import Image from "next/image";
-import { useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
+import { FiImage, RxCross2 } from "react-icons/fa";
 import { useDropzone } from "react-dropzone";
-import { AiOutlineCloseCircle } from "react-icons/ai"; // Import the close icon
-import styles from './ImageUpload.module.css';
+import styles from "./PostImageUpload.module.css";
 
-const ImageUpload = ({ onChange, label, value, disabled }) => {
+const PostImageUpload = ({ onChange, label, value, disabled }) => {
   const [base64, setBase64] = useState(value);
 
   const handleChange = useCallback((base64) => {
@@ -21,18 +20,17 @@ const ImageUpload = ({ onChange, label, value, disabled }) => {
     reader.readAsDataURL(file);
   }, [handleChange]);
 
-  const handleRemove = () => {
-    setBase64(null);
-    handleChange(null);
-  };
+  const handleRemove = useCallback(() => {
+    setBase64(undefined);
+  }, []);
 
   const { getRootProps, getInputProps } = useDropzone({
     maxFiles: 1,
     onDrop: handleDrop,
     disabled,
     accept: {
-      'image/jpeg': [],
-      'image/png': [],
+      "image/jpeg": [],
+      "image/png": [],
     },
   });
 
@@ -51,19 +49,20 @@ const ImageUpload = ({ onChange, label, value, disabled }) => {
             width="100"
             alt="Uploaded image"
           />
-          <button
-            className={styles.removeButton}
+          <RxCross2
+            size={24}
             onClick={handleRemove}
-            disabled={disabled}
-          >
-            <AiOutlineCloseCircle />
-          </button>
+            className={styles.removeButton}
+          />
         </div>
       ) : (
-        <p className={styles.imageUploadLabel}>{label}</p>
+        <div className={styles.uploadIconWrapper}>
+          <FiImage size={24} className={styles.uploadIcon} />
+          <p className={styles.imageUploadLabel}>{label}</p>
+        </div>
       )}
     </div>
   );
 };
 
-export default ImageUpload;
+export default PostImageUpload;

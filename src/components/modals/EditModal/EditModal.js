@@ -33,7 +33,7 @@ const EditModal = () => {
   const onSubmit = useCallback(async () => {
     try {
       setIsLoading(true);
-      await axios.patch('api/edit', {
+      await axios.patch('/api/edit', {
         name,
         username,
         bio,
@@ -45,7 +45,8 @@ const EditModal = () => {
       toast.success('Updated');
       editModal.onClose();
     } catch (error) {
-      toast.error('Something is wrong');
+      toast.error('Something in profile edit is wrong');
+      console.log("Profile edit ", error);
     } finally {
       setIsLoading(false);
     }

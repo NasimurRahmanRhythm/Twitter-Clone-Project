@@ -14,10 +14,14 @@ export default async function handler(req, res) {
 
     if (req.method === "POST") {
       const { currentUser } = await serverAuth(req,res);
-      const { body } = req.body;
+      const { body, image } = req.body;
+      if(!body){
+        throw new Error("Missing Body");
+      }
 
       const post = new Post({
         body,
+        image,
         userId: currentUser._id,
       });
 
