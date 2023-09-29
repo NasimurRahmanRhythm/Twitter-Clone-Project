@@ -10,28 +10,22 @@ export default async function handler(req, res) {
   try {
     await connectToDB();
 
-    const { postId, body } = req.body;
-    const { currentUser } = await serverAuth(req, res);
+    // const { postId, body } = req.body;
+    // const { currentUser } = await serverAuth(req, res);
+    const {postId, body, image} = req.body;
+    console.log("PostId in edit post is ", postId);
 
-    if (!postId || typeof postId !== "string") {
-      throw new Error("Invalid Post ID");
-    }
+  const updatedPost = await Post.findByIdAndUpdate(
+    postId,
+    {
+      body,
+      image
+    },
+    { new: true}
+  );
 
-    const filter = { _id: postId };
-    const update = { body }; 
-    const options = { new: true }; 
 
-    const updatedPost = await Post.findByIdAndUpdate(filter, update, options);
-
-    if (!updatedPost) {
-      throw new Error("Post not found");
-    }
-
-    if (updatedPost.userId.toString() !== currentUser._id) {
-      return res.status(403).json({ error: "You do not have permission to edit this post" });
-    }
-
-    return res.status(200).json({ message: "Post edited successfully", updatedPost });
+  return res.status(200).json(updatedPost.toObject());
   } catch (error) {
     console.error(error);
     return res.status(400).json({ error: "Failed to edit post" });

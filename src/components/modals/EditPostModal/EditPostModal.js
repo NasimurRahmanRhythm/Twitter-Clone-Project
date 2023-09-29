@@ -9,57 +9,70 @@ import Modal from "../../Modal/Modal";
 import EditModal from "../EditModal/EditModal";
 import useEditModal from "@/src/hooks/useEditModal";
 import { useStore } from "zustand";
+import Form from "../../Form/Form";
+import axios from "axios";
+import ImageUpload from "../../ImageUpload/ImageUpload";
+import styles from "./EditPostModal.module.css"
 
-const EditPostModal = ({postId}) =>{
-    console.log(`PostId is ${postId}`);
-    const editPostModal = useEditPostModal();
-    const { data: post} = usePost(postId);
-    const [postbody, setPostbody] = useState('');
+const EditPostModal = () => {
+  const editPostModal = useEditPostModal();
+  const { data: post } = usePost(editPostModal.postId);
+  console.log("Post is ", post);
+  const [body, setBody] = useState("");
+  const [image, setImage]= useState("");
 
-    useEffect(()=> {
-        setPostbody(post?.body);
-    },[post?.body]);
+  useEffect(() => {
+    setBody(post?.body);
+    setImage(post?.image);
+  }, [post?.body, post?.image]);
 
-    const [isLoading,setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-    const onSubmit = useCallback(async() => {
-        try{
-            setIsLoading(true);
-            await axios.patch('/api/postedit', {
-                postbody,
-            });
-            toast.success('Post Edited');
-            editPostModal.onClose();
-        }
-        catch(error){
-            toast.error("Post can not be edited");
-        } finally{
-            setIsLoading(false);
-        }
-    },[postbody,editPostModal]);
+  const onSubmit = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      await axios.patch('/api/postedit', {
+        postId: editPostModal.postId,
+        body,
+        image,
+      });
+      toast.success("Post Edited");
+      editPostModal.onClose();
+    } catch (error) {
+      toast.error("Post can not be edited");
+    } finally {
+      setIsLoading(false);
+    }
+  }, [body, image, editPostModal.postId, editPostModal]);
 
-    const bodyContent = (
-        <div>
-            <Input
-            placeholder="What is happening?"
-            onChange={(e)=>setPostbody(e.target.value)}
-            value={body}
-            disabled={isLoading}
-            />
-        </div>
-    )
-
-    return (
-        <Modal
+  const bodyContent = (
+    <div className={styles.content}>
+      <Input
+        placeholder="What is happening?"
+        onChange={(e) => setBody(e.target.value)}
+        value={body}
         disabled={isLoading}
-        isOpen={editPostModal.isOpen}
-        title="Edit your post"
-        actionLabel="Update"
-        onClose={editPostModal.onClose}
-        onSubmit={onSubmit}
-        body={bodyContent}
-        />
-    );
-}
+      />
+      <ImageUpload
+        value={image}
+        disabled={isLoading}
+        onChange={(image) => setImage(image)}
+        label="Update the Image"
+      />
+    </div>
+  );
+
+  return (
+    <Modal
+      disabled={isLoading}
+      isOpen={editPostModal.isOpen}
+      title="Edit your post"
+      actionLabel="Update"
+      onClose={editPostModal.onClose}
+      onSubmit={onSubmit}
+      body={bodyContent}
+    />
+  );
+};
 
 export default EditPostModal;

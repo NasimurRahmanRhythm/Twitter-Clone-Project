@@ -5,7 +5,14 @@ import { formatDistanceToNowStrict } from "date-fns";
 import { useRouter } from "next/router";
 import React, { useCallback, useMemo } from "react";
 import Avatar from "../../Avatar/Avatar";
-import { AiOutlineHeart, AiFillHeart, AiOutlineMessage, AiFillEdit, AiOutlineRetweet, AiOutlineDelete } from "react-icons/ai";
+import {
+  AiOutlineHeart,
+  AiFillHeart,
+  AiOutlineMessage,
+  AiFillEdit,
+  AiOutlineRetweet,
+  AiOutlineDelete,
+} from "react-icons/ai";
 
 import styles from "./PostItem.module.css";
 import useDelete from "@/src/hooks/useDelete";
@@ -17,50 +24,59 @@ const PostItem = ({ data, userId }) => {
   const loginModal = useLoginModal();
   const editPostModal = useEditPostModal();
   const { data: currentUser } = useCurrentUser();
-  const { hasLiked, toggleLike } = useLike({ postId: data._id, userId: data.userId_id });
-  const { deletePost } = useDelete({postId: data._id});
-  
-  const goToUser = useCallback((ev) => {
-    ev.stopPropagation();
-    console.log(data);
-    router.push(`/users/${data.userId._id}`);
-    console.log(data.userId._id);
-  }, [router, data.userId._id]);
+  const { hasLiked, toggleLike } = useLike({
+    postId: data._id,
+    userId: data.userId_id,
+  });
+  const { deletePost } = useDelete({ postId: data._id });
+
+  const goToUser = useCallback(
+    (ev) => {
+      ev.stopPropagation();
+      console.log(data);
+      router.push(`/users/${data.userId._id}`);
+      console.log(data.userId._id);
+    },
+    [router, data.userId._id]
+  );
 
   const goToPost = useCallback(() => {
     router.push(`/posts/${data._id}`);
   }, [router, data._id]);
 
-  const onLike = useCallback(async (ev) => {
-    ev.stopPropagation();
+  const onLike = useCallback(
+    async (ev) => {
+      ev.stopPropagation();
 
-    if (!currentUser) {
-      return loginModal.onOpen();
-    }
+      if (!currentUser) {
+        return loginModal.onOpen();
+      }
 
-    toggleLike();
-  }, [loginModal, currentUser, toggleLike]);
-
+      toggleLike();
+    },
+    [loginModal, currentUser, toggleLike]
+  );
 
   const LikeIcon = hasLiked ? AiFillHeart : AiOutlineHeart;
 
   const onDelete = useCallback(
     (ev) => {
       ev.stopPropagation();
-      if(!currentUser) return loginModal.onOpen();
+      if (!currentUser) return loginModal.onOpen();
 
       deletePost();
     },
-    [loginModal, currentUser, deletePost],
-  )
-  
-  const onEdit = useCallback (
-    (ev)=> {
+    [loginModal, currentUser, deletePost]
+  );
+
+  const onEdit = useCallback(
+    (ev) => {
       ev.stopPropagation();
-      if(!currentUser) return loginModal.onOpen();
-      editPostModal.onOpen();
+      if (!currentUser) return loginModal.onOpen();
+      editPostModal.onOpen(data._id);
       // return <EditPostModal postId={data._id} />;
-    },[editPostModal,loginModal,data._id,currentUser]
+    },
+    [editPostModal, loginModal, data._id, currentUser]
   );
 
   const createdAt = useMemo(() => {
@@ -107,24 +123,28 @@ const PostItem = ({ data, userId }) => {
               <LikeIcon size={20} color={hasLiked ? "red" : ""} />
               <p>{data.likedIds.length}</p>
             </div>
+            {currentUser && currentUser._id === data.userId._id ? (
+              <div
+                onClick={onEdit}
+                className={`${styles.actionItem} ${styles.editAction}`}
+              >
+                <AiFillEdit size={20} />
+              </div>
+            ) : null}
             <div
-            onClick={onEdit}
-             className={ `${styles.actionItem} ${styles.editAction}`}
-             >
-              <AiFillEdit size={20}/>
+              //  onClick={onEdit}
+              className={`${styles.actionItem} ${styles.retweetAction}`}
+            >
+              <AiOutlineRetweet size={20} />
             </div>
-            <div
-            //  onClick={onEdit}
-             className={ `${styles.actionItem} ${styles.retweetAction}`}
-             >
-              <AiOutlineRetweet size={20}/>
-            </div>
-            <div
-            onClick={onDelete}
-             className={ `${styles.actionItem} ${styles.deleteAction}`}
-             >
-              <AiOutlineDelete size={20}/>
-            </div>
+            {currentUser && currentUser._id === data.userId._id ? (
+              <div
+                onClick={onDelete}
+                className={`${styles.actionItem} ${styles.deleteAction}`}
+              >
+                <AiOutlineDelete size={20} />
+              </div>
+            ) : null}
           </div>
         </div>
       </div>
