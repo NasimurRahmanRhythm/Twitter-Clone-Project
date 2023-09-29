@@ -18,6 +18,7 @@ import styles from "./PostItem.module.css";
 import useDelete from "@/src/hooks/useDelete";
 import useEditPostModal from "@/src/hooks/useEditPostModal";
 import EditPostModal from "../../modals/EditPostModal/EditPostModal";
+import useRetweet from "@/src/hooks/useRetweet";
 
 const PostItem = ({ data, userId }) => {
   const router = useRouter();
@@ -29,6 +30,7 @@ const PostItem = ({ data, userId }) => {
     userId: data.userId_id,
   });
   const { deletePost } = useDelete({ postId: data._id });
+  const { retweetPost } = useRetweet({ postId: data._id});
 
   const goToUser = useCallback(
     (ev) => {
@@ -69,6 +71,16 @@ const PostItem = ({ data, userId }) => {
     [loginModal, currentUser, deletePost]
   );
 
+  const onRetweet = useCallback(
+    (ev) => {
+      ev.stopPropagation();
+      if (!currentUser) return loginModal.onOpen();
+
+      retweetPost();
+    },
+    [loginModal, currentUser, retweetPost]
+  );
+
   const onEdit = useCallback(
     (ev) => {
       ev.stopPropagation();
@@ -87,21 +99,31 @@ const PostItem = ({ data, userId }) => {
     return formatDistanceToNowStrict(new Date(data.createdAt));
   }, [data.createdAt]);
   return (
-    <div onClick={goToPost} className={styles.postItem}>
-      <div className={styles.flexRow}>
-        <Avatar userId={data.userId._id} />
-        <div className={styles.post}>
+      <div onClick={goToPost} className={styles.postItem}>
+        <div className={styles.flexColumn}>
+         { data.isRetweet === true ? (
+           <div className={styles.topRow}>
+            <div className={styles.tweetIcon}>
+              <AiOutlineRetweet size={20} />
+            </div>
+            <div className={styles.repostText}>
+              You reposted
+            </div>
+          </div>
+         ): null }
           <div className={styles.userInfo}>
-            <p onClick={goToUser} className={styles.userName}>
-              {data.userId.username}
-            </p>
-            <span
-              onClick={goToUser}
-              className={`${styles.userUsername} ${styles.hiddenMd}`}
-            >
-              @{data.userId.username}
-            </span>
-            <span className={styles.createdAt}>{createdAt}</span>
+            <Avatar userId={data.userId._id} />
+            <div className={styles.userDetails}>
+              <p onClick={goToUser} className={styles.userName}>
+                {data.userId.username}
+              </p>
+              <span
+                onClick={goToUser}
+                className={`${styles.userUsername} ${styles.hiddenMd}`}
+              >
+                @{data.userId.username}
+              </span>
+            </div>
           </div>
           <div className={styles.postBody}>{data.body}</div>
           {data.image && (
@@ -132,7 +154,7 @@ const PostItem = ({ data, userId }) => {
               </div>
             ) : null}
             <div
-              //  onClick={onEdit}
+              onClick={onRetweet}
               className={`${styles.actionItem} ${styles.retweetAction}`}
             >
               <AiOutlineRetweet size={20} />
@@ -148,8 +170,7 @@ const PostItem = ({ data, userId }) => {
           </div>
         </div>
       </div>
-    </div>
-  );
+    );    
 };
 
 export default PostItem;
