@@ -1,3 +1,4 @@
+
 // pages/api/posts/[postId].jsx
 import Post from "@/src/models/Post";
 import User from "@/src/models/User";

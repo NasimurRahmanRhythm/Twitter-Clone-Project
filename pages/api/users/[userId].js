@@ -18,11 +18,8 @@ export default async function handler(req, res) {
 
     const existingUser = await User.findById(userId);
 
-    const followersCount = await User.countDocuments({
-      followingIds: userId,
-    });
-
-    return res.status(200).json({ ...existingUser.toObject(), followersCount });
+    
+    return res.status(200).json(existingUser);
   } catch (error) {
     console.log(error);
     return res.status(400).end();

@@ -11,7 +11,7 @@ const PostSchema = new Schema({
   comments: [{ type: Schema.Types.ObjectId, ref: "posts" }],
   replies: [{ type: Schema.Types.ObjectId, ref: "posts" }],
   isRetweet: { type: Boolean, default: false},
-  parent: { type: mongoose.Schema.Types.ObjectId, ref: "posts" },
+  parent: { type: Schema.Types.ObjectId, ref: "posts" },
   type:{type:String, enum:['post','comment','reply'], default:'post'},
 });
 

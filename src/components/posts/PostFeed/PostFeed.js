@@ -4,9 +4,11 @@ import PostItem from '../PostItem/PostItem';
 
 const PostFeed = ({userId}) => {
     const {data: posts = [] } = usePosts(userId);
+    console.log("Post feed userId is", userId);
+    const filteredPosts = posts.filter((post) => post.type === 'post');
   return (
     <>
-        {posts.map((post) =>(
+        {filteredPosts.map((post) =>(
             <PostItem
             userId = {userId}
             key= {post._id}
@@ -17,4 +19,4 @@ const PostFeed = ({userId}) => {
   )
 }
 
-export default PostFeed
+export default PostFeed;

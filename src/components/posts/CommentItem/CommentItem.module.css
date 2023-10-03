@@ -1,63 +1,127 @@
-.commentItem {
-    border-bottom: 1px solid #1f2937;
-    padding: 1.25rem;
-    cursor: pointer;
-    transition: background-color 0.2s;
-  }
-  
-  .commentItem:hover {
-    background-color: #1f2937;
-  }
-  
-  .flexRow {
-    display: flex;
-    flex-direction: row;
-    align-items: start;
-    gap: 1rem;
-  }
-  
-  .userInfo {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  
-  .userName {
-    color: white;
-    font-weight: 600;
-    cursor: pointer;
-    text-decoration: underline;
-  }
-  
-  .userName:hover {
-    text-decoration: underline;
-  }
-  
-  .userUsername {
-    color: #6b7280;
-    cursor: pointer;
-    text-decoration: underline;
-    display: none;
-  }
-  
-  .userUsername:hover {
-    text-decoration: underline;
-  }
-  
-  @media (min-width: 768px) {
-    .userUsername {
-      display: inline;
-    }
-  }
-  
-  .createdAt {
-    color: #6b7280;
-    font-size: 0.875rem;
-  }
-  
-  .commentBody {
-    color: white;
-    margin-top: 0.25rem;
-  }
-  
+.postItem {
+  border-bottom: 1px solid #1f2937;
+  padding: 1.25rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: flex;
+  word-wrap: break-word;
+}
+
+.postItem:hover {
+  background-color: #1f2937;
+}
+
+.flexColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  overflow: hidden;
+  word-wrap: break-word;
+}
+
+.topRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tweetIcon {
+  font-size: 1.5rem; /* Adjust size as needed */
+  color: #1da1f2; /* Twitter blue */
+}
+
+.repostText {
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.userDetails {
+  display: flex;
+  flex-direction: column;
+}
+
+.userName {
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: text-decoration 0.2s;
+}
+
+.userName:hover {
+  text-decoration: underline;
+}
+
+.userUsername {
+  color: #6b7280;
+  cursor: pointer;
+  transition: text-decoration 0.2s;
+}
+
+.userUsername:hover {
+  text-decoration: underline;
+}
+
+.hiddenMd {
+  display: none;
+}
+
+.createdAt {
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
+.postBody {
+  color: rgb(255, 255, 255);
+  margin-top: 0.25rem;
+  overflow: hidden;
+}
+
+.postImage {
+  max-width: 100%;
+  height: auto;
+  margin-top: 10px;
+}
+
+.actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2.5rem;
+  margin-top: 0.75rem;
+}
+
+.actionItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: #6b7280;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.commentAction:hover {
+  color: #60a5fa;
+}
+
+.likeAction:hover {
+  color: #ef4444;
+}
+
+.editAction:hover {
+  color: #0670f2;
+}
+
+.retweetAction:hover {
+  color: #050c15;
+}
+
+.deleteAction:hover {
+  color: #f33308;
+}

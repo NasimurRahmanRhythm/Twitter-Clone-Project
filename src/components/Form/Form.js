@@ -18,27 +18,44 @@ const Form = ({placeholder, isComment, postId}) => {
     const { data: currentUser} = useCurrentUser();
     const { mutate: mutatePosts } = usePosts();
     const { mutate: mutatePost } = usePost(postId);
-
+    console.log("isComment is ",isComment);
     const [body, setBody] = useState('');
     const [image, setImage] = useState();
     const [isLoading, setIsLoading] = useState(false);
+    const [type, setType] = useState(isComment ? 'comment' : 'post');
     const onSubmit = useCallback(async () => {
         try {
             setIsLoading(true);
 
             const formData = new FormData();
             formData.append('body', body);
-            if (image) {
+            if (isComment === true) {
                 await axios.post('/api/posts', {
                   body,
                   image,
+                  postId,
+                  type: type,
                 });
+              
+              // mutatePost((currentPost) => ({
+              //   ...currentPost,
+              //   comments: [...(currentPost.comments || []), response.data._id]
+              // }));
+              
             }
             else {
-                await axios.post('/api/posts', {
+              await axios.post('/api/posts', {
                 body,
-              });
+                image,
+                type: type,
+              })
             }
+            // else{
+            //     await axios.post('/api/posts', {
+            //     body,
+            //     type: type,
+            //   });
+            // }
 
             // const url = isComment ? `/api/comments?postId=${postId}` : '/api/posts';
             // await axios.post(url, formData);
@@ -49,11 +66,11 @@ const Form = ({placeholder, isComment, postId}) => {
             mutatePosts();
             mutatePost();
         } catch (error) {
-            toast.error("Something is wrong");
+            toast.error("Something in Form is wrong");
         }finally {
             setIsLoading(false);
         }
-    },[body, image, mutatePosts, mutatePost, isComment, postId]);
+    },[body, image, mutatePosts, mutatePost, isComment, postId,type]);
     return (
         <div className={styles.formContainer}>
           {currentUser ? (

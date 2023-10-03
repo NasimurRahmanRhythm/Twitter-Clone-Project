@@ -21,6 +21,7 @@ import EditPostModal from "../../modals/EditPostModal/EditPostModal";
 import useRetweet from "@/src/hooks/useRetweet";
 
 const PostItem = ({ data, userId }) => {
+  console.log("Data in the comment is ", data);
   const router = useRouter();
   const loginModal = useLoginModal();
   const editPostModal = useEditPostModal();
@@ -99,7 +100,7 @@ const PostItem = ({ data, userId }) => {
     return formatDistanceToNowStrict(new Date(data.createdAt));
   }, [data.createdAt]);
   return (
-      <div onClick={goToPost} className={styles.postItem}>
+      <div className={styles.postItem}>
         <div className={styles.flexColumn}>
          { data.isRetweet === true ? (
            <div className={styles.topRow}>
@@ -123,6 +124,7 @@ const PostItem = ({ data, userId }) => {
               >
                 @{data.userId.username}
               </span>
+              <span className={styles.createdAt}>{createdAt}</span>
             </div>
           </div>
           <div className={styles.postBody}>{data.body}</div>
@@ -134,10 +136,12 @@ const PostItem = ({ data, userId }) => {
             />
           )}
           <div className={styles.actions}>
-            <div className={`${styles.actionItem} ${styles.commentAction}`}>
+            {data.type !== 'reply' ? (
+            <div onClick={goToPost} className={`${styles.actionItem} ${styles.commentAction}`}>
               <AiOutlineMessage size={20} />
-              <p>{data.comments?.length || 0}</p>
+              <p>{data.comments?.length + data.replies?.length || 0}</p>
             </div>
+            ) : null }
             <div
               onClick={onLike}
               className={`${styles.actionItem} ${styles.likeAction}`}
@@ -145,7 +149,7 @@ const PostItem = ({ data, userId }) => {
               <LikeIcon size={20} color={hasLiked ? "red" : ""} />
               <p>{data.likedIds.length}</p>
             </div>
-            {currentUser && currentUser._id === data.userId._id ? (
+            {currentUser && currentUser._id === data.userId._id && data.isRetweet === false ? (
               <div
                 onClick={onEdit}
                 className={`${styles.actionItem} ${styles.editAction}`}
