@@ -6,6 +6,7 @@ import User from "@/src/models/User";
 import connectToDB from "@/src/libs/mongooseDB";
 import mongooseAdapter from "@/src/libs/mongooseAdapter";
 import { toast } from "react-hot-toast";
+import { Router, useRouter } from "next/router";
 
 export const AuthOptions = {
   adapter: mongooseAdapter(User),
@@ -29,8 +30,10 @@ export const AuthOptions = {
         }).exec();
         console.log({user});
         console.log(credentials);
+       // const router = useRouter();
         if(user.isVerified === false){
           throw new Error("User is not verified");
+          //router.push('/');
         }
         if (!user || !user?.hashedPassword) {
           throw new Error("Invalid credentials 2");

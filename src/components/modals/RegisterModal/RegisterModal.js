@@ -7,6 +7,7 @@ import useLoginModal from '@/src/hooks/useLoginModal';
 import useRegisterModal from '@/src/hooks/useRegisterModal';
 import Input from '../../Input/Input';
 import Modal from '../../Modal/Modal';
+import { useRouter } from 'next/router';
 
 const RegisterModal = () => {
   const loginModal = useLoginModal();
@@ -16,6 +17,7 @@ const RegisterModal = () => {
   const [username, setUsername] = useState('');
   const [name, setName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const onToggle = useCallback(() => {
     if (isLoading) {
@@ -28,6 +30,7 @@ const RegisterModal = () => {
 
   const onSubmit = useCallback(async () => {
     try {
+      // router = useRouter();
       setIsLoading(true);
 
       await axios.post('/api/register', {
@@ -37,13 +40,8 @@ const RegisterModal = () => {
         name,
       });
 
-      toast.success('Account created.');
-
-      signIn('credentials', {
-        email,
-        password,
-      });
-
+      toast.success('Verification link sent');
+      router.push('/');
       registerModal.onClose();
     } catch (error) {
       console.log(error);

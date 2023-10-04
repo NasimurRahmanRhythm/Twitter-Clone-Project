@@ -1,6 +1,6 @@
 import User from "@/src/models/User";
 import Link from "next/link";
-
+import styles from '@/src/styles/verify.module.css'
 
 export async function getServerSideProps(ctx){
     const { id,token } = ctx.query;
@@ -31,13 +31,14 @@ export async function getServerSideProps(ctx){
 }
 
 export default function verify({verified}) {
-    return <div className="center fullhw">
-        {verified ? <div className="flex-col center">
+    return <div className={styles.center}>
+        {verified ? <div className={styles.message}>
+            <Link href= '/'>
             <h1>
                 Account verification is sucessful...
             </h1>
+            </Link>
             <br/>
-            <Link href="/?page=login" className="button">Log In</Link>
             </div> : <h1>404 not found</h1>}
     </div>;
 }
