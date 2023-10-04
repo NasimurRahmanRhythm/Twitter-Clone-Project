@@ -1,6 +1,7 @@
 import connectToDB from "@/src/libs/mongooseDB";
 import serverAuth from "@/src/libs/serverAuth";
 import Post from "@/src/models/Post";
+import User from "@/src/models/User";
 
 export default async function handler(req,res) {
     if(req.method!== 'POST'){
@@ -17,17 +18,21 @@ export default async function handler(req,res) {
         if(!retweetpost){
             throw new Error('Post not found');
         }
-
+        const retweetName = await User.findById(retweetpost.userId);
        const post = new Post({
             ...retweetpost.toObject(),
-            userId: currentUser._id,
             isRetweet: true,
             _id: undefined,
             createdAt: undefined,
             updatedAt: undefined,
+            parent: postId,
+            parentRetweet: retweetName.username,
+            userId: currentUser._id,
        });
 
        await post.save();
+
+
 
        return res.status(200).json(post);
 

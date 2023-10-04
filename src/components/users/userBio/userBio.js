@@ -8,9 +8,10 @@ import useFollow from "@/src/hooks/useFollow";
 import useEditModal from "@/src/hooks/useEditModal";
 import Button from "../../Button/Button";
 import styles from "./userBio.module.css";
+import { useSession } from "next-auth/react";
 
 const UserBio = ({ userId }) => {
-  const { data: currentUser } = useCurrentUser();
+  const { data: currentUser } = useSession();
   const { data: fetchedUser } = useUser(userId);
 
   const editModal = useEditModal();
@@ -28,7 +29,7 @@ const UserBio = ({ userId }) => {
   return (
     <div className={styles.bioContainer}>
       <div className={styles.buttonWrapper}>
-        {currentUser?._id === userId ? (
+        {currentUser?.user._id === userId ? (
           <Button secondary label="Edit" onClick={editModal.onOpen} />
         ) : (
           <Button

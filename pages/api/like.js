@@ -2,7 +2,6 @@ import serverAuth from "@/src/libs/serverAuth";
 import connectToDB from "@/src/libs/mongooseDB";
 import Post from "@/src/models/Post";
 import User from "@/src/models/User";
-import Notification from "@/src/models/Notification";
 
 export default async function handler(req, res) {
   if (req.method !== "PATCH") {
@@ -20,14 +19,14 @@ export default async function handler(req, res) {
     }
 
     const post = await Post.findById(postId).select("likedIds");
-    console.log('likes.js->',post.likedIds)
+    // console.log('likes.js->',post.likedIds)
 
     if (!post) {
       throw new Error("Invalid ID");
     }
 
-    console.log("Current User is " + currentUser._id);
-    console.log(typeof(currentUser._id));
+    // console.log("Current User is " + currentUser._id);
+    // console.log(typeof(currentUser._id));
     const isLiked = post.likedIds.includes(currentUser._id);
     if (isLiked) {
       //like

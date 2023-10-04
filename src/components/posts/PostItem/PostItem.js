@@ -19,19 +19,20 @@ import useDelete from "@/src/hooks/useDelete";
 import useEditPostModal from "@/src/hooks/useEditPostModal";
 import EditPostModal from "../../modals/EditPostModal/EditPostModal";
 import useRetweet from "@/src/hooks/useRetweet";
+import { useSession } from "next-auth/react";
 
 const PostItem = ({ data, userId }) => {
   console.log("Data in the comment is ", data);
   const router = useRouter();
   const loginModal = useLoginModal();
   const editPostModal = useEditPostModal();
-  const { data: currentUser } = useCurrentUser();
+  const { data: currentUser } = useSession();
   const { hasLiked, toggleLike } = useLike({
     postId: data._id,
     userId: data.userId_id,
   });
   const { deletePost } = useDelete({ postId: data._id });
-  const { retweetPost } = useRetweet({ postId: data._id});
+  const { retweetPost } = useRetweet({ postId: data._id });
 
   const goToUser = useCallback(
     (ev) => {
@@ -100,81 +101,95 @@ const PostItem = ({ data, userId }) => {
     return formatDistanceToNowStrict(new Date(data.createdAt));
   }, [data.createdAt]);
   return (
-      <div className={styles.postItem}>
-        <div className={styles.flexColumn}>
-         { data.isRetweet === true ? (
-           <div className={styles.topRow}>
-            <div className={styles.tweetIcon}>
-              <AiOutlineRetweet size={20} />
+    <div className={styles.postItem}>
+      <div className={styles.flexColumn}>
+        {data.isRetweet === true ? (
+          <div>
+            <div className={styles.topRow}>
+              <div className={styles.tweetIcon}>
+                <AiOutlineRetweet size={20} />
+              </div>
+              { currentUser?.user._id !== data.userId._id ? (
+              <div className={styles.repostText}>
+                {data.userId.username} reposted
+              </div>) : (
+                <div className={styles.repostText}>
+                You reposted
+              </div>
+              )}
             </div>
-            <div className={styles.repostText}>
-              You reposted
+            <div className={styles.userInfo}>
+              <Avatar userId={data.userId._id} />
+              <div className={styles.userDetails}>
+                <p onClick={goToUser} className={styles.userName}>
+                  {data.parentRetweet}
+                </p>
+                <span className={styles.createdAt}>{createdAt}</span>
+              </div>
             </div>
           </div>
-         ): null }
+        ) : (
           <div className={styles.userInfo}>
             <Avatar userId={data.userId._id} />
             <div className={styles.userDetails}>
               <p onClick={goToUser} className={styles.userName}>
                 {data.userId.username}
               </p>
-              <span
-                onClick={goToUser}
-                className={`${styles.userUsername} ${styles.hiddenMd}`}
-              >
-                @{data.userId.username}
-              </span>
               <span className={styles.createdAt}>{createdAt}</span>
             </div>
           </div>
-          <div className={styles.postBody}>{data.body}</div>
-          {data.image && (
-            <img
-              src={data.image}
-              alt="Post Image"
-              className={styles.postImage}
-            />
-          )}
-          <div className={styles.actions}>
-            {data.type !== 'reply' ? (
-            <div onClick={goToPost} className={`${styles.actionItem} ${styles.commentAction}`}>
+        )}
+        <div className={styles.postBody}>{data.body}</div>
+        {data.image && (
+          <img src={data.image} alt="Post Image" className={styles.postImage} />
+        )}
+        <div className={styles.actions}>
+          {data.type !== "reply" ? (
+            <div
+              onClick={goToPost}
+              className={`${styles.actionItem} ${styles.commentAction}`}
+            >
               <AiOutlineMessage size={20} />
               <p>{data.comments?.length + data.replies?.length || 0}</p>
             </div>
-            ) : null }
+          ) : null}
+          <div
+            onClick={onLike}
+            className={`${styles.actionItem} ${styles.likeAction}`}
+          >
+            <LikeIcon size={20} color={hasLiked ? "red" : ""} />
+            <p>{data.likedIds.length}</p>
+          </div>
+          {currentUser &&
+          currentUser?.user._id === data.userId._id &&
+          data.isRetweet === false ? (
             <div
-              onClick={onLike}
-              className={`${styles.actionItem} ${styles.likeAction}`}
+              onClick={onEdit}
+              className={`${styles.actionItem} ${styles.editAction}`}
             >
-              <LikeIcon size={20} color={hasLiked ? "red" : ""} />
-              <p>{data.likedIds.length}</p>
+              <AiFillEdit size={20} />
             </div>
-            {currentUser && currentUser._id === data.userId._id && data.isRetweet === false ? (
-              <div
-                onClick={onEdit}
-                className={`${styles.actionItem} ${styles.editAction}`}
-              >
-                <AiFillEdit size={20} />
-              </div>
-            ) : null}
+          ) : null}
+          {data.type === "post" ? (
             <div
               onClick={onRetweet}
               className={`${styles.actionItem} ${styles.retweetAction}`}
             >
               <AiOutlineRetweet size={20} />
             </div>
-            {currentUser && currentUser._id === data.userId._id ? (
-              <div
-                onClick={onDelete}
-                className={`${styles.actionItem} ${styles.deleteAction}`}
-              >
-                <AiOutlineDelete size={20} />
-              </div>
-            ) : null}
-          </div>
+          ) : null}
+          {currentUser && currentUser?.user._id === data.userId._id ? (
+            <div
+              onClick={onDelete}
+              className={`${styles.actionItem} ${styles.deleteAction}`}
+            >
+              <AiOutlineDelete size={20} />
+            </div>
+          ) : null}
         </div>
       </div>
-    );    
+    </div>
+  );
 };
 
 export default PostItem;

@@ -13,10 +13,13 @@ import Form from "../../Form/Form";
 import axios from "axios";
 import ImageUpload from "../../ImageUpload/ImageUpload";
 import styles from "./EditPostModal.module.css"
+import { mutate } from "swr";
+import usePosts from "@/src/hooks/usePosts";
 
 const EditPostModal = () => {
   const editPostModal = useEditPostModal();
   const { data: post } = usePost(editPostModal.postId);
+  const { mutate : mutatePosts } = usePosts();
   console.log("Post is ", post);
   const [body, setBody] = useState("");
   const [image, setImage]= useState("");
@@ -36,6 +39,7 @@ const EditPostModal = () => {
         body,
         image,
       });
+      mutatePosts();
       toast.success("Post Edited");
       editPostModal.onClose();
     } catch (error) {
@@ -43,7 +47,7 @@ const EditPostModal = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [body, image, editPostModal.postId, editPostModal]);
+  }, [body, image, editPostModal.postId, mutatePosts, editPostModal]);
 
   const bodyContent = (
     <div className={styles.content}>

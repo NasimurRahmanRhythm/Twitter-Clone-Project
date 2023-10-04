@@ -12,6 +12,7 @@ const PostSchema = new Schema({
   replies: [{ type: Schema.Types.ObjectId, ref: "posts" }],
   isRetweet: { type: Boolean, default: false},
   parent: { type: Schema.Types.ObjectId, ref: "posts" },
+  parentRetweet: String,
   type:{type:String, enum:['post','comment','reply'], default:'post'},
 });
 

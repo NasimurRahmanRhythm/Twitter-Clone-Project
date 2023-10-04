@@ -10,12 +10,13 @@ import styles from './Form.module.css';
 import useCurrentUser from '@/src/hooks/useCurrentUser';
 import Button from '../Button/Button';
 import ImageUpload from '../ImageUpload/ImageUpload';
+import { useSession } from 'next-auth/react';
 
 const Form = ({placeholder, isComment, postId}) => {
     const registerModal = useRegisterModal();
     const loginModal = useLoginModal();
 
-    const { data: currentUser} = useCurrentUser();
+    const { data: currentUser} = useSession();
     const { mutate: mutatePosts } = usePosts();
     const { mutate: mutatePost } = usePost(postId);
     console.log("isComment is ",isComment);
@@ -76,7 +77,7 @@ const Form = ({placeholder, isComment, postId}) => {
           {currentUser ? (
             <div className={styles.userForm}>
               <div>
-                <Avatar userId={currentUser?.id} />
+                <Avatar userId={currentUser?.user._id} />
               </div>
               <div className={styles.textareaWrapper}>
                 <textarea

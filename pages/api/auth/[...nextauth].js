@@ -49,6 +49,32 @@ export const AuthOptions = {
       },
     }),
   ],
+
+  callbacks: {
+    async jwt({ token, user, session}){
+      // console.log("jwt callback", { token, user, session });
+      if(user) {
+        return {
+          ...token,
+          _id: user._id,
+        }
+      }
+      return token;
+    },
+    async session({ session, token, user}) {
+      // console.log("session callback", {session, token, user});
+      // pass userId to session
+      return {
+        ...session,
+        user: { 
+          ...session.user,
+          _id: token._id,
+        }
+      };
+
+      return session;
+    },
+  },
   debug: process.env.NODE_ENV === "development",
   session: {
     strategy: "jwt",
@@ -60,5 +86,3 @@ export const AuthOptions = {
 };
 
 export default NextAuth(AuthOptions);
-
-

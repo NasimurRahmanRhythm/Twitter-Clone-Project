@@ -4,10 +4,13 @@ import useCurrentUser from "./useCurrentUser";
 import useLoginModal from "./useLoginModal";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { useSession } from "next-auth/react";
+import usePosts from "./usePosts";
 
 const useRetweet = ({ postId }) => {
-    const { data: currentUser } = useCurrentUser();
+    const { data: currentUser } = useSession();
     const loginModal = useLoginModal();
+    const { mutate: mutatePosts } = usePosts();
 
     const retweetPost = useCallback( async () => {
         if(!currentUser){
@@ -20,11 +23,12 @@ const useRetweet = ({ postId }) => {
                 postId: postId,
             });
             toast.success('Post retweeted');
+            mutatePosts();
         }
         catch(error){
             toast.error('Failed to retweet');
         }
-    },[currentUser, postId, loginModal]);
+    },[currentUser, postId, loginModal, mutatePosts]);
     return{
         retweetPost
     };

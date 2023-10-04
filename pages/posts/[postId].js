@@ -3,10 +3,11 @@ import Header from "@/src/components/Header/Header";
 import CommentFeed from "@/src/components/posts/CommentFeed/CommentFeed";
 import PostItem from "@/src/components/posts/PostItem/PostItem";
 import usePost from "@/src/hooks/usePost";
-import usePostIds from "@/src/hooks/usePostIds";
+import usePosts from "@/src/hooks/usePosts";
 import fetcher from "@/src/libs/fetcher";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { ClipLoader } from "react-spinners";
 
 import useSWR from 'swr'; // Import useSWR here
@@ -16,6 +17,7 @@ const PostView = () => {
   const { postId } = router.query;
   const { data: fetchedPost, isLoading } = usePost(postId);
   const [commentData, setCommentData] = useState([]);
+  const { mutate: mutatePosts } = usePosts();
   const [commentsLoading, setCommentsLoading] = useState(false);
 
   useEffect(() => {
@@ -30,6 +32,7 @@ const PostView = () => {
           const resultData = await Promise.all(
             commentUrls.map((url) => fetch(url).then((res) => res.json()))
           );
+          mutatePosts();
           setCommentData(resultData);
           setCommentsLoading(false);
         } catch (error) {
@@ -37,10 +40,9 @@ const PostView = () => {
           setCommentsLoading(false);
         }
       };
-
       fetchData();
     }
-  }, [fetchedPost]);
+  }, [fetchedPost, mutatePosts]);
 
 
   if (isLoading || !fetchedPost) {
@@ -55,13 +57,13 @@ const PostView = () => {
     <>
       <Header label="Tweet" showBackArrow />
       <PostItem data={fetchedPost} />
-      {commentsLoading ? (
+      {/* {commentsLoading ? (
         <div className="flex justify-center items-center h-full">
           <ClipLoader color="light-blue" size={80} />
         </div>
-      ) : (
+      ) : ( */}
         <CommentFeed comments={commentData} />
-      )}
+      {/* )} */}
       <Form postId={postId} isComment placeholder="Tweet your reply" />
     </>
   );

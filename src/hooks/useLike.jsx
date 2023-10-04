@@ -5,11 +5,12 @@ import usePost from "./usePost";
 import usePosts from "./usePosts";
 import { toast } from "react-hot-toast";
 import axios from "axios";
+import { useSession } from "next-auth/react";
 
 
 
 const useLike = ({ postId, userId }) => {
-  const { data: currentUser } = useCurrentUser();
+  const { data: currentUser } = useSession();
   const { data: fetchedPost, mutate: mutateFetchedPost } = usePost(postId);
   const { mutate: mutateFetchedPosts } = usePosts(userId);
 
@@ -18,9 +19,9 @@ const useLike = ({ postId, userId }) => {
   const hasLiked = useMemo(() => {
     const list = fetchedPost?.likedIds || [];
 
-    return list.includes(currentUser?._id);
+    return list.includes(currentUser?.user._id);
   }, [fetchedPost, currentUser]);
-  console.log("Has Liked is " + hasLiked);
+  //console.log("Has Liked is " + hasLiked);
   const toggleLike = useCallback(async () => {
     if (!currentUser) {
       return loginModal.onOpen();
