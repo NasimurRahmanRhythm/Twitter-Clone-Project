@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const UserSchema = new mongoose.Schema({
   name: String,
@@ -12,7 +12,8 @@ const UserSchema = new mongoose.Schema({
   hashedPassword: String,
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
-  followingIds: [{ type: mongoose.Schema.Types.ObjectId }],
+  followingIds: [{ type: mongoose.Schema.Types.ObjectId , ref: "users" }],
+  followerIds: [{ type: mongoose.Schema.Types.ObjectId, ref: "users"}],
   hasNotification: Boolean,
 });
 

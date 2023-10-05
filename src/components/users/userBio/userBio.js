@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { BiCalendar } from "react-icons/bi";
 import { format } from "date-fns";
 
@@ -9,14 +9,34 @@ import useEditModal from "@/src/hooks/useEditModal";
 import Button from "../../Button/Button";
 import styles from "./userBio.module.css";
 import { useSession } from "next-auth/react";
+import useFollowerModal from "@/src/hooks/useFollowerModal";
 
 const UserBio = ({ userId }) => {
   const { data: currentUser } = useSession();
   const { data: fetchedUser } = useUser(userId);
 
   const editModal = useEditModal();
+  const followingModal = useFollowerModal();
+  const followerModal = useFollowerModal();
 
   const { isFollowing, toggleFollow } = useFollow(userId);
+
+  const Following = useCallback(
+    (ev) => {
+      ev.stopPropagation();
+      followingModal.onOpen(userId);
+    },
+    [followingModal, userId]
+  );
+
+  const Follower = useCallback(
+    (ev) => {
+      ev.stopPropagation();
+      followerModal.onOpen(userId);
+    },
+    [followerModal, userId]
+  );
+  
 
   const createdAt = useMemo(() => {
     if (!fetchedUser?.createdAt) {
@@ -46,22 +66,21 @@ const UserBio = ({ userId }) => {
           <p className={styles.username}>@{fetchedUser?.username}</p>
         </div>
         <div className={styles.bioJoined}>
-          <p className={styles.bio}>{fetchedUser?.bio}</p>
           <div className={styles.joined}>
             <BiCalendar size={24} />
             <p>Joined {createdAt}</p>
           </div>
         </div>
         <div className={styles.followInfo}>
-          <div className={styles.following}>
+          <div className={styles.following} onClick={Following}>
             <p className={styles.followCount}>
               {fetchedUser?.followingIds?.length}
             </p>
-            <p className={styles.followLabel}>Following</p>
+            <p className={styles.followLabel} >Following</p>
           </div>
-          <div className={styles.followers}>
+          <div className={styles.following} onClick={Follower}>
             <p className={styles.followCount}>
-              {fetchedUser?.followersCount || 0}
+              {fetchedUser?.followerIds?.length}
             </p>
             <p className={styles.followLabel}>Followers</p>
           </div>

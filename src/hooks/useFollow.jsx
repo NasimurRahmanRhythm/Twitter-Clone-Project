@@ -17,20 +17,16 @@ const useFollow = (userId) => {
 
     return list.includes(userId);
   }, [currentUser, userId]);
-
+  console.log("userId is in follow", userId, currentUser._id);
   const toggleFollow = useCallback(async () => {
     if (!currentUser) {
       return loginModal.onOpen();
     }
-
+    console.log("Is following is ", isFollowing);
     try {
       let request;
 
-      if (isFollowing) {
-        request = () => axios.delete('/api/follow', { data: { userId } });
-      } else {
-        request = () => axios.post('/api/follow', { userId });
-      }
+      request = () => axios.patch('/api/follow', {userId});
 
       await request();
       mutateCurrentUser();

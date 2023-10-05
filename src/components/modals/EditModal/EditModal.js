@@ -18,15 +18,13 @@ const EditModal = () => {
   const [coverImage, setCoverImage] = useState('');
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
-  const [bio, setBio] = useState('');
   console.log("My currenttttt user in editmodal is + ", currentUser);
   useEffect(() => {
     setProfileImage(currentUser?.profileImage)
     setCoverImage(currentUser?.coverImage)
     setName(currentUser?.name)
     setUsername(currentUser?.username)
-    setBio(currentUser?.bio)
-  }, [currentUser?.name, currentUser?.username, currentUser?.bio, currentUser?.profileImage, currentUser?.coverImage]);
+  }, [currentUser?.name, currentUser?.username, currentUser?.profileImage, currentUser?.coverImage]);
   
   const [isLoading, setIsLoading] = useState(false);
 
@@ -36,7 +34,6 @@ const EditModal = () => {
       await axios.patch('/api/edit', {
         name,
         username,
-        bio,
         profileImage,
         coverImage,
       });
@@ -50,7 +47,7 @@ const EditModal = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [bio, name, username, profileImage, coverImage, editModal, mutateFetchedUser]);
+  }, [ name, username, profileImage, coverImage, editModal, mutateFetchedUser]);
 
   const bodyContent = (
     <div className={styles.content}>
@@ -76,12 +73,6 @@ const EditModal = () => {
         placeholder="Username"
         onChange={(e) => setUsername(e.target.value)}
         value={username}
-        disabled={isLoading}
-      />
-      <Input
-        placeholder="Bio"
-        onChange={(e) => setBio(e.target.value)}
-        value={bio}
         disabled={isLoading}
       />
     </div>

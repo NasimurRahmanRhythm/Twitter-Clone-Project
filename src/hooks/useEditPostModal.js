@@ -5,7 +5,6 @@ const useEditModal = create((set) => ({
   postId: null, 
   onOpen: (postId) => set({ isOpen: true, postId }),
     onClose: () => set({ isOpen: false }),
-  // setPostId: (postId) => set({ postId }), 
 }));
 
 export default useEditModal;
