@@ -9,10 +9,12 @@ import Button from "../../Button/Button";
 import styles from "./userBio.module.css";
 import { useSession } from "next-auth/react";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 const UserBio = ({ userId }) => {
   const { data: currentUser } = useSession();
   const { data: fetchedUser } = useUser(userId);
+  const router = useRouter();
 
   const editModal = useEditModal();
 
@@ -64,6 +66,15 @@ const UserBio = ({ userId }) => {
     [showFollowing,showFollower, userId]
   );
 
+  const goToUser = useCallback(
+    (_id) =>
+    (ev) => {
+      ev.stopPropagation();
+      setShowFollower(false);
+      setShowFollowing(false);
+      router.push(`/users/${_id}`);
+    }, [router]
+  );
   const createdAt = useMemo(() => {
     if (!fetchedUser?.createdAt) {
       return null;
@@ -113,17 +124,21 @@ const UserBio = ({ userId }) => {
         </div>
         {showFollowing
           ? followingData?.map((user) => (
+            <div className={styles.following} onClick={goToUser(user._id)} key={user._id}>
               <div className={styles.followLabel}>
                 {user.username}
               </div>
+            </div>
             ))
           : null}
 
         {showFollower
           ? followerData?.map((user) => (
+            <div className={styles.following} onClick={goToUser(user._id)} key={user._id}>
               <div className={styles.followLabel}>
                 {user.username}
               </div>
+            </div>
             ))
           : null}
       </div>

@@ -1,9 +1,8 @@
-
 import useLoginModal from "@/src/hooks/useLoginModal";
 import useLike from "@/src/hooks/useLike";
 import { formatDistanceToNowStrict } from "date-fns";
 import { useRouter } from "next/router";
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import Avatar from "../../Avatar/Avatar";
 import {
   AiOutlineHeart,
@@ -35,12 +34,14 @@ const PostItem = ({ data, userId }) => {
   const { deletePost } = useDelete({ postId: data._id });
   const { retweetPost } = useRetweet({ postId: data._id });
 
+  const [showComment,setShowComment] = useState(false);
+
   const goToUser = useCallback(
     (ev) => {
       ev.stopPropagation();
-      console.log(data);
+      //console.log(data);
       router.push(`/users/${data.userId._id}`);
-      console.log(data.userId._id);
+      //console.log(data.userId._id);
     },
     [router, data.userId._id]
   );
@@ -94,6 +95,12 @@ const PostItem = ({ data, userId }) => {
     [editPostModal, loginModal, data._id, currentUser]
   );
 
+  const goToComment = useCallback(
+    (ev)=> {
+      ev.stopPropagation();
+      setShowComment(!showComment);
+    }
+  )
   const createdAt = useMemo(() => {
     if (!data?.createdAt) {
       return null;
@@ -102,7 +109,7 @@ const PostItem = ({ data, userId }) => {
     return formatDistanceToNowStrict(new Date(data.createdAt));
   }, [data.createdAt]);
   return (
-    <div className={styles.postItem}>
+    <div className={styles.postItem} onClick={goToPost}>
       <div className={styles.flexColumn}>
         {data.isRetweet === true ? (
           <div>
@@ -110,13 +117,12 @@ const PostItem = ({ data, userId }) => {
               <div className={styles.tweetIcon}>
                 <AiOutlineRetweet size={20} />
               </div>
-              { currentUser?.user._id !== data.userId._id ? (
-              <div className={styles.repostText}>
-                {data.userId.username} reposted
-              </div>) : (
+              {currentUser?.user._id !== data.userId._id ? (
                 <div className={styles.repostText}>
-                You reposted
-              </div>
+                  {data.userId.username} reposted
+                </div>
+              ) : (
+                <div className={styles.repostText}>You reposted</div>
               )}
             </div>
             <div className={styles.userInfo}>
@@ -147,7 +153,7 @@ const PostItem = ({ data, userId }) => {
         <div className={styles.actions}>
           {data.type !== "reply" ? (
             <div
-              onClick={goToPost}
+              onClick={goToComment}
               className={`${styles.actionItem} ${styles.commentAction}`}
             >
               <AiOutlineMessage size={20} />
@@ -189,6 +195,9 @@ const PostItem = ({ data, userId }) => {
           ) : null}
         </div>
       </div>
+      {
+      showComment ? <CommentFeed comments={data.comments} /> : null
+    }
     </div>
   );
 };
