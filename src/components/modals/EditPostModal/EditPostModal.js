@@ -1,4 +1,4 @@
-import useCurrentUser from "@/src/hooks/useCurrentUser";
+
 import useEditPostModal from "@/src/hooks/useEditPostModal";
 import usePost from "@/src/hooks/usePost";
 import useUser from "@/src/hooks/useUser";
@@ -34,7 +34,7 @@ const EditPostModal = () => {
   const onSubmit = useCallback(async () => {
     try {
       setIsLoading(true);
-      await axios.patch('/api/postedit', {
+      await axios.put(`/api/posts/${editPostModal.postId}`, {
         postId: editPostModal.postId,
         body,
         image,

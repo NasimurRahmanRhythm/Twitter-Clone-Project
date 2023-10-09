@@ -15,13 +15,9 @@ export default async function handler(req, res) {
 
         const user = await User.findById(userId);
         
-        const followingNames = [];
-        for(const id of user.followingIds) {
-            const followingUser = await User.findById(id);
-            if(followingUser){
-                followingNames.push(followingUser.username);
-            }
-        }
+        const followingNames = await User.find({
+            _id: { $in: user.followingIds },
+        }).select('username');
        return res.status(200).json(followingNames); 
 
     } catch(error){

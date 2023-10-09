@@ -1,5 +1,4 @@
 import { useCallback, useMemo, useState } from "react";
-import useCurrentUser from "./useCurrentUser";
 import useLoginModal from "./useLoginModal";
 import usePost from "./usePost";
 import usePosts from "./usePosts";
@@ -29,7 +28,7 @@ const useLike = ({ postId, userId }) => {
 
     try {
       let request;
-      request = () => axios.patch('/api/like', { postId });
+      request = () => axios.patch(`/api/posts/${postId}`, { postId });
      
 
       await request();

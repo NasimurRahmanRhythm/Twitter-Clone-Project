@@ -7,7 +7,6 @@ import { toast } from 'react-hot-toast';
 import Avatar from '../Avatar/Avatar';
 import usePost from '@/src/hooks/usePost';
 import styles from './Form.module.css';
-import useCurrentUser from '@/src/hooks/useCurrentUser';
 import Button from '../Button/Button';
 import ImageUpload from '../ImageUpload/ImageUpload';
 import { useSession } from 'next-auth/react';

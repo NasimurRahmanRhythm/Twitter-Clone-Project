@@ -2,7 +2,6 @@ import toast from "react-hot-toast";
 import axios from "axios"; 
 import usePost from "./usePost";
 import { useCallback } from "react"; 
-import useCurrentUser from "./useCurrentUser";
 import useLoginModal from "./useLoginModal";
 import { useSession } from "next-auth/react";
 import usePosts from "./usePosts";
@@ -18,7 +17,7 @@ const useDelete = ({ postId }) => {
     }
     
     try {
-      await axios.delete('/api/delete', { data: { postId } });
+      await axios.delete(`/api/posts/${postId}`, { data: { postId } });
       //mutateFetchedPosts();
       mutatePosts();
       toast.success('Post deleted successfully');

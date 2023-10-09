@@ -2,17 +2,12 @@ import { useCallback, useMemo, useState } from "react";
 import { BiCalendar } from "react-icons/bi";
 import { format } from "date-fns";
 
-import useCurrentUser from "@/src/hooks/useCurrentUser";
 import useUser from "@/src/hooks/useUser";
 import useFollow from "@/src/hooks/useFollow";
 import useEditModal from "@/src/hooks/useEditModal";
 import Button from "../../Button/Button";
 import styles from "./userBio.module.css";
 import { useSession } from "next-auth/react";
-import useFollowerModal from "@/src/hooks/useFollowerModal";
-import { useRouter } from "next/router";
-import useFollowing from "@/src/hooks/useFollowing";
-import List from "../../List";
 import axios from "axios";
 
 const UserBio = ({ userId }) => {
@@ -20,9 +15,6 @@ const UserBio = ({ userId }) => {
   const { data: fetchedUser } = useUser(userId);
 
   const editModal = useEditModal();
-  const { fetchData }=useFollowing({ userId: userId });
-  const followerModal = useFollowerModal();
-  const router = useRouter();
 
   const { isFollowing, toggleFollow } = useFollow(userId);
   const [showFollowing, setShowFollowing] = useState(false);
@@ -30,44 +22,47 @@ const UserBio = ({ userId }) => {
   const [showFollower, setShowFollower] = useState(false);
   const [followerData, setFollowerData] = useState(null);
 
-  const Follower = useCallback( async (ev) => {
-    ev.stopPropagation();
-    if(showFollowing){
-      setShowFollowing(false);
-    }
-    setShowFollower(!showFollower);
-    try {
-      const response = await axios.post('/api/followernames', { userId });
-      const responseData = response.data;
-      setFollowerData(responseData);
-      console.log(responseData);
-    } catch (error) {
-      console.log("Following names errors is", error);
-    }
-
-  },
-  [showFollowing, userId]
-);
-
-  const Following = useCallback( async (ev) => {
+  const Follower = useCallback(
+    async (ev) => {
       ev.stopPropagation();
-      if(showFollower){
-        setShowFollower(false);
+      if (showFollowing) {
+        setShowFollowing(false);
+        setShowFollower(true);
+      } else {
+        setShowFollower(!showFollower);
       }
-      setShowFollowing(!showFollowing);
       try {
-        const response = await axios.post('/api/followingnames', { userId });
+        const response = await axios.post("/api/followers", { userId });
+        const responseData = response.data;
+        setFollowerData(responseData);
+        console.log(responseData);
+      } catch (error) {
+        console.log("Following names errors is", error);
+      }
+    },
+    [showFollowing,showFollower,userId]
+  );
+
+  const Following = useCallback(
+    async (ev) => {
+      ev.stopPropagation();
+      if (showFollower) {
+        setShowFollower(false);
+        setShowFollowing(true);
+      } else {
+        setShowFollowing(!showFollowing);
+      }
+      try {
+        const response = await axios.post("/api/followings", { userId });
         const responseData = response.data;
         setFollowingData(responseData);
         console.log(responseData);
       } catch (error) {
         console.log("Following names errors is", error);
       }
-
     },
-    [showFollowing, userId]
+    [showFollowing,showFollower, userId]
   );
-  
 
   const createdAt = useMemo(() => {
     if (!fetchedUser?.createdAt) {
@@ -107,31 +102,30 @@ const UserBio = ({ userId }) => {
             <p className={styles.followCount}>
               {fetchedUser?.followingIds?.length}
             </p>
-            <p className={styles.followLabel} >Following</p>
+            <p className={styles.followLabel}>Following</p>
           </div>
           <div className={styles.following} onClick={Follower}>
-
             <p className={styles.followCount}>
               {fetchedUser?.followerIds?.length}
             </p>
             <p className={styles.followLabel}>Followers</p>
           </div>
         </div>
-        {
-          showFollowing ? (
-            followingData?.map((username) => (
-              <div className={styles.followLabel} key={username}>{username}</div>
+        {showFollowing
+          ? followingData?.map((user) => (
+              <div className={styles.followLabel}>
+                {user.username}
+              </div>
             ))
-          ) : null
-        }
+          : null}
 
-        {
-          showFollower ? (
-            followerData?.map((username) => (
-              <div className={styles.followLabel} key={username}>{username}</div>
+        {showFollower
+          ? followerData?.map((user) => (
+              <div className={styles.followLabel}>
+                {user.username}
+              </div>
             ))
-          ) : null
-        }
+          : null}
       </div>
     </div>
   );

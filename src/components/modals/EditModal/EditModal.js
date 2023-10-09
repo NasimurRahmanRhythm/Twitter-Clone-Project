@@ -2,15 +2,15 @@ import axios from 'axios';
 import React, { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import styles from './EditModal.module.css';
-import useCurrentUser from '@/src/hooks/useCurrentUser';
 import useEditModal from '@/src/hooks/useEditModal';
 import useUser from '@/src/hooks/useUser';
 import ImageUpload from '../../ImageUpload/ImageUpload';
 import Input from '../../Input/Input';
 import Modal from '../../Modal/Modal';
+import { useSession } from 'next-auth/react';
 
 const EditModal = () => {
-  const { data: currentUser } = useCurrentUser();
+  const { data: currentUser } = useSession();
   console.log("My now user is ", + currentUser);
   const { mutate: mutateFetchedUser } = useUser(currentUser?._id);
   const editModal = useEditModal();
@@ -31,7 +31,7 @@ const EditModal = () => {
   const onSubmit = useCallback(async () => {
     try {
       setIsLoading(true);
-      await axios.patch('/api/edit', {
+      await axios.put(`/api/users/${currentUser._id}`, {
         name,
         username,
         profileImage,

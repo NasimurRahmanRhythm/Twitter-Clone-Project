@@ -5,6 +5,7 @@ import { toast } from "react-hot-toast";
 import useCurrentUser from "./useCurrentUser";
 import useLoginModal from "./useLoginModal";
 import useUser from "./useUser";
+import { useSession } from "next-auth/react";
 
 const useFollow = (userId) => {
   const { data: currentUser, mutate: mutateCurrentUser } = useCurrentUser();
@@ -17,7 +18,7 @@ const useFollow = (userId) => {
 
     return list.includes(userId);
   }, [currentUser, userId]);
-  console.log("userId is in follow", userId, currentUser._id);
+  //console.log("userId is in follow", userId, currentUser._id);
   const toggleFollow = useCallback(async () => {
     if (!currentUser) {
       return loginModal.onOpen();
@@ -26,10 +27,10 @@ const useFollow = (userId) => {
     try {
       let request;
 
-      request = () => axios.patch('/api/follow', {userId});
+      request = () => axios.patch(`/api/users/${currentUser._id}`, {userId});
 
       await request();
-      mutateCurrentUser();
+      //mutateCurrentUser();
       mutateFetchedUser();
 
       toast.success('Success');

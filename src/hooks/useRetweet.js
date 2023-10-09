@@ -1,6 +1,5 @@
 
 import { useCallback } from "react";
-import useCurrentUser from "./useCurrentUser";
 import useLoginModal from "./useLoginModal";
 import toast from "react-hot-toast";
 import axios from "axios";

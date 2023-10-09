@@ -1,4 +1,4 @@
-import useCurrentUser from "@/src/hooks/useCurrentUser";
+
 import useLoginModal from "@/src/hooks/useLoginModal";
 import useLike from "@/src/hooks/useLike";
 import { formatDistanceToNowStrict } from "date-fns";
@@ -20,6 +20,7 @@ import useEditPostModal from "@/src/hooks/useEditPostModal";
 import EditPostModal from "../../modals/EditPostModal/EditPostModal";
 import useRetweet from "@/src/hooks/useRetweet";
 import { useSession } from "next-auth/react";
+import CommentFeed from "../CommentFeed/CommentFeed";
 
 const PostItem = ({ data, userId }) => {
   console.log("Data in the comment is ", data);
