@@ -1,16 +1,16 @@
-import useLoginModal from '@/src/hooks/useLoginModal';
-import useRegisterModal from '@/src/hooks/useRegisterModal';
-import React, { useCallback, useState } from 'react';
-import { signIn } from 'next-auth/react';
-import styles from './LoginModal.module.css';
-import Input from '../../Input/Input';
-import Modal from '../../Modal/Modal';
+import useLoginModal from "@/src/hooks/useLoginModal";
+import useRegisterModal from "@/src/hooks/useRegisterModal";
+import React, { useCallback, useState } from "react";
+import { signIn } from "next-auth/react";
+import styles from "./LoginModal.module.css";
+import Input from "../../Input/Input";
+import Modal from "../../Modal/Modal";
 
 const LoginModal = () => {
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const onToggle = useCallback(() => {
@@ -26,7 +26,7 @@ const LoginModal = () => {
     try {
       setIsLoading(true);
 
-      await signIn('credentials', {
+      await signIn("credentials", {
         email,
         password,
         redirect: false,
@@ -39,6 +39,11 @@ const LoginModal = () => {
       setIsLoading(false);
     }
   }, [loginModal, email, password]);
+
+  const gitSignIn = async () => {
+    const user = await signIn('github', {callbackUrl: '/'})
+    console.log("Github user is ",user);
+  }
 
   const bodyContent = (
     <div className={styles.content}>
@@ -61,9 +66,16 @@ const LoginModal = () => {
   const footerContent = (
     <div className={styles.footer}>
       <p>
+        Want to Sign in with Github?
+        <span onClick={gitSignIn} className={styles.createAccountLink}>
+          {' '}
+          Click here
+        </span>
+      </p>
+      <p>
         First time using Twitter?
         <span onClick={onToggle} className={styles.createAccountLink}>
-          {' '}
+          {" "}
           Create an account
         </span>
       </p>

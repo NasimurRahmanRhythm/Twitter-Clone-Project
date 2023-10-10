@@ -7,6 +7,7 @@ import connectToDB from "@/src/libs/mongooseDB";
 import mongooseAdapter from "@/src/libs/mongooseAdapter";
 import { toast } from "react-hot-toast";
 import { Router, useRouter } from "next/router";
+import GithubProvider from "next-auth/providers/github";
 
 export const AuthOptions = {
   adapter: mongooseAdapter(User),
@@ -51,6 +52,12 @@ export const AuthOptions = {
         return user;
       },
     }),
+
+    GithubProvider({
+      clientId: process.env.GITHUB_ID,
+      clientSecret: process.env.GITHUB_SECRET,
+    }),
+
   ],
 
   callbacks: {

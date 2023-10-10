@@ -50,7 +50,18 @@ const RegisterModal = () => {
       setIsLoading(false);
     }
   }, [registerModal, email, password, username, name]);
-
+  
+  const gitSignIn = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      await signIn("github")
+      loginModal.onClose();
+    }catch(error) {
+      console.log("Github Error is ", error);
+    }finally {
+      setIsLoading(false);
+    }
+  }, [loginModal]);
   const bodyContent = (
     <div className={styles.content}>
       <Input
@@ -83,6 +94,13 @@ const RegisterModal = () => {
 
   const footerContent = (
     <div className={styles.footer}>
+      <p>
+        Want to Sign in with Github?
+        <span onClick={gitSignIn} className={styles.signInLink}>
+          {' '}
+          Click here
+        </span>
+      </p>
       <p>
         Already have an account?
         <span onClick={onToggle} className={styles.signInLink}>
