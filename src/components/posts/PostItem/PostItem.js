@@ -47,7 +47,9 @@ const PostItem = ({ data, userId }) => {
   );
 
   const goToPost = useCallback(() => {
-    router.push(`/posts/${data._id}`);
+    if(showComment){
+      router.push(`/posts/${data._id}`);
+    }
   }, [router, data._id]);
 
   const onLike = useCallback(
@@ -194,10 +196,12 @@ const PostItem = ({ data, userId }) => {
             </div>
           ) : null}
         </div>
-      </div>
-      {
-      showComment ? <CommentFeed comments={data.comments} /> : null
+        <div>
+        {
+      showComment ? <CommentFeed comments={data} /> : null
     }
+        </div>
+      </div>
     </div>
   );
 };

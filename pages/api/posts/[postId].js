@@ -14,15 +14,23 @@ export default async function handler(req, res) {
       }
 
       const posts = await Post.findById(postId)
-          .populate("userId")
-          .populate({
+        .populate("userId")
+        .populate({
+          path: "comments",
+          populate: {
+            path: "userId",
+          },
+        })
+        .populate({
+          path: "comments",
+          populate: {
             path: "comments",
             populate: {
               path: "userId",
-            }
-          })
-          .sort({ createdAt: "desc" });
-
+            },
+          },
+        })
+        .sort({ createdAt: "desc" });
       return res.status(200).json(posts);
     }
 
@@ -87,35 +95,36 @@ export default async function handler(req, res) {
       return res.status(200).json({ message: "Post deleted successfully" });
     }
 
-    if(req.method === "PATCH") {
+    if (req.method === "PATCH") {
       const { postId } = req.body;
-    const { currentUser } = await serverAuth(req, res);
+      const { currentUser } = await serverAuth(req, res);
 
-    if (!postId || typeof postId !== "string") {
-      throw new Error("Invalid ID");
-    }
+      if (!postId || typeof postId !== "string") {
+        throw new Error("Invalid ID");
+      }
 
-    const post = await Post.findById(postId).select("likedIds");
+      const post = await Post.findById(postId).select("likedIds");
 
-    if (!post) {
-      throw new Error("Invalid ID");
-    }
-    const isLiked = post.likedIds.includes(currentUser._id);
-    if (isLiked) {
-      post.likedIds.pull(currentUser._id);
-    }
-else {
-      post.likedIds.push(currentUser._id);
-    }
+      if (!post) {
+        throw new Error("Invalid ID");
+      }
+      const isLiked = post.likedIds.includes(currentUser._id);
+      if (isLiked) {
+        post.likedIds.pull(currentUser._id);
+      } else {
+        post.likedIds.push(currentUser._id);
+      }
 
-    const updatedPost = await Post.findByIdAndUpdate(
-      postId,
-      {
-        likedIds: post.likedIds,
-      },
-      { new: true }
-    );
-    return res.status(200).json({ isLiked, updatedPost: updatedPost.toObject() });
+      const updatedPost = await Post.findByIdAndUpdate(
+        postId,
+        {
+          likedIds: post.likedIds,
+        },
+        { new: true }
+      );
+      return res
+        .status(200)
+        .json({ isLiked, updatedPost: updatedPost.toObject() });
     }
   } catch (error) {
     console.log(error);

@@ -13,29 +13,29 @@ export default async function handler(req, res) {
     await connectToDB();
 
     if (req.method === "POST") {
-      const { currentUser } = await serverAuth(req,res);
+      const { currentUser } = await serverAuth(req, res);
       const { body, image, type, postId } = req.body;
-      if(!body){
+      if (!body) {
         throw new Error("Missing Body");
       }
 
-      if(type === 'comment' && postId) {
+      if (type === "comment" && postId) {
         const parentPost = await Post.findById(postId);
 
-        if(!parentPost) {
-          throw new Error('Parent Post not found');
+        if (!parentPost) {
+          throw new Error("Parent Post not found");
         }
 
-        if(parentPost.type === 'comment'){
+        if (parentPost.type === "comment") {
           const mainPost = await Post.findById(parentPost.parent);
-          if(!mainPost){
-            throw new Error('Parent Parent post not found');
+          if (!mainPost) {
+            throw new Error("Parent Parent post not found");
           }
 
-          const reply = new Post ({
+          const reply = new Post({
             body,
             image,
-            type: 'reply',
+            type: "reply",
             userId: currentUser._id,
             parent: parentPost._id,
           });
@@ -47,39 +47,35 @@ export default async function handler(req, res) {
           await mainPost.save();
 
           return res.status(200).json(reply);
+        } else {
+          const comment = new Post({
+            body,
+            image,
+            type,
+            userId: currentUser._id,
+            parent: postId,
+          });
+
+          await comment.save();
+
+          parentPost.comments.push(comment._id);
+          await parentPost.save();
+
+          return res.status(200).json(comment);
         }
-
-        else {
-
-        const comment = new Post ({
+      } else {
+        const post = new Post({
           body,
           image,
           type,
           userId: currentUser._id,
-          parent: postId,
         });
 
-        await comment.save();
+        await post.save();
 
-        parentPost.comments.push(comment._id);
-        await parentPost.save();
-
-        return res.status(200).json(comment);
+        return res.status(200).json(post);
       }
     }
-      else {
-      const post = new Post({
-        body,
-        image,
-        type,
-        userId: currentUser._id,
-      });
-
-      await post.save();
-
-      return res.status(200).json(post);
-    }
-  }
     if (req.method === "GET") {
       const { userId } = req.query;
       let posts;
@@ -87,12 +83,40 @@ export default async function handler(req, res) {
       if (userId && typeof userId === "string") {
         posts = await Post.find({ userId })
           .populate("userId")
-          .populate("comments")
+          .populate({
+            path: "comments",
+            populate: {
+              path: "userId",
+            },
+          })
+          .populate({
+            path: "comments",
+            populate: {
+              path: "comments",
+              populate: {
+                path: "userId",
+              },
+            },
+          })
           .sort({ createdAt: "desc" });
       } else {
         posts = await Post.find({})
           .populate("userId")
-          .populate("comments")
+          .populate({
+            path: "comments",
+            populate: {
+              path: "userId",
+            },
+          })
+          .populate({
+            path: "comments",
+            populate: {
+              path: "comments",
+              populate: {
+                path: "userId",
+              },
+            },
+          })
           .sort({ createdAt: "desc" });
       }
 
