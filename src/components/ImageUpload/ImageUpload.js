@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { AiOutlineCloseCircle } from "react-icons/ai"; // Import the close icon
+import { AiOutlineCloseCircle } from "react-icons/ai"; 
 import styles from './ImageUpload.module.css';
 
 const ImageUpload = ({ onChange, label, value, disabled }) => {
@@ -33,6 +33,7 @@ const ImageUpload = ({ onChange, label, value, disabled }) => {
     accept: {
       'image/jpeg': [],
       'image/png': [],
+      'image/jpg': [],
     },
   });
 

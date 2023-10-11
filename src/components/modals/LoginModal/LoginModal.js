@@ -41,8 +41,8 @@ const LoginModal = () => {
   }, [loginModal, email, password]);
 
   const gitSignIn = async () => {
-    const user = await signIn('github', {callbackUrl: '/'})
-    console.log("Github user is ",user);
+    const user = await signIn('github', {callbackUrl: 'http://localhost:3000/', redirect: true});
+    //console.log("Github user is ",user);
   }
 
   const bodyContent = (

@@ -4,13 +4,9 @@ import CredentialsProvider from "next-auth/providers/credentials";
 
 import User from "@/src/models/User";
 import connectToDB from "@/src/libs/mongooseDB";
-import mongooseAdapter from "@/src/libs/mongooseAdapter";
-import { toast } from "react-hot-toast";
-import { Router, useRouter } from "next/router";
 import GithubProvider from "next-auth/providers/github";
 
 export const AuthOptions = {
-  adapter: mongooseAdapter(User),
   providers: [
     CredentialsProvider({
       name: "credentials",
@@ -31,10 +27,8 @@ export const AuthOptions = {
         }).exec();
         console.log({user});
         console.log(credentials);
-       // const router = useRouter();
         if(user.isVerified === false){
           throw new Error("User is not verified");
-          //router.push('/');
         }
         if (!user || !user?.hashedPassword) {
           throw new Error("Invalid credentials 2");
@@ -61,19 +55,58 @@ export const AuthOptions = {
   ],
 
   callbacks: {
-    async jwt({ token, user, session}){
-      // console.log("jwt callback", { token, user, session });
+
+    async signIn({ user, account}) {
+      if (account) {
+        try{
+        const { email, name } = user;
+        await connectToDB();
+        const existingUser = await User.findOne({email});
+        if (!existingUser) {
+           await User.create({
+            username: email.split("@")[0],
+            email,
+            name,
+            isVerified:true,
+          });
+        }
+        else if(!existingUser.isVerified){
+           existingUser.isVerified = true;
+           existingUser.verificationToken = undefined;
+           await existingUser.save();
+        }
+        return true;
+        }
+        catch(err){
+          return false;
+        }
+      }
+      return true;
+    },
+
+    async jwt({ token, user, profile}){
+      //console.log("nextauth user is ",user);
+      //console.log("nextauth profile is ",profile);
+     // console.log("nextAuthhh token is ",token);
       if(user) {
+        //console.log("dhukbena");
         return {
           ...token,
           _id: user._id,
         }
       }
-      return token;
+      else {
+        const {email} = token;
+        const existingUser = await User.findOne({email});
+        return {
+          ...token,
+          _id: existingUser._id,
+        }
+      }
     },
     async session({ session, token, user}) {
-      // console.log("session callback", {session, token, user});
-      // pass userId to session
+     // console.log("Token is ", token);
+      //console.log("session is ",session);
       return {
         ...session,
         user: { 

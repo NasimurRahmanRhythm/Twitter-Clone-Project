@@ -51,17 +51,11 @@ const RegisterModal = () => {
     }
   }, [registerModal, email, password, username, name]);
   
-  const gitSignIn = useCallback(async () => {
-    try {
-      setIsLoading(true);
-      await signIn("github")
-      loginModal.onClose();
-    }catch(error) {
-      console.log("Github Error is ", error);
-    }finally {
-      setIsLoading(false);
-    }
-  }, [loginModal]);
+  const gitSignIn = async () => {
+    const user = await signIn('github', {callbackUrl: '/'})
+    console.log("Github user is ",user);
+  }
+  
   const bodyContent = (
     <div className={styles.content}>
       <Input

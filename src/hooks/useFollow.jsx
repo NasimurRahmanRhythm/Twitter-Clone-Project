@@ -30,7 +30,7 @@ const useFollow = (userId) => {
       request = () => axios.patch(`/api/users/${currentUser._id}`, {userId});
 
       await request();
-      //mutateCurrentUser();
+      mutateCurrentUser();
       mutateFetchedUser();
 
       toast.success('Success');

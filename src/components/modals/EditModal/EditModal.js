@@ -8,11 +8,13 @@ import ImageUpload from '../../ImageUpload/ImageUpload';
 import Input from '../../Input/Input';
 import Modal from '../../Modal/Modal';
 import { useSession } from 'next-auth/react';
+import useCurrentUser from '@/src/hooks/useCurrentUser';
 
 const EditModal = () => {
   const { data: currentUser } = useSession();
   console.log("My now user is ", + currentUser);
   const { mutate: mutateFetchedUser } = useUser(currentUser?._id);
+  const {mutate: mutateCurrentUser} = useCurrentUser();
   const editModal = useEditModal();
   const [profileImage, setProfileImage] = useState('');
   const [coverImage, setCoverImage] = useState('');
@@ -37,6 +39,7 @@ const EditModal = () => {
         profileImage,
         coverImage,
       });
+      mutateCurrentUser();
       mutateFetchedUser();
 
       toast.success('Updated');
@@ -47,7 +50,7 @@ const EditModal = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [ name, username, profileImage, coverImage, editModal, mutateFetchedUser]);
+  }, [ name, username, profileImage, coverImage, editModal, mutateFetchedUser, mutateCurrentUser]);
 
   const bodyContent = (
     <div className={styles.content}>
