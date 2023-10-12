@@ -6,6 +6,7 @@ import { Toaster } from "react-hot-toast";
 import { SessionProvider } from "next-auth/react";
 import EditModal from "@/src/components/modals/EditModal/EditModal";
 import EditPostModal from "@/src/components/modals/EditPostModal/EditPostModal";
+import { SocketProvider } from "@/src/providers/SocketProvider";
 
 export default function App({ Component, pageProps }) {
   return (
@@ -17,9 +18,11 @@ export default function App({ Component, pageProps }) {
       <LoginModal />
       <RegisterModal />
       <EditPostModal />
+      <SocketProvider>
       <Layout>
         <Component {...pageProps} />
       </Layout>
+      </SocketProvider>
     </SessionProvider>
   );
 }
