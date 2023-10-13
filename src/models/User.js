@@ -15,6 +15,7 @@ const UserSchema = new mongoose.Schema({
   followingIds: [{ type: mongoose.Schema.Types.ObjectId , ref: "users" }],
   followerIds: [{ type: mongoose.Schema.Types.ObjectId, ref: "users"}],
   hasNotification: Boolean,
+  messageNotifications: [{ type: mongoose.Schema.Types.ObjectId, ref: "users"}],
 });
 
 module.exports = mongoose.models.users || mongoose.model("users", UserSchema);

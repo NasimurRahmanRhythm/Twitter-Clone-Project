@@ -8,22 +8,21 @@ export function SocketProvider({ children }) {
   const [socket, setSocket] = useState(undefined);
   const { data: session } = useSession();
 
+  const socketInitializer = async () => {
+    if (!socket) {
+      await fetch("/api/socket");
+      const socketClient = io();
+      setSocket(socketClient);
+    }
+  };
+
   useEffect(() => {
-    const socketInitializer = async () => {
-      if (!socket) {
-        await fetch("/api/socket");
-        const socketClient = io();
-        setSocket(socketClient);
-      }
-    };
-
     socketInitializer();
-
     return () => {
       socket?.removeAllListeners();
       socket?.close();
     };
-  }, [session]);
+  }, [session, socket, socketInitializer]);
 
   useEffect(() => {
     if (session && session.user) {
