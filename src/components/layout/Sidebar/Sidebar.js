@@ -6,6 +6,7 @@ import { BiLogOut } from 'react-icons/bi';
 import styles from './Sidebar.module.css';
 import SidebarLogo from '../SidebarLogo/SidebarLogo';
 import SidebarItem from '../SidebarItem/SidebarItem';
+import { AiOutlineMessage } from 'react-icons/ai';
 
 const Sidebar = () => {
   const { data: currentUser } = useSession();
@@ -21,6 +22,11 @@ const Sidebar = () => {
       href: `/users/${currentUser?.user._id}`,
       icon: FaUser,
       auth: true,
+    },
+    {
+      label: 'Message',
+      href: '/message',
+      icon: AiOutlineMessage,
     },
   ];
 

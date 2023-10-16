@@ -5,16 +5,24 @@ const MessageSchema = new mongoose.Schema(
     users: [{ type: mongoose.Schema.Types.ObjectId, ref: "users" }],
     messages: [
       {
-        body: String,
+        content: {
+          text: String,
+          file: String,
+        },
         sender: { type: mongoose.Schema.Types.ObjectId, ref: "users" },
         receiver: { type: mongoose.Schema.Types.ObjectId, ref: "users" },
         seen: { type: Boolean, default: false },
-        originalMessage: { id: String, body: String },
+        originalMessage: {
+          id: String,
+          text: String,
+          file: String,
+        },
         createdAt: { type: Date, default: Date.now },
       },
     ],
     lastMessage: {
-      body: String,
+      text: String,
+      file: String,
       sender: { type: Schema.Types.ObjectId, ref: "users" },
     },
   },
