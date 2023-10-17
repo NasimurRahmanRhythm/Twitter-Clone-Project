@@ -15,9 +15,15 @@
     grid-template-columns: repeat(4, 1fr);
     height: 100%;
   }
+
+  .gridMessage {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    height: 100%;
+  }
   
   .mainContent {
-    grid-column: span 3 / span 3;
+    grid-column: span 2;
     border-left: 1px solid #424b54;
     border-right: 1px solid #424b54; 
   }

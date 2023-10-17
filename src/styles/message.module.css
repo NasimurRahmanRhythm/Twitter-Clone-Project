@@ -1,9 +1,39 @@
 .message {
     text-align: center;
-    font-size: 24px;
+    font-size: 20px;
     color: #fff; 
-    padding: 20px;
-    border: 2px solid #d81a1a; 
-    border-radius: 8px; 
+    padding: 2px;
+    border-radius: center;
+    border-color: blue;
+    padding-left: 10px;
   }
   
+
+  .userList {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
+  
+  .user {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+  }
+  
+  .userInfo {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .userName {
+    color: white;
+    font-weight: 600;
+    font-size: 0.875rem;
+  }
+  
+  .userHandle {
+    color: #9ca3af;
+    font-size: 0.875rem;
+  }

@@ -7,6 +7,7 @@ import { SessionProvider } from "next-auth/react";
 import EditModal from "@/src/components/modals/EditModal/EditModal";
 import EditPostModal from "@/src/components/modals/EditPostModal/EditPostModal";
 import { SocketProvider } from "@/src/providers/SocketProvider";
+import { MessageProvider } from "@/src/providers/MessageProvider";
 
 export default function App({ Component, pageProps }) {
   return (
@@ -19,9 +20,11 @@ export default function App({ Component, pageProps }) {
       <RegisterModal />
       <EditPostModal />
       <SocketProvider>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+        <MessageProvider>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </MessageProvider>
       </SocketProvider>
     </SessionProvider>
   );

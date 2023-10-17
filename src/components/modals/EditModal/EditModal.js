@@ -41,7 +41,22 @@ const EditModal = () => {
       });
       mutateCurrentUser();
       mutateFetchedUser();
+      console.log("Profile Image is ",profileImage);
+      if(profileImage){
+        await axios.post('/api/posts', {
+          body: "What a sunny sunny day to create a profile picture",
+          image: profileImage,
+          type: 'post',
+        });
+      }
 
+      if(coverImage){
+        await axios.post('/api/posts', {
+          body: "What a sunny sunny day to give a cover image",
+          image: coverImage,
+          type: 'post',
+        });
+      }
       toast.success('Updated');
       editModal.onClose();
     } catch (error) {
