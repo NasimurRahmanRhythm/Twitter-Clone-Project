@@ -23,7 +23,7 @@ const MessageSchema = new mongoose.Schema(
     lastMessage: {
       text: String,
       file: String,
-      sender: { type: Schema.Types.ObjectId, ref: "users" },
+      sender: { type: mongoose.Schema.Types.ObjectId, ref: "users" },
     },
   },
   { timestamps: true }

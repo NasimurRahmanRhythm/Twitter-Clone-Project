@@ -22,7 +22,7 @@ export function SocketProvider({ children }) {
       socket?.removeAllListeners();
       socket?.close();
     };
-  }, [session, socket, socketInitializer]);
+  }, [session]);
 
   useEffect(() => {
     if (session && session.user) {

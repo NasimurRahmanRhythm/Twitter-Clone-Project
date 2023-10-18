@@ -112,7 +112,7 @@ const PostItem = ({ data, userId }) => {
   }, [data.createdAt]);
   return (
     <div className={styles.postItem} onClick={goToPost}>
-      <div className={styles.flexColumn}>
+      <div className={styles.flexColumn} onClick={goToPost}>
         {data.isRetweet === true ? (
           <div>
             <div className={styles.topRow}>
