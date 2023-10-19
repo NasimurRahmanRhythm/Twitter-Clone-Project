@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { io } from "socket.io-client";
 import { useSession } from "next-auth/react";
+import { findSocket } from "../libs/findSocket";
 
 const SocketContext = createContext();
 
@@ -10,8 +10,7 @@ export function SocketProvider({ children }) {
 
   const socketInitializer = async () => {
     if (!socket) {
-      await fetch("/api/socket");
-      const socketClient = io();
+      const socketClient = await findSocket();
       setSocket(socketClient);
     }
   };
@@ -20,7 +19,6 @@ export function SocketProvider({ children }) {
     socketInitializer();
     return () => {
       socket?.removeAllListeners();
-      socket?.close();
     };
   }, [session]);
 

@@ -1,18 +1,23 @@
 import { useCallback, useState } from "react";
-
 export function useActionDispatcher(initialState) {
-  const [state, setState] = useState(initialState);
+  let [state, setState] = useState(initialState);
+  const getState = useCallback(()=>{return state},[state])
   const dispatch = useCallback(
     async (action, payload) => {
-      if (!action || !(action instanceof Function)) {
-        return;
+      if (!action) {
+        return state;
       }
-      const newState = await action(payload, state, dispatch);
-      if (newState !== undefined) {
-        setState(newState);
+      let newState = state;
+      if (action.constructor.name === "AsyncFunction") {
+        newState = await action(state, payload, dispatch , getState);
+      } else if (action.constructor.name === "Function") {
+        newState = action(state, payload, dispatch);
       }
+      setState(newState);
+      // console.log(action.name,newState);
+      return newState;
     },
     [state]
   );
-  return [state, dispatch];
+  return [state, dispatch, getState];
 }

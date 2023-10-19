@@ -1,0 +1,41 @@
+.msg {
+    max-width: 80%;
+    width: fit-content;
+    padding: 1rem 1rem;
+    margin: 0.5rem 0;
+    border-radius: 1em;
+  }
+  
+  
+  
+  .myMsg .msg {
+    margin-left: auto;
+    margin-right: 1rem;
+    border-bottom-right-radius: 0.2rem;
+    background-color: blue;
+    color: #fff;
+  }
+  
+  .otherMsg .msg {
+    margin-left: 1rem;
+    color: #fff;
+    background-color: blue;
+    border-bottom-left-radius: 0.2rem;
+  }
+  
+  .label {
+    width: fit-content;
+    color: var(--grey);
+    font-size: 0.7rem;
+  }
+  
+  .otherMsg .label {
+    margin-left: 1rem;
+  }
+  
+  .myMsg .label {
+    margin-left: auto;
+    margin-right: 1rem;
+  }
+  
+  

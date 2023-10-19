@@ -12,15 +12,13 @@ import { MessageProvider } from "@/src/providers/MessageProvider";
 export default function App({ Component, pageProps }) {
   return (
     <SessionProvider session={pageProps.session}>
-      <Toaster />
-      {/* <FollowerModal />
-      <FollowingModal /> */}
-      <EditModal />
-      <LoginModal />
-      <RegisterModal />
-      <EditPostModal />
       <SocketProvider>
         <MessageProvider>
+          <Toaster />
+          <EditModal />
+          <LoginModal />
+          <RegisterModal />
+          <EditPostModal />
           <Layout>
             <Component {...pageProps} />
           </Layout>

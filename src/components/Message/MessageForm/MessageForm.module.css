@@ -1,0 +1,56 @@
+.message{
+    display: flex;
+    width: 100%;
+    padding:0.5rem 1rem;
+    border-bottom: 1px solid #fff;
+    position: relative;
+    background-color: #000;
+  }
+  
+  .image{
+    position: relative;
+  
+  }
+  
+  .image button{
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+  
+  
+  
+  .fields{
+    display: flex;
+    margin-top: 0.2rem;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .fields img{
+    border-radius: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+  }
+  
+  .actions{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  
+  .textarea{
+    margin: 1rem;
+    font-size: 1.5rem;
+    line-height: 24px;
+    color: #000;
+  }
+  
+  .submit{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  

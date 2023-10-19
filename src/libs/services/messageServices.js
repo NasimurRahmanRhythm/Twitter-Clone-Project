@@ -1,4 +1,6 @@
 import { allConversations, createConversations, createNotifications, deleteNotifications, fetchedConversations, findConversation, getConversation, getNotificationIds, moreConversationss, newNotification, updateMessages, updateUserNotification } from "../repositories/message.repositories";
+import User from '@/src/models/User';
+import mongoose from "mongoose";
 
 export async function deleteMessageNotification({ userId, notificationSenderId }) {
     try {
@@ -137,6 +139,15 @@ export async function getAllConversationsByUser({userId,receiverID,pageIndex,pag
     return messages;
   } catch (error) {
     throw { status: 500, message: error.message };
+  }
+}
+
+export async function takeAllUsers() {
+  try {
+    const users = await User.find({isVerified:true}).lean();
+    return users;
+  } catch (error) {
+    console.log("TAke all users error is ", error);
   }
 }
 

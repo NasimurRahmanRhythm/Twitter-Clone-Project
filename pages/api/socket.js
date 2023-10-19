@@ -8,12 +8,19 @@ import {
 import connectToDB from "@/src/libs/mongooseDB";
 
 export default async function handler(req, res) {
-  if (req.method === "GET") {
+  if (req.method !== "GET") {
+    return res.status(405).end();
+  }
+  try{
     await connectToDB();
     const session = await serverAuth(req, res);
     if (session) {
       await createSocket(res);
     }
+    return res.status(200).json({ message: "Socket.js is working" });
+  } catch(error) {
+    console.log('Socket error is ', error);
+        return res.status(400).end();
   }
 }
 
@@ -33,8 +40,8 @@ export async function createSocket(res) {
       });
 
       socket.on("see_message", async (message) => {
-        console.log("socket seen", message.id);
-        seeMessage({ messageIds: [new mongoose.Types.ObjectId(message.id)] });
+        console.log("socket seen", message._id);
+        seeMessage({ messageIds: [new mongoose.Types.ObjectId(message._id)] });
         deleteMessageNotification({
           userId: message.receiver,
           notificationSenderId: message.sender,
