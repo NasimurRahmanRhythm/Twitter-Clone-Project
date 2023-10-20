@@ -12,11 +12,12 @@ export const messageActions = {
             }
             currentState.messages[room].data = roomMessages;
             return {...currentState};
-        }
+        };
     },
 
     SEND_MESSAGES: async(_, {message, room}, dispatch) => {
         const customId = Math.floor(10000000 + Math.random() * 90000000).toString().substring(0, 8);
+        console.log("messageeeeeee is ",message);
         await dispatch(messageActions.ADD_MESSAGES, {
             message: {
                 ...message,
@@ -64,7 +65,7 @@ export const messageActions = {
                 messages[i].seen = true;
             }
         }
-        return newState;
+        return currentState;
     },
 
     ADD_USER_MESSAGES: (state, {userId, messages }) => {

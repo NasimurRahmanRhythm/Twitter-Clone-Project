@@ -22,7 +22,7 @@ import { useSession } from "next-auth/react";
 import CommentFeed from "../CommentFeed/CommentFeed";
 
 const PostItem = ({ data, userId }) => {
-  console.log("Data in the comment is ", data);
+  // ("Data in the console.logcomment is ", data);
   const router = useRouter();
   const loginModal = useLoginModal();
   const editPostModal = useEditPostModal();

@@ -37,10 +37,6 @@ const Form = ({placeholder, isComment, postId}) => {
                   type: type,
                 });
               
-              // mutatePost((currentPost) => ({
-              //   ...currentPost,
-              //   comments: [...(currentPost.comments || []), response.data._id]
-              // }));
               
             }
             else {
@@ -50,16 +46,6 @@ const Form = ({placeholder, isComment, postId}) => {
                 type: type,
               })
             }
-            // else{
-            //     await axios.post('/api/posts', {
-            //     body,
-            //     type: type,
-            //   });
-            // }
-
-            // const url = isComment ? `/api/comments?postId=${postId}` : '/api/posts';
-            // await axios.post(url, formData);
-
             toast.success('Tweet Created');
             setBody('');
             setImage(undefined);

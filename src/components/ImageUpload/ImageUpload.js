@@ -1,25 +1,31 @@
 import Image from "next/image";
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { AiOutlineCloseCircle } from "react-icons/ai"; 
-import styles from './ImageUpload.module.css';
+import { AiOutlineCloseCircle, AiOutlineFileAdd } from "react-icons/ai";
+import styles from "./ImageUpload.module.css";
 
 const ImageUpload = ({ onChange, label, value, disabled }) => {
   const [base64, setBase64] = useState(value);
 
-  const handleChange = useCallback((base64) => {
-    onChange(base64);
-  }, [onChange]);
+  const handleChange = useCallback(
+    (base64) => {
+      onChange(base64);
+    },
+    [onChange]
+  );
 
-  const handleDrop = useCallback((files) => {
-    const file = files[0];
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      setBase64(event.target.result);
-      handleChange(event.target.result);
-    };
-    reader.readAsDataURL(file);
-  }, [handleChange]);
+  const handleDrop = useCallback(
+    (files) => {
+      const file = files[0];
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setBase64(event.target.result);
+        handleChange(event.target.result);
+      };
+      reader.readAsDataURL(file);
+    },
+    [handleChange]
+  );
 
   const handleRemove = () => {
     setBase64(null);
@@ -31,9 +37,9 @@ const ImageUpload = ({ onChange, label, value, disabled }) => {
     onDrop: handleDrop,
     disabled,
     accept: {
-      'image/jpeg': [],
-      'image/png': [],
-      'image/jpg': [],
+      "image/jpeg": [],
+      "image/png": [],
+      "image/jpg": [],
     },
   });
 
@@ -46,12 +52,7 @@ const ImageUpload = ({ onChange, label, value, disabled }) => {
       <input {...getInputProps()} />
       {base64 ? (
         <div className={styles.imageWrapper}>
-          <Image
-            src={base64}
-            height="100"
-            width="100"
-            alt="Uploaded image"
-          />
+          <Image src={base64} height="100" width="100" alt="Uploaded image" />
           <button
             className={styles.removeButton}
             onClick={handleRemove}
@@ -60,8 +61,10 @@ const ImageUpload = ({ onChange, label, value, disabled }) => {
             <AiOutlineCloseCircle />
           </button>
         </div>
-      ) : (
+      ) : label ? (
         <p className={styles.imageUploadLabel}>{label}</p>
+      ) : (
+        <AiOutlineFileAdd />
       )}
     </div>
   );

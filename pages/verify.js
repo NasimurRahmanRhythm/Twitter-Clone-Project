@@ -4,8 +4,6 @@ import styles from '@/src/styles/verify.module.css'
 
 export async function getServerSideProps(ctx){
     const { id,token } = ctx.query;
-    console.log("The id is " + id);
-    console.log("The token is " + token);
     let user = await User.findById(id);
     let verified = false;
     console.log("User is " + user);

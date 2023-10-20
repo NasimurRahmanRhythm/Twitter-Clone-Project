@@ -9,7 +9,7 @@ const PostFeed = ({userId}) => {
     const { data: session, status, update } = useSession();
     console.log("Session is ", session);
     //console.log("Session id is ", session?.user._id);
-    console.log("Post Feed are ", posts);
+    // console.log("Post Feed are ", posts);
     const filteredPosts = posts.filter((post) => post.type === 'post');
   return (
     <>

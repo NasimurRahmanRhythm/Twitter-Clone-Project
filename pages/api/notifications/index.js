@@ -10,10 +10,10 @@ export default async function handler(req,res) {
     
     try {
         await connectToDB();
-        const session = await serverAuth(req,res);
+        const { session } = await serverAuth(req,res);
         const { type } = req.query; 
         if(type === 'message') {
-            const { messageNotifications } = await User.findById(session.user._id).select({ messageNotifications: 1});
+            const { messageNotifications } = await User.findById(session._id).select({ messageNotifications: 1});
             return res.status(200).end(messageNotifications);
         }
     } catch (error) {

@@ -10,11 +10,11 @@ export default async function handler(req, res){
 
     try {
         await connectToDB();
-        const session = await serverAuth(req,res);
+        const { session } = await serverAuth(req,res);
         const { receiverID } = req.body;
         const { pageIndex, pageSize } = req.query;
         const messages = await getAllConversationsByUser({
-            userId: session.user?._id,
+            userId: session._id,
             receiverID,
             pageIndex:+pageIndex,
             pageSize:+pageSize,

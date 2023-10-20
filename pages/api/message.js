@@ -12,10 +12,11 @@ export default async function handler(req,res) {
     try {
 
         await connectToDB();
-        const session = await serverAuth(req,res);
+        const { session } = await serverAuth(req,res);
         const {content, sender, receiver, customId} = req.body;
+       // console.log('Message session is ',session._id);
         const newMessage = await createMessage({
-            sender: session.user?._id,
+            sender: sender,
             receiver: receiver,
             text: content.text,
         });
@@ -25,7 +26,7 @@ export default async function handler(req,res) {
         let io = res.socket.server.io;
         io?.in(receiver).emit("new_message", newMessage);
 
-        return res.status(200).end({data: {message: newMessage, customId}});
+        return res.status(200).end(JSON.stringify({data: {message: newMessage, customId}}));
 
     } catch(error){
         console.log("message.js error is ",error);

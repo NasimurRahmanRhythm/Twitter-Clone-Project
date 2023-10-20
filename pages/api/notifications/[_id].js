@@ -10,7 +10,7 @@ export default async function handler(req,res) {
 
     try {
         await connectToDB();
-        const session = await serverAuth(req,res);
+        const { session } = await serverAuth(req,res);
         const { type, _id } = req.query;
         if(type === 'message') {
             await deleteMessageNotification({ userId: session._id, notificationSenderId: _id});
