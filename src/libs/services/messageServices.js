@@ -7,19 +7,19 @@ import mongoose from "mongoose";
 
 export async function deleteMessageNotification({ userId, notificationSenderId }) {
   try{
-    await User.updateOne({_id:userId},{$pull:{messageNotifications:notificationSenderId}})
-    return true
+    await User.updateOne({_id:userId},{$pull:{messageNotifications:notificationSenderId}});
+    return true;
   } catch(err){
-    return false
+    return false;
   }
   }
   
   export async function createMessageNotification({userId,notificationSenderId}){
     try{
-      await User.updateOne({_id:userId},{$push:{messageNotifications:notificationSenderId}})            
-      return true
+      await User.updateOne({_id:userId},{$push:{messageNotifications:notificationSenderId}});           
+      return true;
    }catch(err){
-      return false 
+      return false;
    }
    }
 
@@ -145,7 +145,7 @@ export async function createConversation(userID, receiverID) {
 
 export async function getAllConversationsByUser({userId,receiverID,pageIndex,pageSize = 30}) {
   try {
-    console.log(userId + " " + receiverID + " " + pageIndex);
+   // console.log(userId + " " + receiverID + " " + pageIndex);
     const objectIdUserId = new mongoose.Types.ObjectId(userId);
     const objectIdReceiverId = new mongoose.Types.ObjectId(receiverID);
     let messages = await Message.aggregate([
@@ -191,58 +191,5 @@ export async function takeAllUsers() {
     return users;
   } catch (error) {
     console.log("TAke all users error is ", error);
-  }
-}
-
-
-export async function getAllConversationsForUser({userId,receiverID,pageIndex,pageSize = 1}) {
-  try {
-    const fetchedConversations = await Message.findOne({
-      users: { $all: [userId, receiverID] },
-    }).sort({ createdAt: -1 });
-
-    if (fetchedConversations && fetchedConversations.messages) {
-      fetchedConversations?.messages.forEach((message) => {
-        if (message.sender.toString() !== userId) {
-          message.seen = true;
-        }
-      });
-      await fetchedConversations.save();
-    }
-
-    const conversations = await Message.find({
-      users: { $all: [userId, receiverID] },
-    })
-      .select("messages")
-      .skip((pageIndex - 1) * pageSize)
-      .limit(pageSize)
-      .sort({ createdAt: -1 })
-      .lean();
-
-    if (conversations[0]?.messages?.length < 20) {
-      const moreConversations = await Message.find({
-        users: { $all: [userId, receiverID] },
-      })
-        .select("messages")
-        .skip((pageIndex - 1) * (pageSize + 1))
-        .limit(pageSize + 1)
-        .sort({ createdAt: -1 })
-        .lean();
-
-      if (moreConversations.length > 1) {
-        const firstConversationMessages =
-          moreConversations[1]?.messages?.map((msg) => msg) || [];
-        const secondConversationMessages =
-          moreConversations[0]?.messages?.map((msg) => msg) || [];
-        return [...firstConversationMessages, ...secondConversationMessages];
-      } else {
-        return conversations[0]?.messages?.map((msg) => msg) || [];
-      }
-
-    } else {
-      return conversations[0]?.messages?.map((msg) => msg) || [];
-    }
-  } catch (error) {
-    throw { status: 500, message: error.message };
   }
 }

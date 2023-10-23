@@ -20,6 +20,8 @@ import { useMessages } from "@/src/hooks/useMessage";
 import ImageUpload from "@/src/components/ImageUpload/ImageUpload";
 import { RxCross2 } from "react-icons/rx";
 import { AiOutlineSend } from "react-icons/ai";
+import { BiBadge } from "react-icons/bi";
+import { BsDot } from "react-icons/bs";
 
 export async function getServerSideProps(ctx) {
   await connectToDB();
@@ -80,7 +82,7 @@ const MessageView = ({ users, previousMessages, receiver, currentUser }) => {
   const router = useRouter();
   const { room } = router.query;
   const { data: session } = useSession();
-  console.log("currentUSersssssssss isss ",currentUser._id);
+  console.log("currentUSersssssssss isss ", currentUser._id);
   const [text, setText] = useState();
   const [image, setImage] = useState();
   //const mainUserss = takeAllUsers();
@@ -102,7 +104,7 @@ const MessageView = ({ users, previousMessages, receiver, currentUser }) => {
           userId: receiver._id,
           messages: previousMessages,
         });
-        console.log("previous messages is ",messages);
+        console.log("previous messages is ", messages);
       }
       await dispatch(messageActions.SET_USERS, users);
     })();
@@ -120,10 +122,11 @@ const MessageView = ({ users, previousMessages, receiver, currentUser }) => {
         },
         room: room,
       });
-      setText();
+      setText("");
     }
   };
-
+  const firstMessage = messages[room]?.data[0];
+  console.log("Message Notification is ", messageNotifications);
   return (
     <div className={styles.messageContainer}>
       <div className={styles.userList}>
@@ -143,16 +146,40 @@ const MessageView = ({ users, previousMessages, receiver, currentUser }) => {
               key={user._id}
               href={{ pathname: "/message", query: { room: user._id } }}
             >
-              <div key={user._id} className={styles.userUser}>
+              <div
+                key={user._id}
+                className={
+                  messageNotifications.has(user._id)
+                    ? styles.userUser1
+                    : styles.userUser
+                }
+              >
+                {messageNotifications.has(user._id) ? (
+                  <BsDot size={40} />
+                ) : null}
                 <Avatar userId={user._id} />
                 <div className={styles.userInfoUser}>
-                  <p className={styles.userNameUser}>{user.name}</p>
-                  <p className={styles.userHandleUser}>@{user.username}</p>
+                  <p
+                    key={user._id}
+                    className={
+                      messageNotifications.has(user._id)
+                        ? styles.useNameUser1
+                        : styles.userNameUser
+                    }
+                  >
+                    {user.name}
+                  </p>
+                  <p
+                    className={
+                      messageNotifications.has(user._id)
+                        ? styles.userHandleUser1
+                        : styles.userHandleUser
+                    }
+                  >
+                    @{user.username}
+                  </p>
                 </div>
               </div>{" "}
-              {messageNotifications.has(user._id) && (
-                <span className="notification=badge"></span>
-              )}
             </Link>
           </div>
         ))}
@@ -169,7 +196,7 @@ const MessageView = ({ users, previousMessages, receiver, currentUser }) => {
           </div>
           <div>
             {messages[room]?.data.map((msg, idx) => (
-              <NewMessage message={msg} key={msg._id} />
+              <NewMessage message={msg} key={msg._id} isComment={idx === 0} />
             ))}
           </div>
           <div className={styles.sendMsg}>
@@ -185,24 +212,21 @@ const MessageView = ({ users, previousMessages, receiver, currentUser }) => {
                 {image && image !== "undefined" && (
                   <div className={styles.image}>
                     <img src={image} alt="img" />
-                    <button
-                      onClick={() => setImage(undefined)}
-                      className={"btn btn-ghost"}
-                    >
+                    <button onClick={() => setImage(undefined)}>
                       <RxCross2 />
                     </button>
                   </div>
                 )}
-                <div className={styles.actions}>
-                  <div className={styles.attachment}>
+              </div>
+              <div className={styles.actions}>
+                {/* <div className={styles.attachment}>
                     <ImageUpload
                       onChange={(image) => setImage(image)}
                     />
-                  </div>
-                  <button onClick={sendMessages}>
-                  <AiOutlineSend/>
+                  </div> */}
+                <button onClick={sendMessages}>
+                  <AiOutlineSend size={30} />
                 </button>
-                </div>
               </div>
             </div>
           </div>
