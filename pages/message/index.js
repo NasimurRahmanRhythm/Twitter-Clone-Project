@@ -22,6 +22,7 @@ import { RxCross2 } from "react-icons/rx";
 import { AiOutlineSend } from "react-icons/ai";
 import { BiBadge } from "react-icons/bi";
 import { BsDot } from "react-icons/bs";
+import useLoader from "@/src/hooks/useLoader";
 
 export async function getServerSideProps(ctx) {
   await connectToDB();
@@ -55,7 +56,7 @@ export async function getServerSideProps(ctx) {
       userId: user._id,
       receiverID: receiverId,
       pageIndex: 1,
-      pageSize: 50,
+      pageSize: 14,
     });
   }
 
@@ -91,11 +92,13 @@ const MessageView = ({ users, previousMessages, receiver, currentUser }) => {
 
   // console.log("messages is "+ messages + "messageNotifications " + messageNotifications, "chatUsers " + chatUsers, "dispatch " + dispatch);
 
+  const loaderRef = useRef();
+  const loader = !!useLoader(loaderRef, {})?.isIntersecting;
   useEffect(() => {
-    if (receiver) {
-      dispatch(messageActions.FETCH_USER_MESSEGES, { userId: receiver?._id });
+    if (loader) {
+      dispatch(messageActions.FETCH_USER_MESSEGES, { userId: receiver._id });
     }
-  }, []);
+  }, [loader]);
 
   useEffect(() => {
     (async () => {

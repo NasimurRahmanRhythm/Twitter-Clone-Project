@@ -14,7 +14,7 @@ export function useActionDispatcher(initialState) {
         newState = action(state, payload, dispatch);
       }
       setState(newState);
-      // console.log(action.name,newState);
+      console.log(action.name,newState);
       return newState;
     },
     [state]

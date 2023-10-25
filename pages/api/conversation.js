@@ -1,6 +1,8 @@
 import connectToDB from "@/src/libs/mongooseDB";
-import serverAuth from "@/src/libs/serverAuth";
 import { getAllConversationsByUser } from "@/src/libs/services/messageServices";
+import { getServerSession } from "next-auth";
+import { AuthOptions } from "./auth/[...nextauth]";
+import serverAuth from "@/src/libs/serverAuth";
 
 
 export default async function handler(req, res){
@@ -10,14 +12,16 @@ export default async function handler(req, res){
 
     try {
         await connectToDB();
-        const { session } = await serverAuth(req,res);
         const { receiverID } = req.body;
+        const { currentUser } = await serverAuth(req, res);
+
+        console.log("Conversationjs session is ",currentUser);
         const { pageIndex, pageSize } = req.query;
         const messages = await getAllConversationsByUser({
-            userId: session._id,
+            userId: currentUser._id,
             receiverID,
-            pageIndex:+pageIndex,
-            pageSize:+pageSize,
+            pageIndex: +pageIndex,
+            pageSize: +pageSize,
         }) 
 
         return res.status(200).end(messages);

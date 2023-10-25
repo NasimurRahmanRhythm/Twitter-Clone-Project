@@ -4,11 +4,13 @@ import { BsDot } from 'react-icons/bs';
 import styles from './SidebarItem.module.css';
 import useLoginModal from '@/src/hooks/useLoginModal';
 import { useSession } from 'next-auth/react';
+import { useMessages } from '@/src/hooks/useMessage';
 
 const SidebarItem = ({ label, href, icon: IconComponent, onClick, auth, alert }) => {
   const { data: currentUser } = useSession();
   const loginModal = useLoginModal();
   const router = useRouter();
+  const { messageNotifications } = useMessages();
   const handleClick = useCallback(() => {
     if (onClick) {
       return onClick();
@@ -28,7 +30,7 @@ const SidebarItem = ({ label, href, icon: IconComponent, onClick, auth, alert })
       </div>
       <div className={`${styles.iconContainer} ${styles.iconContainerLarge}`}>
         <IconComponent size={24} color="white" />
-        <p className={styles.itemLabel}>{label}</p>
+        <p className={label === 'Message' && messageNotifications.size !== 0 ? styles.itemLabel2 : styles.itemLabel}>{label}</p>
         {alert ? <BsDot className={styles.alertDot} size={70} /> : null}
       </div>
     </div>

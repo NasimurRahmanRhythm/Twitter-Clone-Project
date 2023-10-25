@@ -42,24 +42,6 @@ export async function deleteMessageNotification({ userId, notificationSenderId }
     }
   }
 
-  export async function getNotifications(userID) {
-    try {
-      const notifications = await User.findById(userID)
-        .select({
-          notifications: 1,
-        })
-        .populate({
-          path: "messageNotifications",
-        })
-        .sort({ createdAt: -1 })
-        .limit(10);
-  
-      return notifications;
-    } catch (error) {
-      throw { status: 500, error: error.message };
-    }
-  }
-
 
 
   export async function seeMessage({ messageIds }) {
@@ -143,9 +125,9 @@ export async function createConversation(userID, receiverID) {
 }
 
 
-export async function getAllConversationsByUser({userId,receiverID,pageIndex,pageSize = 30}) {
+export async function getAllConversationsByUser({userId,receiverID,pageIndex,pageSize = 20}) {
   try {
-   // console.log(userId + " " + receiverID + " " + pageIndex);
+   console.log("userId is " + userId + " RecieverID is " + receiverID + " pageIndex is " + pageIndex);
     const objectIdUserId = new mongoose.Types.ObjectId(userId);
     const objectIdReceiverId = new mongoose.Types.ObjectId(receiverID);
     let messages = await Message.aggregate([

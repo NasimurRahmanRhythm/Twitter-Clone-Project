@@ -38,6 +38,12 @@
     color: white;
     font-size: 1.25rem;
   }
+
+    .itemLabel2 {
+    display: none;
+    color: red;
+    font-size: 1.25rem;
+  }
   
   .alertDot {
     color: #3c82ff;
@@ -56,6 +62,10 @@
     }
   
     .itemLabel {
+      display: block;
+    }
+
+    .itemLabel2 {
       display: block;
     }
   }
