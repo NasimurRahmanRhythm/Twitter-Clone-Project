@@ -96,7 +96,7 @@ export const messageActions = {
         messages: response,
         userId,
       });
-      if (response.data && response.data.length < 14) {
+      if (response && response.length < 14) {
         state.messages[userId].isLastPage = true;
       }
       state.messages[userId].pageIndex++;
