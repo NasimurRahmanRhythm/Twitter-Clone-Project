@@ -1,5 +1,5 @@
-import useLoginModal from "@/src/hooks/useLoginModal";
-import useRegisterModal from "@/src/hooks/useRegisterModal";
+import useLoginModal from "@/hooks/useLoginModal";
+import useRegisterModal from "@/hooks/useRegisterModal";
 import React, { useCallback, useState } from "react";
 import { signIn } from "next-auth/react";
 import styles from "./LoginModal.module.css";

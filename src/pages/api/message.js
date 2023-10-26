@@ -1,6 +1,6 @@
-import connectToDB from "@/src/libs/mongooseDB";
-import serverAuth from "@/src/libs/serverAuth";
-import { createMessage, createMessageNotification } from "@/src/libs/services/messageServices";
+import connectToDB from "@/libs/mongooseDB";
+import serverAuth from "@/libs/serverAuth";
+import { createMessage, createMessageNotification } from "@/libs/services/messageServices";
 import { createSocket } from "./socket";
 
 

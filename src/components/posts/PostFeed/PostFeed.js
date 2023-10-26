@@ -1,4 +1,4 @@
-import usePosts from '@/src/hooks/usePosts'; 
+import usePosts from '@/hooks/usePosts'; 
 import React from 'react'
 import PostItem from '../PostItem/PostItem';
 import { useSession } from 'next-auth/react';

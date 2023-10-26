@@ -1,11 +1,11 @@
 import { Server } from "socket.io";
 import mongoose from "mongoose";
-import serverAuth from "@/src/libs/serverAuth";
+import serverAuth from "@/libs/serverAuth";
 import {
   deleteMessageNotification,
   seeMessage,
-} from "@/src/libs/services/messageServices";
-import connectToDB from "@/src/libs/mongooseDB";
+} from "@/libs/services/messageServices";
+import connectToDB from "@/libs/mongooseDB";
 
 export default async function handler(req, res) {
   if (req.method !== "GET") {

@@ -1,8 +1,8 @@
 // pages/api/posts/index.jsx
-import serverAuth from "@/src/libs/serverAuth";
-import Post from "@/src/models/Post";
-import User from "@/src/models/User";
-import connectToDB from "@/src/libs/mongooseDB";
+import serverAuth from "@/libs/serverAuth";
+import Post from "@/models/Post";
+import User from "@/models/User";
+import connectToDB from "@/libs/mongooseDB";
 
 export default async function handler(req, res) {
   if (req.method !== "POST" && req.method !== "GET") {

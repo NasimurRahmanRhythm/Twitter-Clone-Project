@@ -1,5 +1,5 @@
-import connectToDB from "@/src/libs/mongooseDB";
-import User from "@/src/models/User";
+import connectToDB from "@/libs/mongooseDB";
+import User from "@/models/User";
 
 export default async function handler(req, res) {
     if(req.method !== "POST") {
@@ -15,10 +15,11 @@ export default async function handler(req, res) {
 
         const user = await User.findById(userId);
         
-        const followingNames = await User.find({
-            _id: { $in: user.followingIds },
+        const followerNames = await User.find({
+            _id: { $in: user.followerIds },
         }).select('username');
-       return res.status(200).json(followingNames); 
+
+       return res.status(200).json(followerNames); 
 
     } catch(error){
         console.log(error);

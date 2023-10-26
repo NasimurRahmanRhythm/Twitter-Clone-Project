@@ -1,6 +1,6 @@
-import connectToDB from "@/src/libs/mongooseDB";
-import serverAuth from "@/src/libs/serverAuth";
-import { deleteMessageNotification } from "@/src/libs/services/messageServices";
+import connectToDB from "@/libs/mongooseDB";
+import serverAuth from "@/libs/serverAuth";
+import { deleteMessageNotification } from "@/libs/services/messageServices";
 
 
 export default async function handler(req,res) {

@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
-import connectToDB from "@/src/libs/mongooseDB";
-import User from "@/src/models/User";
-import { sendVerficiationMail } from "@/src/libs/sendVerificationMail";
+import connectToDB from "@/libs/mongooseDB";
+import User from "@/models/User";
+import { sendVerficiationMail } from "@/libs/sendVerificationMail";
 import urlencode from "urlencode";
 
 export default async function handler(req, res) {

@@ -1,11 +1,11 @@
-import useLoginModal from '@/src/hooks/useLoginModal';
-import usePosts from '@/src/hooks/usePosts';
-import useRegisterModal from '@/src/hooks/useRegisterModal'
+import useLoginModal from '@/hooks/useLoginModal';
+import usePosts from '@/hooks/usePosts';
+import useRegisterModal from '@/hooks/useRegisterModal'
 import axios from 'axios';
 import React, { useCallback, useState } from 'react'
 import { toast } from 'react-hot-toast';
 import Avatar from '../Avatar/Avatar';
-import usePost from '@/src/hooks/usePost';
+import usePost from '@/hooks/usePost';
 import styles from './Form.module.css';
 import Button from '../Button/Button';
 import ImageUpload from '../ImageUpload/ImageUpload';

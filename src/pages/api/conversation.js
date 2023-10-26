@@ -1,8 +1,8 @@
-import connectToDB from "@/src/libs/mongooseDB";
-import { getAllConversationsByUser } from "@/src/libs/services/messageServices";
+import connectToDB from "@/libs/mongooseDB";
+import { getAllConversationsByUser } from "@/libs/services/messageServices";
 import { getServerSession } from "next-auth";
 import { AuthOptions } from "./auth/[...nextauth]";
-import serverAuth from "@/src/libs/serverAuth";
+import serverAuth from "@/libs/serverAuth";
 
 
 export default async function handler(req, res){
@@ -24,7 +24,7 @@ export default async function handler(req, res){
             pageSize: +pageSize,
         }) 
 
-        return res.status(200).end(messages);
+        return res.status(200).end(JSON.stringify(messages));
     } catch(error) {
         console.log("Conversation. js error is ", error);
         return res.status(400).end();

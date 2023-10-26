@@ -132,7 +132,12 @@
 }
 
 .chatBox > div:nth-child(2)::-webkit-scrollbar {
-  width: 0;
+  width: 6px; 
+  background: #333; 
+}
+
+.chatBox > div:nth-child(2)::-webkit-scrollbar-thumb {
+  background: #666; 
 }
 
 .receiver {
@@ -257,3 +262,32 @@
   top: -1rem;
   left: 0;
 }
+
+.loading {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  height: calc(100vh - 50px);
+  align-items: center;
+}
+
+.loader {
+  width: 1.2em;
+  height: 1.2em;
+  border: 0.2em solid currentColor;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  opacity: 0.8;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+  }
+
+  @keyframes rotation {
+  0% {
+      transform: rotate(0deg);
+  }
+  100% {
+      transform: rotate(360deg);
+  }
+  } 

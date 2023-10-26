@@ -1,28 +1,28 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import styles from "@/src/styles/message.module.css";
-import Header from "@/src/components/Header/Header";
-import Avatar from "@/src/components/Avatar/Avatar";
+import styles from "@/styles/message.module.css";
+import Header from "@/components/Header/Header";
+import Avatar from "@/components/Avatar/Avatar";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import connectToDB from "@/src/libs/mongooseDB";
+import connectToDB from "@/libs/mongooseDB";
 import {
   deleteMessageNotification,
   getAllConversationsByUser,
   takeAllUsers,
-} from "@/src/libs/services/messageServices";
+} from "@/libs/services/messageServices";
 import { useSession } from "next-auth/react";
-import { messageActions } from "@/src/actions/message.actions";
-import NewMessage from "@/src/components/Message/NewMessage/NewMessage";
-import MessageForm from "@/src/components/Message/MessageForm/MessageForm";
+import { messageActions } from "@/actions/message.actions";
+import NewMessage from "@/components/Message/NewMessage/NewMessage";
+import MessageForm from "@/components/Message/MessageForm/MessageForm";
 import { AuthOptions } from "../api/auth/[...nextauth]";
 import { getServerSession } from "next-auth";
-import { useMessages } from "@/src/hooks/useMessage";
-import ImageUpload from "@/src/components/ImageUpload/ImageUpload";
+import { useMessages } from "@/hooks/useMessage";
+import ImageUpload from "@/components/ImageUpload/ImageUpload";
 import { RxCross2 } from "react-icons/rx";
 import { AiOutlineSend } from "react-icons/ai";
 import { BiBadge } from "react-icons/bi";
 import { BsDot } from "react-icons/bs";
-import useLoader from "@/src/hooks/useLoader";
+import useLoader from "@/hooks/useLoader";
 
 export async function getServerSideProps(ctx) {
   await connectToDB();
@@ -93,7 +93,10 @@ const MessageView = ({ users, previousMessages, receiver, currentUser }) => {
   // console.log("messages is "+ messages + "messageNotifications " + messageNotifications, "chatUsers " + chatUsers, "dispatch " + dispatch);
 
   const loaderRef = useRef();
-  const loader = !!useLoader(loaderRef, {})?.isIntersecting;
+  const loader = !!useLoader(loaderRef, {})
+    ?.isIntersecting;
+  
+    console.log("loader is ",loader);
   useEffect(() => {
     if (loader) {
       dispatch(messageActions.FETCH_USER_MESSEGES, { userId: receiver._id });
@@ -201,6 +204,11 @@ const MessageView = ({ users, previousMessages, receiver, currentUser }) => {
             {messages[room]?.data.map((msg, idx) => (
               <NewMessage message={msg} key={msg._id} isComment={idx === 0} />
             ))}
+            <div className={styles.loading}>
+              {!messages[room]?.isLastPage && (
+                <div ref={loaderRef} className={styles.loader}></div>
+              )}
+            </div>
           </div>
           <div className={styles.sendMsg}>
             <div className={styles.message}>

@@ -69,7 +69,7 @@ export const messageActions = {
     return (state) => {
       state.messages[userId] = {
         data: messages,
-        isLastPage: messages && messages.length < 50,
+        isLastPage: messages && messages.length < 14,
         pageIndex: 1,
       };
       return { ...state };
@@ -77,23 +77,23 @@ export const messageActions = {
   },
 
   FETCH_USER_MESSEGES: async (state, { userId, pageSize = 14 }, dispatch) => {
+    console.log("state is ", state);
     if (state.messages[userId]?.isLastPage) {
-      console.log("state is ", state);
       return state;
     }
     try {
-      console.log(state.session.user?._id);
+      console.log(typeof(userId));
       const { data: response } = await axios.post(
         `/api/conversation/?pageIndex=${
           state.messages[userId].pageIndex + 1
         }&pageSize=${pageSize}`,
         {
-          userId: state.session.user?._id,
           receiverID: userId,
         }
       );
+      console.log("Fetch messages ",response);
       state = await dispatch(messageActions.ADD_USER_MESSAGES, {
-        messages: response.data,
+        messages: response,
         userId,
       });
       if (response.data && response.data.length < 14) {
@@ -102,12 +102,16 @@ export const messageActions = {
       state.messages[userId].pageIndex++;
       return { ...state };
     } catch (error) {
+      console.log("error is ",error);
       return state;
     }
   },
 
   ADD_USER_MESSAGES: (state, { userId, messages }) => {
     const currentState = { ...state };
+    console.log("Add messages message is ",messages);
+    console.log("Add messages current state is ",state);
+    console.log("Add messages Userid is ",userId);
     if (!currentState.messages[userId]) {
       currentState.messages[userId] = {
         data: [],
@@ -120,6 +124,12 @@ export const messageActions = {
       ...messages,
     ];
     return currentState;
+  },
+
+  SET_LAST_PAGE: (state, { userId }) => {
+    const newState = { ...state };
+    newState.messages[userId].isLastPage = true;
+    return newState;
   },
 
   CLEAR_USER_NOTIFICATIONS: (state, userId) => {

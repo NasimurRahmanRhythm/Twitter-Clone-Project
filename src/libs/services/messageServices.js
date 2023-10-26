@@ -1,112 +1,143 @@
-import { allConversations, createConversations, createNotifications, deleteNotifications, fetchedConversations, findConversation, getConversation, getNotificationIds, moreConversationss, newNotification, updateMessages, updateUserNotification } from "../repositories/message.repositories";
-import User from '@/src/models/User';
-import Message from '@/src/models/Message';
-import Notification from '@/src/models/Notification';
+import {
+  allConversations,
+  createConversations,
+  createNotifications,
+  deleteNotifications,
+  fetchedConversations,
+  findConversation,
+  getConversation,
+  getNotificationIds,
+  moreConversationss,
+  newNotification,
+  updateMessages,
+  updateUserNotification,
+} from "../repositories/message.repositories";
+import User from "@/models/User";
+import Message from "@/models/Message";
+import Notification from "@/models/Notification";
 
 import mongoose from "mongoose";
 
-export async function deleteMessageNotification({ userId, notificationSenderId }) {
-  try{
-    await User.updateOne({_id:userId},{$pull:{messageNotifications:notificationSenderId}});
+export async function deleteMessageNotification({
+  userId,
+  notificationSenderId,
+}) {
+  try {
+    await User.updateOne(
+      { _id: userId },
+      { $pull: { messageNotifications: notificationSenderId } }
+    );
     return true;
-  } catch(err){
+  } catch (err) {
     return false;
   }
-  }
-  
-  export async function createMessageNotification({userId,notificationSenderId}){
-    try{
-      await User.updateOne({_id:userId},{$push:{messageNotifications:notificationSenderId}});           
-      return true;
-   }catch(err){
-      return false;
-   }
-   }
+}
 
-   export async function createNotification(type, userID, content) {
-    try {
-      const notification = await Notification.create({
-        type,
-        userID,
-        content,
-      });
-  
-      await User.updateOne(
-        { _id: userID },
-        { $push: { messageNotifications: notification } }
-      );
-  
-      return notification;
-    } catch (error) {
-      throw { status: 500, error: error.message };
+export async function createMessageNotification({
+  userId,
+  notificationSenderId,
+}) {
+  try {
+    await User.updateOne(
+      { _id: userId },
+      { $push: { messageNotifications: notificationSenderId } }
+    );
+    return true;
+  } catch (err) {
+    return false;
+  }
+}
+
+export async function createNotification(type, userID, content) {
+  try {
+    const notification = await Notification.create({
+      type,
+      userID,
+      content,
+    });
+
+    await User.updateOne(
+      { _id: userID },
+      { $push: { messageNotifications: notification } }
+    );
+
+    return notification;
+  } catch (error) {
+    throw { status: 500, error: error.message };
+  }
+}
+
+export async function seeMessage({ messageIds }) {
+  try {
+    await Message.updateMany(
+      {
+        "messages._id": { $in: messageIds },
+      },
+      {
+        $set: { "messages.$.seen": true },
+      }
+    );
+    return true;
+  } catch (err) {
+    return false;
+  }
+}
+
+export async function createMessage({
+  text,
+  file,
+  sender,
+  receiver,
+  originalMessage,
+}) {
+  console.log("sender is ", sender);
+  try {
+    const message = {
+      content: {
+        text,
+        file,
+      },
+      sender,
+      receiver,
+      originalMessage,
+    };
+    const conversations = await Message.find({
+      users: { $all: [sender, receiver] },
+    })
+      .sort({ createdAt: -1 })
+      .limit(1);
+    let conversation;
+    if (!conversations || conversations.length === 0) {
+      conversation = await createConversation(sender, receiver);
+    } else {
+      conversation = conversations[0];
     }
-  }
-
-
-
-  export async function seeMessage({ messageIds }) {
-    try {
-      await Message.updateMany(
-        {
-          "messages._id": {$in:messageIds},
-        },
-        {
-          $set: { "messages.$.seen": true },
-        }
-      );
-      return true;
-    } catch (err) {
-      return false;
-    }
-  }
-  
-  export async function createMessage({text,file,sender,receiver,originalMessage}) {
-    console.log("sender is ",sender);
-    try {
-      const message = {
-        content: {
-          text,
-          file,
-        },
+    let newMessage;
+    if (conversation.messages.length < 14) {
+      conversation.messages.push(message);
+      conversation.lastMessage = {
+        text,
+        file,
         sender,
-        receiver,
-        originalMessage,
       };
-      const conversations = await Message.find({users:{$all:[sender,receiver]}}).sort({createdAt:-1}).limit(1);
-      let conversation
-      if(!conversations || conversations.length === 0  ){
-        conversation = await createConversation(sender,receiver);
-      }
-      else{
-        conversation = conversations[0];
-      }
-      let newMessage;
-      if (conversation.messages.length < 50) {
-        conversation.messages.push(message);
-        conversation.lastMessage = {
-          text,
-          file,
-          sender,
-        };
-        await conversation.save();
-        newMessage  = conversation.messages[conversation.messages.length-1];
-      } else {
-        const newConversation = await createConversation(sender, receiver);
-        newConversation.messages.push(message);
-        newConversation.lastMessage = {
-          text,
-          file,
-          sender,
-        };
-        await newConversation.save();
-        newMessage  = conversation.messages[conversation.messages.length-1];
-      }
-      return newMessage._doc;
-    } catch (error) {
-      throw { status: 500, error: error.message };
+      await conversation.save();
+      newMessage = conversation.messages[conversation.messages.length - 1];
+    } else {
+      const newConversation = await createConversation(sender, receiver);
+      newConversation.messages.push(message);
+      newConversation.lastMessage = {
+        text,
+        file,
+        sender,
+      };
+      await newConversation.save();
+      newMessage = conversation.messages[conversation.messages.length - 1];
     }
+    return newMessage._doc;
+  } catch (error) {
+    throw { status: 500, error: error.message };
   }
-
+}
 
 export async function createConversation(userID, receiverID) {
   try {
@@ -124,10 +155,21 @@ export async function createConversation(userID, receiverID) {
   }
 }
 
-
-export async function getAllConversationsByUser({userId,receiverID,pageIndex,pageSize = 20}) {
+export async function getAllConversationsByUser({
+  userId,
+  receiverID,
+  pageIndex,
+  pageSize = 10,
+}) {
   try {
-   console.log("userId is " + userId + " RecieverID is " + receiverID + " pageIndex is " + pageIndex);
+    console.log(
+      "userId is " +
+        userId +
+        " RecieverID is " +
+        receiverID +
+        " pageIndex is " +
+        pageIndex
+    );
     const objectIdUserId = new mongoose.Types.ObjectId(userId);
     const objectIdReceiverId = new mongoose.Types.ObjectId(receiverID);
     let messages = await Message.aggregate([
@@ -169,7 +211,7 @@ export async function getAllConversationsByUser({userId,receiverID,pageIndex,pag
 
 export async function takeAllUsers() {
   try {
-    const users = await User.find({isVerified:true}).lean();
+    const users = await User.find({ isVerified: true }).lean();
     return users;
   } catch (error) {
     console.log("TAke all users error is ", error);

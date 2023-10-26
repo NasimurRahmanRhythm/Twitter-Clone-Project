@@ -1,7 +1,7 @@
-import Form from "@/src/components/Form/Form";
-import Header from "@/src/components/Header/Header";
-import PostItem from "@/src/components/posts/PostItem/PostItem";
-import usePost from "@/src/hooks/usePost";
+import Form from "@/components/Form/Form";
+import Header from "@/components/Header/Header";
+import PostItem from "@/components/posts/PostItem/PostItem";
+import usePost from "@/hooks/usePost";
 import { useRouter } from "next/router";
 import React from "react";
 import { ClipLoader } from "react-spinners";

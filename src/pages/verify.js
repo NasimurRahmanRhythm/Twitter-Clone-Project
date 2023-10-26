@@ -1,6 +1,6 @@
-import User from "@/src/models/User";
+import User from "@/models/User";
 import Link from "next/link";
-import styles from '@/src/styles/verify.module.css'
+import styles from '@/styles/verify.module.css'
 
 export async function getServerSideProps(ctx){
     const { id,token } = ctx.query;

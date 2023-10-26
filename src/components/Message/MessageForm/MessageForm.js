@@ -1,6 +1,6 @@
 import { useSession } from "next-auth/react";
 import React, { useState } from "react";
-import styles from "@/src/components/Message/MessageForm/MessageForm.module.css";
+import styles from "@/components/Message/MessageForm/MessageForm.module.css";
 import Avatar from "../../Avatar/Avatar";
 import { RxCross2 } from "react-icons/rx";
 import ImageUpload from "../../ImageUpload/ImageUpload";

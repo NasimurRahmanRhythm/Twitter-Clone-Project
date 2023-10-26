@@ -2,9 +2,9 @@ import { useRouter } from 'next/router';
 import React, { useCallback } from 'react';
 import { BsDot } from 'react-icons/bs';
 import styles from './SidebarItem.module.css';
-import useLoginModal from '@/src/hooks/useLoginModal';
+import useLoginModal from '@/hooks/useLoginModal';
 import { useSession } from 'next-auth/react';
-import { useMessages } from '@/src/hooks/useMessage';
+import { useMessages } from '@/hooks/useMessage';
 
 const SidebarItem = ({ label, href, icon: IconComponent, onClick, auth, alert }) => {
   const { data: currentUser } = useSession();

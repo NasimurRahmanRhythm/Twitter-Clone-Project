@@ -1,6 +1,6 @@
-import Message from "@/src/models/Message";
-import User from "@/src/models/User";
-import Notification from '@/src/models/Notification';
+import Message from "@/models/Message";
+import User from "@/models/User";
+import Notification from '@/models/Notification';
 
 export async function deleteNotifications({ userId, notificationSenderId }){
     await User.updateOne({ _id: userId }, { $pull: { messageNotifications: notificationSenderId } });

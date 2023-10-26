@@ -1,20 +1,20 @@
 
-import useEditPostModal from "@/src/hooks/useEditPostModal";
-import usePost from "@/src/hooks/usePost";
-import useUser from "@/src/hooks/useUser";
+import useEditPostModal from "@/hooks/useEditPostModal";
+import usePost from "@/hooks/usePost";
+import useUser from "@/hooks/useUser";
 import { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Input from "../../Input/Input";
 import Modal from "../../Modal/Modal";
 import EditModal from "../EditModal/EditModal";
-import useEditModal from "@/src/hooks/useEditModal";
+import useEditModal from "@/hooks/useEditModal";
 import { useStore } from "zustand";
 import Form from "../../Form/Form";
 import axios from "axios";
 import ImageUpload from "../../ImageUpload/ImageUpload";
 import styles from "./EditPostModal.module.css"
 import { mutate } from "swr";
-import usePosts from "@/src/hooks/usePosts";
+import usePosts from "@/hooks/usePosts";
 
 const EditPostModal = () => {
   const editPostModal = useEditPostModal();

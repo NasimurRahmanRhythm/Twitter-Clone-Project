@@ -1,12 +1,12 @@
 import { useRouter } from "next/router";
 import { ClipLoader } from "react-spinners";
 
-import useUser from "@/src/hooks/useUser";
+import useUser from "@/hooks/useUser";
 
-import Header from "@/src/components/Header/Header";
-import UserBio from "@/src/components/users/userBio/userBio";
-import UserHero from "@/src/components/users/UserHero/UserHero";
-import PostFeed from "@/src/components/posts/PostFeed/PostFeed";
+import Header from "@/components/Header/Header";
+import UserBio from "@/components/users/userBio/userBio";
+import UserHero from "@/components/users/UserHero/UserHero";
+import PostFeed from "@/components/posts/PostFeed/PostFeed";
 
 const UserView = () => {
   const router = useRouter();

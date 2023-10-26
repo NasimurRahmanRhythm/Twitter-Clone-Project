@@ -1,5 +1,5 @@
-import useLoginModal from "@/src/hooks/useLoginModal";
-import useLike from "@/src/hooks/useLike";
+import useLoginModal from "@/hooks/useLoginModal";
+import useLike from "@/hooks/useLike";
 import { formatDistanceToNowStrict } from "date-fns";
 import { useRouter } from "next/router";
 import React, { useCallback, useMemo, useState } from "react";
@@ -14,10 +14,10 @@ import {
 } from "react-icons/ai";
 
 import styles from "./PostItem.module.css";
-import useDelete from "@/src/hooks/useDelete";
-import useEditPostModal from "@/src/hooks/useEditPostModal";
+import useDelete from "@/hooks/useDelete";
+import useEditPostModal from "@/hooks/useEditPostModal";
 import EditPostModal from "../../modals/EditPostModal/EditPostModal";
-import useRetweet from "@/src/hooks/useRetweet";
+import useRetweet from "@/hooks/useRetweet";
 import { useSession } from "next-auth/react";
 import CommentFeed from "../CommentFeed/CommentFeed";
 

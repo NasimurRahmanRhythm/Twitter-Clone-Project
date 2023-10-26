@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import useUser from "@/src/hooks/useUser";
+import useUser from "@/hooks/useUser";
 
 import Avatar from "../../Avatar/Avatar";
 import styles from "./UserHero.module.css";

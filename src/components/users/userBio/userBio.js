@@ -2,9 +2,9 @@ import { useCallback, useMemo, useState } from "react";
 import { BiCalendar } from "react-icons/bi";
 import { format } from "date-fns";
 
-import useUser from "@/src/hooks/useUser";
-import useFollow from "@/src/hooks/useFollow";
-import useEditModal from "@/src/hooks/useEditModal";
+import useUser from "@/hooks/useUser";
+import useFollow from "@/hooks/useFollow";
+import useEditModal from "@/hooks/useEditModal";
 import Button from "../../Button/Button";
 import styles from "./userBio.module.css";
 import { useSession } from "next-auth/react";

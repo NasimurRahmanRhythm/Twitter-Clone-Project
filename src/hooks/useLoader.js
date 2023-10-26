@@ -1,27 +1,30 @@
 import { useEffect, useState } from "react";
 
 
-export default function useLoader(
-    elelmentRef,
+function useLoader(
+    elementRef,
     {
-        threshold = 0,
-        root= null,
-        rootMargin = '0%',
-        freezeOnceVisible = false,
+      threshold = 0,
+      root = null,
+      rootMargin = '0%',
+      freezeOnceVisible = false,
     },
-){
-    const [entry, setEntry] = useState();
-    const froze = entry?.isIntersecting && freezeOnceVisible;
+  ){
+    const [entry, setEntry] = useState()
+    const frozen = entry?.isIntersecting && freezeOnceVisible
     const updateEntry = ([entry]) => {
-        setEntry(entry);
+      setEntry(entry)
     }
-    useEffect(()=> {
-        const dom = elelmentRef?.current;
-        const ioSupport = !!window.IntersectionObserver;
-        if(!ioSupport || froze || !dom) return;
-        const params = {threshold, root, rootMargin};
-        const observer = new IntersectionObserver(updateEntry, params);
-        observer.observe(dom);
-        return () => observer.disconnect();
-    },[elelmentRef?.current, JSON.stringify(threshold), root, rootMargin, froze]);
-}
+    useEffect(() => {
+      const node = elementRef?.current // DOM Ref
+      const hasIOSupport = !!window.IntersectionObserver
+      if (!hasIOSupport || frozen || !node) return
+      const observerParams = { threshold, root, rootMargin }
+      const observer = new IntersectionObserver(updateEntry, observerParams)
+      observer.observe(node)
+      return () => observer.disconnect()
+    }, [elementRef?.current, JSON.stringify(threshold), root, rootMargin, frozen])
+    return entry
+  }
+  
+  export default useLoader;

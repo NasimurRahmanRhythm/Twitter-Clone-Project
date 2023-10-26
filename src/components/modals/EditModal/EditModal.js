@@ -2,13 +2,13 @@ import axios from 'axios';
 import React, { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import styles from './EditModal.module.css';
-import useEditModal from '@/src/hooks/useEditModal';
-import useUser from '@/src/hooks/useUser';
+import useEditModal from '@/hooks/useEditModal';
+import useUser from '@/hooks/useUser';
 import ImageUpload from '../../ImageUpload/ImageUpload';
 import Input from '../../Input/Input';
 import Modal from '../../Modal/Modal';
 import { useSession } from 'next-auth/react';
-import useCurrentUser from '@/src/hooks/useCurrentUser';
+import useCurrentUser from '@/hooks/useCurrentUser';
 
 const EditModal = () => {
   const { data: currentUser } = useSession();

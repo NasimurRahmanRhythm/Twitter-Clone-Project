@@ -2,8 +2,8 @@ import bcrypt from "bcrypt";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-import User from "@/src/models/User";
-import connectToDB from "@/src/libs/mongooseDB";
+import User from "@/models/User";
+import connectToDB from "@/libs/mongooseDB";
 import GithubProvider from "next-auth/providers/github";
 
 export const AuthOptions = {

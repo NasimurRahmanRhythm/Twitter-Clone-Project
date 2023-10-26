@@ -1,7 +1,7 @@
 // pages/api/users/[userId].jsx
-import User from "@/src/models/User";
-import connectToDB from "@/src/libs/mongooseDB";
-import serverAuth from "@/src/libs/serverAuth";
+import User from "@/models/User";
+import connectToDB from "@/libs/mongooseDB";
+import serverAuth from "@/libs/serverAuth";
 
 export default async function handler(req, res) {
   try {

@@ -1,4 +1,4 @@
-import useUsers from "@/src/hooks/useUsers";
+import useUsers from "@/hooks/useUsers";
 import styles from "./followbar.module.css";
 import Avatar from "../../Avatar/Avatar";
 
